@@ -1,0 +1,1 @@
+lưu trữ các tài liệu kế hoạch, các báo cáo (báo cáo hàng tuần, báo cáo tình trạng dự án, v.v.)

@@ -1,0 +1,1 @@
+lưu trữ tất cả các tài liệu kiểm thử như kế hoạch kiểm thử, các trường hợp kiểm thử, báo cáo kiểm thử
