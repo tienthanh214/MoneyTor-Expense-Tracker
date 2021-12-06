@@ -5,3 +5,4 @@
 # Commit admmend
 # Amend 
 # Git branh training
+# git push or git push -u
