@@ -11,17 +11,18 @@ import com.hcmus.group14.moneytor.data.model.relation.SpendingRelateCrossRef;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingWithRelates;
 
 import java.util.List;
-import java.util.concurrent.Future;
 
 public class AppRepository {
+    // all dao
     final private SpendingDao spendingDao;
+
     private LiveData<List<SpendingWithRelates>> allSpending;
 
     public AppRepository(Application application) {
         AppRoomDatabase db = AppRoomDatabase.getDatabase(application);
         // get all DAO
         spendingDao = db.spendingDao();
-        allSpending = spendingDao.getSpendingWithRelates();
+        allSpending = spendingDao.getAllSpendingWithRelates();
 
     }
 

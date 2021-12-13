@@ -10,7 +10,6 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.hcmus.group14.moneytor.data.model.Relate;
-import com.hcmus.group14.moneytor.data.model.relation.RelateWithSpending;
 import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingRelateCrossRef;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingWithRelates;
@@ -38,7 +37,7 @@ public abstract class SpendingDao {
     // for bill sharing
     @Transaction
     @Query("SELECT * FROM spending_table")
-    public abstract LiveData<List<SpendingWithRelates>> getSpendingWithRelates();
+    public abstract LiveData<List<SpendingWithRelates>> getAllSpendingWithRelates();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract void insertSpendingRelateCrossRef(SpendingRelateCrossRef crossRef);

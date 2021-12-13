@@ -51,12 +51,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     }
 
 
-
-
-
-
-
-    // below code for testing database
+    // below code for testing database, could be delete
     final static private Callback sOnOpenCallback = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
@@ -76,7 +71,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                     Spending s3 = (
                             new Spending(1000, "Hello 3", "Study", "say to show", 141));
 
-                    Relate r1 = new Relate("NDTT", "0365830678");
+                    Relate r1 = new Relate("NDTT", "123123123");
                     Relate r2 = new Relate("hauhau", "000012111");
                     Relate r3 = new Relate("binh", "123321123");
 
