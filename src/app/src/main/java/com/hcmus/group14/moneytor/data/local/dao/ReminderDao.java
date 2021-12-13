@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Update;
 import java.util.List;
 import com.hcmus.group14.moneytor.data.model.Reminder;
-import com.hcmus.group14.moneytor.data.model.SpendGoal;
 
 @Dao
 public interface ReminderDao {
@@ -23,5 +22,5 @@ public interface ReminderDao {
 
     //Total data retrieval
     @Query("select * from reminder_table order by date desc")
-    public LiveData<List<SpendGoal>> getAllReminders();
+    public LiveData<List<Reminder>> getAllReminders();
 }
