@@ -1,35 +1,8 @@
-package com.hcmus.group14.moneytor.data.local.dao;
+package com.hcmus.group14.moneytor.data.model;
 
-import androidx.room.Dao;
-import androidx.room.Query;
-import androidx.room.Insert;
-import androidx.lifecycle.LiveData;
-import androidx.room.Update;
-import java.util.List;
-import com.hcmus.group14.moneytor.data.model.SpendGoal;
-
-@Dao
-public interface SpendGoalDao {
-    //Data manipulation queries
-    @Insert
-    void insert(SpendGoal spendGoal);
-    @Update
-    public void update(SpendGoal... spendGoals);
-    @Query("delete from spend_goal_table")
-    public void deleteAllSpendGoals();
-    @Query("delete from spend_goal_table where goalID = :id")
-    public void deleteSpendGoal(int id);
-
-    //Total data retrieval
-    @Query("select * from spend_goal_table order by date desc")
-    public LiveData<List<SpendGoal>> getAllSpendGoals();
-}package com.hcmus.group14.moneytor.data.model;
-
+import androidx.room.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.room.*;
-
-import java.security.MessageDigest;
 /*
 This is the class entity for the Spending goal table (SPEND_GOAL). The schema is defined as follows:
               |-----------goal_id: INT NOT NULL PRIMARY KEY
