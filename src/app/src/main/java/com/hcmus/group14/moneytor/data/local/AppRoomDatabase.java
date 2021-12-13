@@ -10,10 +10,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.hcmus.group14.moneytor.data.local.dao.RelateDao;
-import com.hcmus.group14.moneytor.data.local.dao.SpendingDao;
-import com.hcmus.group14.moneytor.data.model.Relate;
-import com.hcmus.group14.moneytor.data.model.Spending;
+import com.hcmus.group14.moneytor.data.local.dao.*;
+import com.hcmus.group14.moneytor.data.model.*;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingRelateCrossRef;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingWithRelates;
 
@@ -25,7 +23,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(
-        entities = {Spending.class, Relate.class, SpendingRelateCrossRef.class}, // all table
+        entities = {Spending.class, Relate.class, SpendingRelateCrossRef.class,
+        Reminder.class, SpendGoal.class}, // all table
         version = 1, exportSchema = false)
 public abstract class AppRoomDatabase extends RoomDatabase {
     static public AppRoomDatabase INSTANCE = null;
@@ -34,6 +33,8 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     // all DAO
     public abstract SpendingDao spendingDao();
     public abstract RelateDao relateDao();
+    public abstract ReminderDao reminderDao();
+    public abstract SpendGoalDao spendGoalDao();
 
     public static AppRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
