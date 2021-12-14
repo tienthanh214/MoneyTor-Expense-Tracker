@@ -16,11 +16,13 @@ public class AppRepository {
     final private SpendingDao spendingDao;
     final private ReminderDao reminderDao;
     final private SpendGoalDao spendGoalDao;
+    final private DebtLendDao debtLendDao;
 
     //Data repositories
     private LiveData<List<SpendingWithRelates>> allSpending;
     private LiveData<List<Reminder>> allReminders;
     private LiveData<List<SpendGoal>> allSpendGoals;
+    private LiveData<List<DebtLend>> allDebtLends;
 
     public AppRepository(Application application) {
         AppRoomDatabase db = AppRoomDatabase.getDatabase(application);
@@ -28,9 +30,12 @@ public class AppRepository {
         spendingDao = db.spendingDao();
         reminderDao = db.reminderDao();
         spendGoalDao = db.spendGoalDao();
+        debtLendDao = db.debtLendDao();
+
         allSpending = spendingDao.getAllSpendingWithRelates();
         allReminders = reminderDao.getAllReminders();
         allSpendGoals = spendGoalDao.getAllSpendGoals();
+        allDebtLends = debtLendDao.getAllDebtLends();
     }
 
     // -------------- spending note --------------
@@ -74,5 +79,13 @@ public class AppRepository {
     public void insertSpendGoal(SpendGoal spendGoal)
     {
         AppRoomDatabase.databaseWriteExecutor.execute(()->spendGoalDao.insert(spendGoal));
+    }
+    public LiveData<List<DebtLend>> getAllDebtLends()
+    {
+        return allDebtLends;
+    }
+    public void insertDebtLend(DebtLend debtLend)
+    {
+        AppRoomDatabase.databaseWriteExecutor.execute(()->debtLendDao.insert(debtLend));
     }
 }

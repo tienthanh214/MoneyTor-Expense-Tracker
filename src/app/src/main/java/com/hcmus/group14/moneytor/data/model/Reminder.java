@@ -38,6 +38,7 @@ public class Reminder {
         this.date = date;
         this.desc = desc;
     }
+    public int getReminderId() { return remID; }
     public String getType()
     {
         return type;

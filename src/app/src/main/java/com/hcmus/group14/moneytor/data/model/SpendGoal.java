@@ -40,6 +40,7 @@ public class SpendGoal {
         this.date = date;
         this.desc = desc;
     }
+    public int getGoalId() { return goalID; }
     public String getCategory()
     {
         return category;

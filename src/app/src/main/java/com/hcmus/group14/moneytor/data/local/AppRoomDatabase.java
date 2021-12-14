@@ -24,7 +24,7 @@ import java.util.concurrent.Executors;
 
 @Database(
         entities = {Spending.class, Relate.class, SpendingRelateCrossRef.class,
-        Reminder.class, SpendGoal.class}, // all table
+        Reminder.class, SpendGoal.class, DebtLend.class}, // all table
         version = 1, exportSchema = false)
 public abstract class AppRoomDatabase extends RoomDatabase {
     static public AppRoomDatabase INSTANCE = null;
@@ -35,6 +35,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     public abstract RelateDao relateDao();
     public abstract ReminderDao reminderDao();
     public abstract SpendGoalDao spendGoalDao();
+    public abstract DebtLendDao debtLendDao();
 
     public static AppRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
