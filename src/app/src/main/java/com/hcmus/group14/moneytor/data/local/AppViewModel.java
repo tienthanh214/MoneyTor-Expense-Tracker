@@ -34,6 +34,7 @@ public class AppViewModel extends AndroidViewModel {
     public void insertReminder(Reminder reminder)
     {
         appRepository.insertReminder(reminder);
+        allReminders = appRepository.getAllReminders();
     }
     //---------------------Spending goals------------------
     public LiveData<List<SpendGoal>> getAllSpendGoals()
@@ -43,6 +44,7 @@ public class AppViewModel extends AndroidViewModel {
     public void insertSpendGoal(SpendGoal spendGoal)
     {
         appRepository.insertSpendGoal(spendGoal);
+        allSpendGoals = appRepository.getAllSpendGoals();
     }
     public LiveData<List<DebtLend>> getAllDebtLends()
     {
@@ -51,5 +53,6 @@ public class AppViewModel extends AndroidViewModel {
     public void insertDebtLend(DebtLend debtLend)
     {
        appRepository.insertDebtLend(debtLend);
+       allDebtLends = appRepository.getAllDebtLends();
     }
 }
