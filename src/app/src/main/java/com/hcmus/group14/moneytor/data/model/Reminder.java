@@ -40,7 +40,16 @@ public class Reminder implements Serializable {
         this.date = date;
         this.desc = desc;
     }
-    public int getReminderId() { return remID; }
+
+    public int getRemID() {
+        return remID;
+    }
+
+    public void setRemID(int remID) {
+        this.remID = remID;
+    }
+
+    @NonNull
     public String getType()
     {
         return type;
@@ -49,6 +58,7 @@ public class Reminder implements Serializable {
     {
         this.type = type;
     }
+    @NonNull
     public String getWhen()
     {
         return when;
@@ -65,6 +75,7 @@ public class Reminder implements Serializable {
     {
         this.date = date;
     }
+    @Nullable
     public String getDesc()
     {
         return desc;

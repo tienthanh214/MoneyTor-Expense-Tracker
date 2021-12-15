@@ -54,10 +54,14 @@ public class DebtLend implements Serializable {
         this.desc = desc;
     }
 
-    public int getRecordId()
-    {
+    public int getRecordId() {
         return recordId;
     }
+
+    public void setRecordId(int recordId) {
+        this.recordId = recordId;
+    }
+
     public @Nullable String getCategory()
     {
         return category;
