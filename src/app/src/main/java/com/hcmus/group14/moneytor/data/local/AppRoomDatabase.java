@@ -4,27 +4,34 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.hcmus.group14.moneytor.data.local.dao.*;
-import com.hcmus.group14.moneytor.data.model.*;
+import com.hcmus.group14.moneytor.data.local.dao.DebtLendDao;
+import com.hcmus.group14.moneytor.data.local.dao.RelateDao;
+import com.hcmus.group14.moneytor.data.local.dao.ReminderDao;
+import com.hcmus.group14.moneytor.data.local.dao.SpendGoalDao;
+import com.hcmus.group14.moneytor.data.local.dao.SpendingDao;
+import com.hcmus.group14.moneytor.data.local.dao.WalletDao;
+import com.hcmus.group14.moneytor.data.model.DebtLend;
+import com.hcmus.group14.moneytor.data.model.Relate;
+import com.hcmus.group14.moneytor.data.model.Reminder;
+import com.hcmus.group14.moneytor.data.model.SpendGoal;
+import com.hcmus.group14.moneytor.data.model.Spending;
+import com.hcmus.group14.moneytor.data.model.Wallet;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingRelateCrossRef;
-import com.hcmus.group14.moneytor.data.model.relation.SpendingWithRelates;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(
         entities = {Spending.class, Relate.class, SpendingRelateCrossRef.class,
-        Reminder.class, SpendGoal.class, DebtLend.class}, // all table
+        Reminder.class, SpendGoal.class, DebtLend.class, Wallet.class}, // all table
         version = 1, exportSchema = false)
 public abstract class AppRoomDatabase extends RoomDatabase {
     static public AppRoomDatabase INSTANCE = null;
@@ -36,6 +43,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     public abstract ReminderDao reminderDao();
     public abstract SpendGoalDao spendGoalDao();
     public abstract DebtLendDao debtLendDao();
+    public abstract WalletDao walletDao();
 
     public static AppRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -62,7 +70,6 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 //            RelateDao relateDao = INSTANCE.relateDao();
             Log.i("@@@ create", "complete");
             // test spending && relate
-            List<Spending> allRes = new ArrayList<>();
 
             databaseWriteExecutor.execute(() -> {
                 if (spendingDao.getAllSpendingRelate().length < 1) {

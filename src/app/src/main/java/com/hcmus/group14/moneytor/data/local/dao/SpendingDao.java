@@ -39,11 +39,21 @@ public abstract class SpendingDao {
     @Query("SELECT * FROM spending_table")
     public abstract LiveData<List<SpendingWithRelates>> getAllSpendingWithRelates();
 
+    @Transaction
+    @Query("SELECT * FROM spending_table WHERE spending_id = :id")
+    public abstract LiveData<List<SpendingWithRelates>> getSpendingWithRelatesById(int id);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract void insertSpendingRelateCrossRef(SpendingRelateCrossRef crossRef);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract void insertAllSpendingRelateCrossRef(List<SpendingRelateCrossRef> crossRefList);
+
+    @Delete
+    public abstract void deleteSpendingRelateCrossRef(SpendingRelateCrossRef crossRef);
+
+    @Delete
+    public abstract void deleteAllSpendingRelateCrossRef(List<SpendingRelateCrossRef> crossRefList);
 
     @Query("SELECT * FROM spending_relate")
     public abstract SpendingRelateCrossRef[] getAllSpendingRelate();
@@ -52,8 +62,19 @@ public abstract class SpendingDao {
     public void insertSpendingWithRelates(Spending spending, List<Relate> relates) {
         final long spendingId = insertSpending(spending);
         for (Relate relate : relates) {
+            // TODO: wonder if IGNORE conflict return id = ?, check later
             long relateId = insertRelate(relate);
             insertSpendingRelateCrossRef(new SpendingRelateCrossRef((int)spendingId, (int)relateId));
+        }
+    }
+    @Transaction
+    public void updateSpendingWithRelates(Spending spending, List<Relate> olds, List<Relate> news) {
+        for (Relate relate : olds) {
+            deleteSpendingRelateCrossRef(new SpendingRelateCrossRef(spending.getSpendingId(), relate.getRelateId()));
+        }
+        for (Relate relate : news) {
+            long relateId = insertRelate(relate);
+            insertSpendingRelateCrossRef(new SpendingRelateCrossRef(spending.getSpendingId(), (int)relateId));
         }
     }
 

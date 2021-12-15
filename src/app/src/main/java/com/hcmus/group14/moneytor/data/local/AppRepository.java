@@ -17,12 +17,14 @@ public class AppRepository {
     final private ReminderDao reminderDao;
     final private SpendGoalDao spendGoalDao;
     final private DebtLendDao debtLendDao;
-
+    final private RelateDao relateDao;
+    final private WalletDao walletDao;
     //Data repositories
-    private LiveData<List<SpendingWithRelates>> allSpending;
+    private LiveData<List<Spending>> allSpending;
     private LiveData<List<Reminder>> allReminders;
     private LiveData<List<SpendGoal>> allSpendGoals;
     private LiveData<List<DebtLend>> allDebtLends;
+    private LiveData<List<Wallet>> allWallets;
 
     public AppRepository(Application application) {
         AppRoomDatabase db = AppRoomDatabase.getDatabase(application);
@@ -31,15 +33,22 @@ public class AppRepository {
         reminderDao = db.reminderDao();
         spendGoalDao = db.spendGoalDao();
         debtLendDao = db.debtLendDao();
+        relateDao = db.relateDao();
+        walletDao = db.walletDao();
 
-        allSpending = spendingDao.getAllSpendingWithRelates();
+        allSpending = spendingDao.getAllSpending();
         allReminders = reminderDao.getAllReminders();
         allSpendGoals = spendGoalDao.getAllSpendGoals();
         allDebtLends = debtLendDao.getAllDebtLends();
+        allWallets = walletDao.getAllWallets();
     }
 
     // -------------- spending note --------------
-    public LiveData<List<SpendingWithRelates>> getAllSpending() {
+    public LiveData<List<SpendingWithRelates>> getSpendingWithRelatesById(int id) {
+        return spendingDao.getSpendingWithRelatesById(id);
+    }
+
+    public LiveData<List<Spending>> getAllSpending() {
         return allSpending;
     }
 
@@ -61,7 +70,57 @@ public class AppRepository {
         });
     }
 
-    // TODO: other entities
+    public void deleteSpending(Spending spending) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            spendingDao.deleteSpending(spending);
+        });
+    }
+
+    public void updateSpending(Spending spending) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            spendingDao.updateSpending(spending);
+        });
+    }
+    // update spending with new relates, remove old relates
+    public void updateSpendingWithRelates(Spending spending, List<Relate> olds, List<Relate> news) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            spendingDao.updateSpendingWithRelates(spending, olds, news);
+        });
+    }
+
+    // -------------- wallet --------------
+    public LiveData<List<Wallet>> getAllWallets() {
+        return allWallets;
+    }
+    public LiveData<List<Wallet>> getWalletByProvider(String provider) {
+        return walletDao.getWalletByProvider(provider);
+    }
+
+    public void insertWallet(Wallet wallet) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            walletDao.insertWallet(wallet);
+        });
+    }
+
+    public void deleteWallet(Wallet wallet) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            walletDao.deleteWallet(wallet);
+        });
+    }
+
+    public void updateWallet(Wallet wallet) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            walletDao.updateWallet((wallet));
+        });
+    }
+
+    // -------------- Relate (share bill, debt target) --------------
+    public void insertRelate(Relate relate) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            relateDao.insertRelate(relate);
+        });
+    }
+
     //---------------------Reminders-----------------------
     public LiveData<List<Reminder>> getAllReminders()
     {
