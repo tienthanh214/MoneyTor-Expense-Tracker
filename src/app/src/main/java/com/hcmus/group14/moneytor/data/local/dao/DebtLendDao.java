@@ -9,6 +9,7 @@ import com.hcmus.group14.moneytor.data.model.DebtLend;
 import androidx.lifecycle.LiveData;
 import java.util.List;
 
+@Dao
 public interface DebtLendDao {
     //Data manipulation
     @Insert
