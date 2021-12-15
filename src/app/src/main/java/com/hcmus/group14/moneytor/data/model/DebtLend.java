@@ -3,6 +3,9 @@ package com.hcmus.group14.moneytor.data.model;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.*;
+
+import java.io.Serializable;
+
 /*
               |-----------record_id: INT NOT NULL PRIMARY KEY
               |-----------category: CHAR(30)
@@ -22,7 +25,7 @@ consists of:
     - Description (up to 100 characters, optional)
  */
 @Entity(tableName = "debt_lend_table")
-public class DebtLend {
+public class DebtLend implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int recordId = 0;
 

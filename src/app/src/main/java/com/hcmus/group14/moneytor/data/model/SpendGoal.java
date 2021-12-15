@@ -3,6 +3,8 @@ package com.hcmus.group14.moneytor.data.model;
 import androidx.room.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import java.io.Serializable;
 /*
 This is the class entity for the Spending goal table (SPEND_GOAL). The schema is defined as follows:
               |-----------goal_id: INT NOT NULL PRIMARY KEY
@@ -19,7 +21,7 @@ goal which should be 100 characters or less, or leave it blank.
 
 
 @Entity(tableName = "spend_goal_table")
-public class SpendGoal {
+public class SpendGoal implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int goalID = 0;
 
