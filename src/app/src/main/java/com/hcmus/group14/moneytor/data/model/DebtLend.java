@@ -26,6 +26,7 @@ consists of:
  */
 @Entity(tableName = "debt_lend_table")
 public class DebtLend implements Serializable {
+
     @PrimaryKey(autoGenerate = true)
     private int recordId = 0;
 
@@ -54,10 +55,14 @@ public class DebtLend implements Serializable {
         this.desc = desc;
     }
 
-    public int getRecordId()
-    {
+    public int getRecordId() {
         return recordId;
     }
+
+    public void setRecordId(int recordId) {
+        this.recordId = recordId;
+    }
+
     public @Nullable String getCategory()
     {
         return category;

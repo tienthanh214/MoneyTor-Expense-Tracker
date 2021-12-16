@@ -42,7 +42,15 @@ public class SpendGoal implements Serializable {
         this.date = date;
         this.desc = desc;
     }
-    public int getGoalId() { return goalID; }
+
+    public int getGoalID() {
+        return goalID;
+    }
+
+    public void setGoalID(int goalID) {
+        this.goalID = goalID;
+    }
+
     public String getCategory()
     {
         return category;
