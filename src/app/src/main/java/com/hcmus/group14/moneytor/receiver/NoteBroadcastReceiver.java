@@ -14,7 +14,7 @@ import com.hcmus.group14.moneytor.R;
 
 public class NoteBroadcastReceiver extends BroadcastReceiver {
     public static final String CHANNEL_ID = "note_reminder_channel";
-    public static final int notifId = 1;
+    public static final int notifId = -1;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -34,15 +34,13 @@ public class NoteBroadcastReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(context.getString(R.string.reminder_title))
                 .setContentText(context.getString(R.string.reminder_message))
-                // TODO: replace with app icon
-                //.setSmallIcon(R.drawable.wall_clock)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setStyle(new NotificationCompat.BigTextStyle());
 
         // TODO set what happen when press notification
-//        if (alarm.getTagUri() != null) {
-//            if (alarm.getTagUri().length() != 0) {
 //                Intent notificationIntent = new Intent(Intent.ACTION_VIEW,
 //                        Uri.parse(alarm.getTagUri()));
 //                PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
@@ -50,12 +48,7 @@ public class NoteBroadcastReceiver extends BroadcastReceiver {
 //                builder.setContentText(alarm.getDescription() + " - Tap to open url: " + alarm
 //                .getTagUri());
 //                builder.setContentIntent(contentIntent);
-//            }
-//        }
+
         notificationManager.notify(notifId, builder.build());
-    }
-
-    void setNextReminder(Context context) {
-
     }
 }
