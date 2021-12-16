@@ -1,5 +1,7 @@
 package com.hcmus.group14.moneytor.ui.goal;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -18,6 +20,7 @@ import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
+import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,7 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
     private SpendGoalViewModel goalViewModel;
     private List<SpendGoal> spendGoals;
     private GoalAdapter goalAdapter;
+    private Context context;
 
     @Override
     public int getLayoutId() {
@@ -39,6 +43,7 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
+        context = this.getApplicationContext();
 
         this.setTitle("Spending goal");
 
@@ -56,8 +61,8 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(context, AddGoalActivity.class);
+                startActivity(intent);
             }
         });
     }

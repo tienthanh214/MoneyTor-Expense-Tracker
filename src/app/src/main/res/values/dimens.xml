@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="margin_top_card">10dp</dimen>
+    <dimen name="margin_bottom_card">10dp</dimen>
+    <dimen name="margin_left_card">20dp</dimen>
+    <dimen name="margin_right_card">20dp</dimen>
+
+    <dimen name="corner_radius">12dp</dimen>
+
+    <dimen name="margin_top_text">10dp</dimen>
+    <dimen name="margin_bottom_text">10dp</dimen>
+    <dimen name="margin_left_text">5dp</dimen>
+    <dimen name="margin_right_text">5dp</dimen>
+
+    <dimen name="text_size">18dp</dimen>
+    <dimen name="amount_size">25dp</dimen>
+
+    <dimen name="text_padding_left">20dp</dimen>
+    <dimen name="text_padding_vertical">10dp</dimen>
 </resources>
