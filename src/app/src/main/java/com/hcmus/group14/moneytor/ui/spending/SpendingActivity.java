@@ -43,9 +43,6 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
     private SpendingAdapter spendingAdapter;
     private Context context;
 
-    public SpendingActivity() {
-    }
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_spending;

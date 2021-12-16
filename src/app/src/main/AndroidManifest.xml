@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moneytor">
         <activity
+            android:name=".ui.contact.ContactActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.goal.AddGoalActivity"
             android:exported="false" />
         <activity
@@ -23,7 +26,6 @@
             android:name=".ui.spending.SpendingActivity"
             android:exported="true"
             android:label="@string/title_activity_spending" />
-
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">

@@ -13,6 +13,7 @@
     <!-- Menu title -->
     <string name="menu_filter">Filter</string>
     <string name="menu_search">Search</string>
+    <string name="menu_confirm">Confirm</string>
 
     <!-- Button text -->
     <string name="analyze_btn">Tap to analyze</string>
