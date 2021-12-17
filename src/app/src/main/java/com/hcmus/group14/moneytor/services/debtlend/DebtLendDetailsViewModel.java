@@ -50,31 +50,37 @@ public class DebtLendDetailsViewModel extends AndroidViewModel {
 
     //sets
     public void setCategory(@Nullable String category) {
+        if (_debtLend.getCategory().equals(category)) return;
         _debtLend.setCategory(category);
         debtLend.setValue(_debtLend);
     }
 
     public void setValue(int value) {
+        if (_debtLend.getValue() == value) return;
         _debtLend.setValue(value);
         debtLend.setValue(_debtLend);
     }
 
     public void setDebt(int debt) {
+        if (_debtLend.getDebt() == debt) return;
         _debtLend.setDebt(debt);
         debtLend.setValue(_debtLend);
     }
 
     public void setDate(long date) {
+        if (_debtLend.getDate() == date) return;
         _debtLend.setDate(date);
         debtLend.setValue(_debtLend);
     }
 
     public void setTarget(int target) {
+        if (_debtLend.getTarget() == target) return;
         _debtLend.setTarget(target);
         debtLend.setValue(_debtLend);
     }
 
     public void setDesc(@Nullable String desc) {
+        if (_debtLend.getDesc().equals(desc)) return;
         _debtLend.setDesc(desc);
         debtLend.setValue(_debtLend);
     }

@@ -3,10 +3,12 @@ package com.hcmus.group14.moneytor.ui.spending;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,8 +24,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.databinding.ActivityNoteSpendingBinding;
 import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
+import com.hcmus.group14.moneytor.services.spending.SpendingDetailsViewModel;
 import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
+import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,7 +37,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityNoteSpendingBinding binding;
-    private SpendingViewModel viewModel;
+    private SpendingDetailsViewModel viewModel;
 
     @Override
     public int getLayoutId() {
@@ -43,9 +47,11 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_note_spending);
-        viewModel = binding.getViewModel();
         this.setTitle("Spending note");
+        binding = getViewDataBinding();
+        // binding.setLifecycleOwner(this);
+        viewModel = new ViewModelProvider(this).get(SpendingDetailsViewModel.class);
+        binding.setViewModel(viewModel);
         setSpinner();
         setDatePickerDialog();
     }
@@ -55,6 +61,8 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         switch (item.getItemId()) {
             case R.id.actionSave:
                 // insert spending
+                InputUtils errors = viewModel.saveSpending();
+
                 Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.actionDelete:

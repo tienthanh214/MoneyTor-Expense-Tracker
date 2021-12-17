@@ -30,4 +30,9 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="bundle_goal_obj">bundleAlarmObj</string>
+    <string name="arg_goal_obj">ArgAlarmObj</string>
+    <string name="reminder_message">Creating habits is the key to financial success. We are here to remind you to take track down your spending regularly.</string>
+    <string name="reminder_title">MoneyTor Reminder</string>
 </resources>

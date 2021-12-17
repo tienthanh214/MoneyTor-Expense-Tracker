@@ -25,7 +25,14 @@ public interface RelateDao {
     @Update
     void updateRelate(Relate relate);
 
+    @Query("SELECT * FROM relate_table")
+    LiveData<List<Relate>> getAllRelates();
+
     @Transaction
     @Query("SELECT * FROM relate_table")
     LiveData<List<RelateWithSpending>> getRelatesWithSpending();
+
+    @Transaction
+    @Query("SELECT * FROM relate_table WHERE rel_id = :id")
+    LiveData<List<RelateWithSpending>> getRelateBySpendingId(int id);
 }

@@ -51,6 +51,7 @@ public class SpendGoal implements Serializable {
         this.goalID = goalID;
     }
 
+    @NonNull
     public String getCategory()
     {
         return category;

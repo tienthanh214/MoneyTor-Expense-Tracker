@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.hcmus.group14.moneytor.services.spending.SpendingViewModel" />
+            type="com.hcmus.group14.moneytor.services.spending.SpendingDetailsViewModel" />
     </data>
 
     <RelativeLayout
@@ -37,10 +37,12 @@
                 android:background="@drawable/text_view_background"
                 android:gravity="center_horizontal"
                 android:hint="Amount"
+                android:text="@={viewModel.cost}"
                 android:inputType="number"
                 android:paddingVertical="@dimen/text_padding_vertical"
                 android:textSize="@dimen/amount_size" />
         </LinearLayout>
+
 
 
         <RelativeLayout
@@ -96,7 +98,12 @@
                         android:focusable="false"
                         android:hint="The date"
                         android:paddingVertical="@dimen/text_padding_vertical"
-                        android:paddingHorizontal="@dimen/text_padding_horizontal" />
+                        android:paddingHorizontal="@dimen/text_padding_horizontal"
+                        android:text="@={viewModel.date}"/>
+
+
+
+
 
                     <TextView
                         android:id="@+id/textViewTitle"
@@ -116,6 +123,7 @@
                         android:hint="Title"
                         android:paddingVertical="@dimen/text_padding_vertical"
                         android:paddingHorizontal="@dimen/text_padding_horizontal"
+                        android:text="@={viewModel.title}"
                         android:textSize="@dimen/text_size" />
 
                     <TextView
@@ -136,6 +144,7 @@
                         android:hint="Description"
                         android:paddingVertical="@dimen/text_padding_vertical"
                         android:paddingHorizontal="@dimen/text_padding_horizontal"
+                        android:text="@={viewModel.description}"
                         android:textSize="@dimen/text_size" />
 
 

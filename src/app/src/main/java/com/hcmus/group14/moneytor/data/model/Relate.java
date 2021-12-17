@@ -3,11 +3,13 @@ package com.hcmus.group14.moneytor.data.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "relate_table")
+@Entity(tableName = "relate_table",
+        indices = {@Index(value = "tel", unique = true)})
 public class Relate implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "rel_id")
