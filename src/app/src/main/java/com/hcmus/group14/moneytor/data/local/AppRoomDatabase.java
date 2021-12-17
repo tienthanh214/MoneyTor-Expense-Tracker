@@ -25,7 +25,6 @@ import com.hcmus.group14.moneytor.data.model.relation.SpendingRelateCrossRef;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -65,6 +64,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     final static private Callback sOnOpenCallback = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            /*
             super.onOpen(db);
             SpendingDao spendingDao = INSTANCE.spendingDao();
 //            RelateDao relateDao = INSTANCE.relateDao();
@@ -94,6 +94,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 }
                 // can't use LiveData in thread pool
             });
+            */
         }
     };
 }

@@ -23,6 +23,11 @@ public class Spending implements Serializable {
     @ColumnInfo(name = "date")
     long date;
 
+    public Spending() {
+        this.cost = -1;
+        this.date = -1;
+    }
+
     public Spending(long cost, String title, String category, String description, long date) {
         this.cost = cost;
         this.title = title;

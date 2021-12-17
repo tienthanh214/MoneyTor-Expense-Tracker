@@ -1,5 +1,7 @@
 package com.hcmus.group14.moneytor.data.local.dao;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -25,6 +27,9 @@ public abstract class SpendingDao {
     @Delete
     public abstract void deleteSpending(Spending spending);
 
+    @Query("DELETE FROM spending_table WHERE spending_id = :id")
+    public abstract void deleteSpendingById(int id);
+
     @Update
     public abstract void updateSpending(Spending spending);
 
@@ -41,7 +46,7 @@ public abstract class SpendingDao {
 
     @Transaction
     @Query("SELECT * FROM spending_table WHERE spending_id = :id")
-    public abstract LiveData<List<SpendingWithRelates>> getSpendingWithRelatesById(int id);
+    public abstract SpendingWithRelates[] getSpendingWithRelatesById(int id);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract void insertSpendingRelateCrossRef(SpendingRelateCrossRef crossRef);
@@ -52,8 +57,8 @@ public abstract class SpendingDao {
     @Delete
     public abstract void deleteSpendingRelateCrossRef(SpendingRelateCrossRef crossRef);
 
-    @Delete
-    public abstract void deleteAllSpendingRelateCrossRef(List<SpendingRelateCrossRef> crossRefList);
+    @Query("DELETE FROM spending_relate WHERE spending_id = :id")
+    public abstract void deleteRelateBySpendingId(int id);
 
     @Query("SELECT * FROM spending_relate")
     public abstract SpendingRelateCrossRef[] getAllSpendingRelate();
@@ -61,9 +66,15 @@ public abstract class SpendingDao {
     @Transaction
     public void insertSpendingWithRelates(Spending spending, List<Relate> relates) {
         final long spendingId = insertSpending(spending);
+        if (spendingId == -1) return;
         for (Relate relate : relates) {
-            // TODO: wonder if IGNORE conflict return id = ?, check later
             long relateId = insertRelate(relate);
+            // if exists relate = -1, query to get relate index
+            if (relateId == -1) {
+                long[] result = getRelateIdByTel(relate.getTel());
+                if (result.length > 0)
+                    relateId = result[0];
+            }
             insertSpendingRelateCrossRef(new SpendingRelateCrossRef((int)spendingId, (int)relateId));
         }
     }
@@ -78,6 +89,16 @@ public abstract class SpendingDao {
         }
     }
 
+    @Transaction
+    public void deleteSpendingWithRelatesById(int id) {
+        Log.i("@@@ delete", id + " ");
+        deleteSpendingById(id);
+        deleteRelateBySpendingId(id);
+    }
+
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long insertRelate(Relate relate);
+    @Query("SELECT rel_id FROM relate_table WHERE tel LIKE :tel")
+    public abstract long[] getRelateIdByTel(String tel);
 }

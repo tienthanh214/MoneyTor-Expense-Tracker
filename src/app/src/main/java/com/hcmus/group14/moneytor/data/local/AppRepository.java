@@ -44,7 +44,7 @@ public class AppRepository {
     }
 
     // -------------- spending note --------------
-    public LiveData<List<SpendingWithRelates>> getSpendingWithRelatesById(int id) {
+    public SpendingWithRelates[] getSpendingWithRelatesById(int id) {
         return spendingDao.getSpendingWithRelatesById(id);
     }
 
@@ -69,10 +69,10 @@ public class AppRepository {
             spendingDao.insertSpendingWithRelates(spending, relates);
         });
     }
-
+    // delete a spending with all relates
     public void deleteSpending(Spending spending) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            spendingDao.deleteSpending(spending);
+            spendingDao.deleteSpendingWithRelatesById(spending.getSpendingId());
         });
     }
 
