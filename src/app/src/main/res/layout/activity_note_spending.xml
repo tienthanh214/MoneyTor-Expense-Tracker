@@ -73,7 +73,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/text_view_background"
                     android:paddingHorizontal="@dimen/text_padding_horizontal"
-                    android:paddingVertical="@dimen/text_padding_vertical" />
+                    android:paddingVertical="@dimen/text_padding_vertical"
+                    android:selectedItemPosition="@={viewModel.category}"/>
 
                 <TextView
                     android:id="@+id/textViewDateTitle"

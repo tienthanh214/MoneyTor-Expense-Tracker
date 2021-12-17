@@ -15,6 +15,7 @@ public class DebtLendDetailsViewModel extends AndroidViewModel {
 
     public DebtLendDetailsViewModel(@NonNull Application application) {
         super(application);
+        
     }
 
     //gets

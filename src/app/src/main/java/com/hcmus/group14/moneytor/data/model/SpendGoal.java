@@ -28,13 +28,13 @@ public class SpendGoal implements Serializable {
     @ColumnInfo(name = "category") @NonNull
     private String category;
     @ColumnInfo(name = "spending_cap")
-    private int spendingCap;
+    private long spendingCap;
     @ColumnInfo(name = "date")
     private long date;
     @ColumnInfo(name = "desc") @Nullable
     private String desc;
 
-    public SpendGoal(@NonNull String category, int spendingCap,
+    public SpendGoal(@NonNull String category, long spendingCap,
                      long date, @Nullable String desc)
     {
         this.category = category;
@@ -60,11 +60,11 @@ public class SpendGoal implements Serializable {
     {
         this.category = category;
     }
-    public int getSpendingCap()
+    public long getSpendingCap()
     {
         return spendingCap;
     }
-    public void setSpendingCap(int spendingCap)
+    public void setSpendingCap(long spendingCap)
     {
         this.spendingCap = spendingCap;
     }

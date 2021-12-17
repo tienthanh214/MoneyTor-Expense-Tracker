@@ -9,12 +9,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.hcmus.group14.moneytor.data.local.AppViewModel;
 import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingWithRelates;
+import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 
 public class SpendingDetailsViewModel extends AppViewModel {
     public MutableLiveData<Spending> spending;
-    final private Spending _spending;
+    private Spending _spending;
 
     public SpendingDetailsViewModel(@NonNull Application application) {
         super(application);
@@ -22,8 +23,12 @@ public class SpendingDetailsViewModel extends AppViewModel {
         spending = new MutableLiveData<>(_spending);
     }
 
-    public SpendingDetailsViewModel(@NonNull Application application, int spendingId) {
-        super(application);
+//    public SpendingDetailsViewModel(@NonNull Application application, int spendingId) {
+//        super(application);
+//        setSpendingData(spendingId);
+//    }
+
+    public void setSpendingData(int spendingId) {
         SpendingWithRelates[] result = appRepository.getSpendingWithRelatesById(spendingId);
         if (result.length > 0) {
             _spending = result[0].spending;
@@ -42,6 +47,7 @@ public class SpendingDetailsViewModel extends AppViewModel {
     }
 
     public String getCost() {
+        Log.i("@@@ getCost", "" + _spending.getCost());
         if (_spending.getCost() < 0)
             return "0";
         return String.valueOf(_spending.getCost());
@@ -53,8 +59,11 @@ public class SpendingDetailsViewModel extends AppViewModel {
         return DateTimeUtils.getDate(_spending.getDate());
     }
 
-    public String getCategory() {
-        return _spending.getCategory();
+    public int getCategory() {
+        int position = CategoriesUtils.findPositionById(_spending.getCategory());
+        if (position != -1)
+            return position;
+        return -1;
     }
 
     public void setTitle(String title) {
@@ -81,11 +90,11 @@ public class SpendingDetailsViewModel extends AppViewModel {
         }
     }
 
-    public void setCategory(String category) {
-        if (!category.equals(_spending.getCategory())) {
-            _spending.setCategory(category);
-            spending.setValue(_spending);
+    public void setCategory(int position) {
+        if (position != CategoriesUtils.findPositionById(_spending.getCategory())) {
+            _spending.setCategory(CategoriesUtils.getCategoryIdByPosition(position));
         }
+        Log.i("@@@ cat", _spending.getCategory());
     }
 
     public void setDate(String date) {
@@ -112,7 +121,7 @@ public class SpendingDetailsViewModel extends AppViewModel {
         if (_spending.getDate() == -1) {
             _spending.setDate(DateTimeUtils.getCurrentTimeMillis());
         }
-        appRepository.insertSpending(_spending);
+//        appRepository.insertSpending(_spending);
         return errors;
     }
 

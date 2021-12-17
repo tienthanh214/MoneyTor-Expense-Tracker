@@ -29,7 +29,9 @@ import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
 import com.hcmus.group14.moneytor.services.spending.SpendingDetailsViewModel;
 import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
+import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
+import com.hcmus.group14.moneytor.utils.InputUtils.Type;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -156,13 +158,14 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         Spinner spinner = binding.spinnerCategory;
 
         spinner.setOnItemSelectedListener(this);
-
+        /*
         List<String> categories = new ArrayList<String>();
         categories.add("cat1");
         categories.add("cat2");
         categories.add("cat3");
         categories.add("cat4");
-
+        */
+        List<String> categories = CategoriesUtils.getDefaultCategories();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

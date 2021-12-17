@@ -24,6 +24,7 @@ import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.databinding.ActivityGoalSpendingBinding;
 import com.hcmus.group14.moneytor.databinding.ActivityNoteSpendingBinding;
 import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
+import com.hcmus.group14.moneytor.services.goal.SpendGoalDetailsViewModel;
 import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
 import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
@@ -38,7 +39,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalSpendingBindin
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityGoalSpendingBinding binding;
-    private SpendGoalViewModel viewModel;
+    private SpendGoalDetailsViewModel viewModel;
 
     @Override
     public int getLayoutId() {
@@ -49,6 +50,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalSpendingBindin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
+        
         viewModel = binding.getViewModel();
         this.setTitle("Spending goal");
         setSpinner();

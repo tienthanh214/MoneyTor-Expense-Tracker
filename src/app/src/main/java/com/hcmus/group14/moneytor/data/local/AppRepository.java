@@ -139,6 +139,10 @@ public class AppRepository {
     {
         AppRoomDatabase.databaseWriteExecutor.execute(()->spendGoalDao.insert(spendGoal));
     }
+    public void deleteSpendGoal(SpendGoal spendGoal) {
+        AppRoomDatabase.databaseWriteExecutor.execute(()->spendGoalDao.deleteSpendGoal(spendGoal));
+    }
+    //---------------------Debt Lend------------------
     public LiveData<List<DebtLend>> getAllDebtLends()
     {
         return allDebtLends;
