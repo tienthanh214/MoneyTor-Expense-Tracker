@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_green">
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/input_amount"
+            android:background="@drawable/text_view_background"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Amount"
+            android:inputType="number"
+            android:paddingVertical="@dimen/text_padding_vertical"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/amount_size"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/detail_view_background">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_top_text"
+                        android:layout_marginBottom="@dimen/margin_bottom_text"
+                        android:text="Category"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+
+                    <Spinner
+                        android:id="@+id/spinnerCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/text_view_background"
+                        android:paddingVertical="@dimen/text_padding_vertical"
+                        android:paddingLeft="@dimen/text_padding_left" />
+
+                    <TextView
+                        android:id="@+id/textViewDateTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_top_text"
+                        android:layout_marginBottom="@dimen/margin_bottom_text"
+                        android:text="Date"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+
+                    <EditText
+                        android:id="@+id/editTextDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/text_view_background"
+                        android:paddingVertical="@dimen/text_padding_vertical"
+                        android:paddingLeft="@dimen/text_padding_left"
+                        android:focusable="false"
+                        android:text="The date" />
+
+                    <TextView
+                        android:id="@+id/textViewTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_top_text"
+                        android:layout_marginBottom="@dimen/margin_bottom_text"
+                        android:text="Title"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+
+                    <EditText
+                        android:id="@+id/editTextTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/text_view_background"
+                        android:paddingVertical="@dimen/text_padding_vertical"
+                        android:paddingLeft="@dimen/text_padding_left"
+                        android:text="Title"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/textViewDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_top_text"
+                        android:layout_marginBottom="@dimen/margin_bottom_text"
+                        android:text="Description"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+
+                    <EditText
+                        android:id="@+id/editTextDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/text_view_background"
+                        android:paddingVertical="@dimen/text_padding_vertical"
+                        android:paddingLeft="@dimen/text_padding_left"
+                        android:text="Description"
+                        android:textSize="@dimen/text_size" />
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

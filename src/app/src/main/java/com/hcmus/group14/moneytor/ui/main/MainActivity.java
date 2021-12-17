@@ -3,13 +3,16 @@ package com.hcmus.group14.moneytor.ui.main;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hcmus.group14.moneytor.R;
-import com.hcmus.group14.moneytor.data.model.Spending;
-import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
+import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
+import com.hcmus.group14.moneytor.ui.goal.GoalActivity;
+import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,12 +20,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SpendingViewModel viewModel = new ViewModelProvider(this).get(SpendingViewModel.class);
-        Spending spending = new Spending(1234, "Thanh", "no",
-                "no des", 12312312312L);
-        spending.setSpendingId(1);
-//        viewModel.insertSpending(spending);
-        viewModel.deleteSpending(spending);
     }
 
+    public void onOpenSpendingList(View view) {
+        Intent intent = new Intent(this, SpendingActivity.class);
+        startActivity(intent);
+    }
+
+    public void onOpenSpendingGoal(View view){
+        Intent intent = new Intent(this, ContactActivity.class);
+        startActivity(intent);
+    }
 }

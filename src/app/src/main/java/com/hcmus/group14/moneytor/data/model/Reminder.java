@@ -21,6 +21,7 @@ or should be 100 characters long or lower.
 
 @Entity(tableName = "reminder_table")
 public class Reminder implements Serializable {
+
     @PrimaryKey(autoGenerate = true)
     private int remID = 0;
     @ColumnInfo(name = "type") @NonNull

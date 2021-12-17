@@ -2,7 +2,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
->
+    >
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -14,40 +14,29 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
+            <TextView
+                android:drawablePadding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="30dp"
-                android:text="@string/analyze_btn"
-                android:background="@drawable/btn_radius_background"
-                android:id="@+id/analyzeBtn"
-                app:icon="@drawable/ic_analyze"
-                app:iconGravity="textStart"/>
+                android:padding="10dp"
+                android:focusable="false"
+                android:drawableStart="@drawable/ic_contact"
+                android:background="@drawable/contact_selected_background"
+                android:id="@+id/selectedContact"
+              />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/list_background_radius"
                 android:paddingTop="20dp"
-                android:id="@+id/spendingList"
-                android:paddingBottom="100dp"
+                android:id="@+id/contactList"
+                android:paddingBottom="20dp"
                 android:paddingHorizontal="10dp"/>
         </LinearLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/dark_grey"
-            android:contentDescription="@string/content_desc_spending"
-            app:borderWidth="0dp"
-            app:srcCompat="@android:drawable/ic_input_add"
-            app:tint="@color/light_grey" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

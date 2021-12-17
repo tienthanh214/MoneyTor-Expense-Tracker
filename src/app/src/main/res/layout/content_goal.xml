@@ -12,7 +12,7 @@
 
 
     <LinearLayout
-        android:id="@+id/categorySpendingItem"
+        android:id="@+id/categorySpendingGoalItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -21,50 +21,32 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/contentWrapperSpendingItem"
+        android:id="@+id/contentWrapperSpendingGoalItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/titleSpendingItem"
+            android:id="@+id/valueSpendingGoalItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/dateSpendingItem"
+            android:id="@+id/dateSpendingGoalItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textStyle="italic" />
 
         <TextView
-            android:id="@+id/descSpendingItem"
+            android:id="@+id/descSpendingGoalItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/valueSpendingColumn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/valueSpendingItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="textEnd"
-            android:textColor="@color/black"
-            android:textSize="13sp"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
 </LinearLayout>

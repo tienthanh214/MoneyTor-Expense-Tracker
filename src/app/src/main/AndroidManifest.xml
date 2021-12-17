@@ -14,12 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moneytor">
         <activity
+            android:name=".ui.contact.ContactActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.goal.AddGoalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.spending.AddSpendingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.goal.GoalActivity"
+            android:exported="true"
+            android:label="@string/title_spending_goal" />
+        <activity
             android:name=".ui.spending.SpendingActivity"
             android:exported="true"
-            android:label="@string/title_activity_spending"
-            android:theme="@style/Theme.Moneytor.NoActionBar">
-
-        </activity>
+            android:label="@string/title_activity_spending" />
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">

@@ -26,6 +26,7 @@ consists of:
  */
 @Entity(tableName = "debt_lend_table")
 public class DebtLend implements Serializable {
+
     @PrimaryKey(autoGenerate = true)
     private int recordId = 0;
 
