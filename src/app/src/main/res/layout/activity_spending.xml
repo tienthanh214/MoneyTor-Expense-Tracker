@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
->
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -15,25 +14,24 @@
             android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/analyzeBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="30dp"
-                android:text="@string/analyze_btn"
                 android:background="@drawable/btn_radius_background"
-                android:id="@+id/analyzeBtn"
+                android:text="@string/analyze_btn"
                 app:icon="@drawable/ic_analyze"
-                app:iconGravity="textStart"/>
+                app:iconGravity="textStart" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/spendingList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/list_background_radius"
-                android:paddingTop="20dp"
-                android:id="@+id/spendingList"
-                android:paddingBottom="100dp"
-                android:paddingHorizontal="10dp"/>
+                android:paddingHorizontal="10dp"
+                android:paddingTop="20dp" />
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

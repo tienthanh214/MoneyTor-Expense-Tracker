@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -33,6 +34,7 @@ import com.hcmus.group14.moneytor.ui.goal.AddGoalActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> {
 
@@ -42,6 +44,7 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
     private List<Spending> spendings;
     private SpendingAdapter spendingAdapter;
     private Context context;
+    private SearchView searchView;
 
     @Override
     public int getLayoutId() {
@@ -56,15 +59,15 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         // do what you want
         this.setTitle("List spending");
 
-        /*spendingViewModel = new ViewModelProvider(this).get(SpendingViewModel.class);
-        spendingViewModel.getAllRentals().observe(this, new Observer<List<Rental>>() {
+        spendingViewModel = new ViewModelProvider(this).get(SpendingViewModel.class);
+        spendingViewModel.getAllSpending().observe(this, new Observer<List<Spending>>() {
             @Override
-            public void onChanged(@Nullable final List<Spending> spendingList) {
-                spendings = spendingList;
-                SpendingAdapter.setRental(rentalsList);
+            public void onChanged(List<Spending> spendingList) {
+                spendings=spendingList;
+                spendingAdapter.setSpending(spendings);
             }
-        });*/
-        spendings = getData();
+        });
+        //spendings = getData();
         initializeViews();
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
@@ -97,11 +100,36 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         binding.spendingList.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    private List<Spending> filter(String text) {
+        List<Spending> filteredList = new ArrayList<>();
+        for (Spending item : spendings) {
+            if (item.getTitle().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        return filteredList;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.spending_menu, menu);
-        //MenuItem searchItem = menu.findItem(R.id.actionSearch);
-        return super.onCreateOptionsMenu(menu);
+        MenuItem searchItem = menu.findItem(R.id.actionSearch);
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                searchView.clearFocus();
+                spendingAdapter.filterList(filter(s));
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                spendingAdapter.filterList(filter(s));
+                return false;
+            }
+        });
+        return true;
     }
 }

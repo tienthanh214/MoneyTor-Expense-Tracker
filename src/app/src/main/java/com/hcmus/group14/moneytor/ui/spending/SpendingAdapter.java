@@ -44,7 +44,15 @@ public class SpendingAdapter extends RecyclerView.Adapter<SpendingAdapter.Spendi
         holder.setValue(currentSpending.getCost());
         holder.setDate(currentSpending.getDate());
     }
+    public void setSpending(List<Spending> spendingList){
+        spendings=spendingList;
+        notifyDataSetChanged();
+    }
 
+    public void filterList(List<Spending> filteredList){
+        spendings=filteredList;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {

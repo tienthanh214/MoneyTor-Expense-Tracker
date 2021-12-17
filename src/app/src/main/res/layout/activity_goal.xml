@@ -13,7 +13,7 @@
             android:layout_height="match_parent"
             android:background="@color/dark_green"
             android:paddingHorizontal="10dp"
-            android:paddingVertical="70dp"/>
+            android:paddingTop="20dp"/>
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
