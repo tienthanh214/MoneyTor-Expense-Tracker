@@ -1,11 +1,13 @@
 package com.hcmus.group14.moneytor.ui.goal;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +28,7 @@ import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
 import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.spending.AddSpendingActivity;
+import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,7 +48,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalSpendingBindin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_goal_spending);
+        binding = getViewDataBinding();
         viewModel = binding.getViewModel();
         this.setTitle("Spending goal");
         setSpinner();
@@ -56,15 +59,64 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalSpendingBindin
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionSave:
-                // insert spending
-                Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
+                saveGoal();
                 return true;
             case R.id.actionDelete:
-                // delete spending
-                Toast.makeText(getApplicationContext(), "Spending deleted", Toast.LENGTH_LONG).show();
+                deleteGoal();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveGoal() {
+        boolean check = checkValidGoal();
+        if (check){
+            Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Not a valid spending", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean checkValidGoal() {
+        EditText cost = binding.inputAmount;
+        //InputUtils errors = viewModel.saveGoal();
+        //if (errors.hasError()){
+        if (cost.length() == 0){
+            // if error type is cost
+            cost.setError("Amount of spending is required!");
+            // if error type is category
+            // cost.setError("Category of spending is required!");
+            return false;
+        }
+        return true;
+    }
+
+    private void deleteGoal() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Do you really want to delete?");
+        builder.setTitle("Alert!");
+        builder.setCancelable(false);
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // view model delete spending
+                Toast.makeText(getApplicationContext(), "Spending deleted",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override

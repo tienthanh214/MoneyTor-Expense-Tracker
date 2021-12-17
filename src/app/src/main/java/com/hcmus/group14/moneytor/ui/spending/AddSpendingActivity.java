@@ -1,12 +1,14 @@
 package com.hcmus.group14.moneytor.ui.spending;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -60,17 +62,63 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionSave:
-                // insert spending
-                InputUtils errors = viewModel.saveSpending();
-
-                Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
+                saveSpending();
                 return true;
             case R.id.actionDelete:
-                // delete spending
-                Toast.makeText(getApplicationContext(), "Spending deleted", Toast.LENGTH_LONG).show();
+                deleteSpending();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveSpending() {
+        boolean check = checkValidSpending();
+        if (check){
+            Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Not a valid spending", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean checkValidSpending() {
+        EditText cost = binding.inputAmount;
+        InputUtils errors = viewModel.saveSpending();
+        if (errors.hasError()){
+            // if error type is cost
+            cost.setError("Amount of spending is required!");
+            // if error type is category
+            // cost.setError("Category of spending is required!");
+            return false;
+        }
+        return true;
+    }
+
+    private void deleteSpending() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Do you really want to delete?");
+        builder.setTitle("Alert!");
+        builder.setCancelable(false);
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // view model delete spending
+                Toast.makeText(getApplicationContext(), "Spending deleted",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
