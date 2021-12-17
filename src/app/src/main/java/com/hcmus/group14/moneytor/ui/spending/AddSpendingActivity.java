@@ -45,7 +45,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_note_spending);
         viewModel = binding.getViewModel();
-
+        this.setTitle("Spending note");
         setSpinner();
         setDatePickerDialog();
     }

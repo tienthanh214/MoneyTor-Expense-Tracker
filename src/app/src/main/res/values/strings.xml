@@ -14,6 +14,8 @@
     <string name="menu_filter">Filter</string>
     <string name="menu_search">Search</string>
     <string name="menu_confirm">Confirm</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_save">Save</string>
 
     <!-- Button text -->
     <string name="analyze_btn">Tap to analyze</string>

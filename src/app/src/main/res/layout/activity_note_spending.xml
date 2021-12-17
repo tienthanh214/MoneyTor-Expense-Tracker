@@ -4,42 +4,55 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.hcmus.group14.moneytor.services.spending.SpendingViewModel" />
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/light_green">
 
-        <EditText
-            android:layout_width="250dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/input_amount"
-            android:background="@drawable/text_view_background"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:layout_gravity="center_horizontal"
-            android:text="Amount"
-            android:inputType="number"
-            android:paddingVertical="@dimen/text_padding_vertical"
-            android:gravity="center_horizontal"
-            android:textSize="@dimen/amount_size"/>
+            android:layout_centerHorizontal="true"
+            android:layout_margin="40dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_coin" />
+
+            <EditText
+                android:id="@+id/input_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:background="@drawable/text_view_background"
+                android:gravity="center_horizontal"
+                android:hint="Amount"
+                android:inputType="number"
+                android:paddingVertical="@dimen/text_padding_vertical"
+                android:textSize="@dimen/amount_size" />
+        </LinearLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/detail_view_background">
+            android:layout_centerVertical="true"
+            android:background="@drawable/detail_view_background"
+            android:padding="20dp">
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -50,7 +63,6 @@
                         android:id="@+id/textViewCategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_top_text"
                         android:layout_marginBottom="@dimen/margin_bottom_text"
                         android:text="Category"
                         android:textColor="@color/black"
@@ -62,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/text_view_background"
                         android:paddingVertical="@dimen/text_padding_vertical"
-                        android:paddingLeft="@dimen/text_padding_left" />
+                        android:paddingHorizontal="@dimen/text_padding_horizontal" />
 
                     <TextView
                         android:id="@+id/textViewDateTitle"
@@ -79,10 +91,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/text_view_background"
-                        android:paddingVertical="@dimen/text_padding_vertical"
-                        android:paddingLeft="@dimen/text_padding_left"
+                        android:drawableStart="@drawable/ic_calendar"
+                        android:drawablePadding="10dp"
                         android:focusable="false"
-                        android:hint="The date" />
+                        android:hint="The date"
+                        android:paddingVertical="@dimen/text_padding_vertical"
+                        android:paddingHorizontal="@dimen/text_padding_horizontal" />
 
                     <TextView
                         android:id="@+id/textViewTitle"
@@ -99,9 +113,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/text_view_background"
-                        android:paddingVertical="@dimen/text_padding_vertical"
-                        android:paddingLeft="@dimen/text_padding_left"
                         android:hint="Title"
+                        android:paddingVertical="@dimen/text_padding_vertical"
+                        android:paddingHorizontal="@dimen/text_padding_horizontal"
                         android:textSize="@dimen/text_size" />
 
                     <TextView
@@ -119,33 +133,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/text_view_background"
-                        android:paddingVertical="@dimen/text_padding_vertical"
-                        android:paddingLeft="@dimen/text_padding_left"
                         android:hint="Description"
+                        android:paddingVertical="@dimen/text_padding_vertical"
+                        android:paddingHorizontal="@dimen/text_padding_horizontal"
                         android:textSize="@dimen/text_size" />
 
-                    <TextView
-                        android:id="@+id/textViewShareWith"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_top_text"
-                        android:layout_marginBottom="@dimen/margin_bottom_text"
-                        android:text="Share with"
-                        android:textSize="@dimen/text_size"
-                        android:textColor="@color/black"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textViewSelectWho"
-                        android:background="@drawable/text_view_background"
-                        android:paddingLeft="@dimen/text_padding_left"
-                        android:paddingVertical="@dimen/text_padding_vertical"
-                        android:text="No one"
-                        android:focusable="false"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size"
-                        android:layout_marginBottom="@dimen/margin_bottom_text"/>
 
                 </LinearLayout>
 
@@ -153,6 +145,38 @@
 
         </RelativeLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/detail_view_background"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/textViewShareWith"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_text"
+                android:layout_marginBottom="@dimen/margin_bottom_text"
+                android:text="Share with"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size" />
+
+            <EditText
+                android:id="@+id/textViewSelectWho"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_bottom_text"
+                android:background="@drawable/text_view_background"
+                android:focusable="false"
+                android:paddingVertical="@dimen/text_padding_vertical"
+                android:paddingHorizontal="@dimen/text_padding_horizontal"
+                android:text="No one"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </layout>

@@ -47,7 +47,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalSpendingBindin
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_goal_spending);
         viewModel = binding.getViewModel();
-
+        this.setTitle("Spending goal");
         setSpinner();
         setDatePickerDialog();
     }
