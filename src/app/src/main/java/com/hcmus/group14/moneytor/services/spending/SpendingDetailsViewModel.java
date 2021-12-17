@@ -1,6 +1,7 @@
 package com.hcmus.group14.moneytor.services.spending;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -18,6 +19,7 @@ public class SpendingDetailsViewModel extends AppViewModel {
     public SpendingDetailsViewModel(@NonNull Application application) {
         super(application);
         _spending = new Spending();
+        spending = new MutableLiveData<>(_spending);
     }
 
     public SpendingDetailsViewModel(@NonNull Application application, int spendingId) {
@@ -28,6 +30,7 @@ public class SpendingDetailsViewModel extends AppViewModel {
         } else {
             _spending = new Spending();
         }
+        spending = new MutableLiveData<>(_spending);
     }
 
     public String getTitle() {
@@ -39,10 +42,14 @@ public class SpendingDetailsViewModel extends AppViewModel {
     }
 
     public String getCost() {
+        if (_spending.getCost() < 0)
+            return "0";
         return String.valueOf(_spending.getCost());
     }
 
     public String getDate() {
+        if (_spending.getDate() == -1)
+            return DateTimeUtils.getDate(DateTimeUtils.getCurrentTimeMillis());
         return DateTimeUtils.getDate(_spending.getDate());
     }
 
@@ -91,6 +98,7 @@ public class SpendingDetailsViewModel extends AppViewModel {
 
     // save spending, if input invalid return all errors
     public InputUtils saveSpending() {
+        Log.i("@@@ save", _spending.toString());
         InputUtils errors = new InputUtils();
         if (_spending.getCategory().isEmpty())
             errors.setError(InputUtils.Type.CATEGORY);
