@@ -34,6 +34,11 @@ public class SpendGoal implements Serializable {
     @ColumnInfo(name = "desc") @Nullable
     private String desc;
 
+    public SpendGoal()
+    {
+        this("", 0, 0L, "");
+    }
+
     public SpendGoal(@NonNull String category, int spendingCap,
                      long date, @Nullable String desc)
     {
