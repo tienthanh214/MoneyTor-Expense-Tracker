@@ -1,6 +1,25 @@
 <resources>
     <string name="app_name">Moneytor</string>
     <string name="title_activity_spending">SpendingActivity</string>
+    <string name="title_spending_goal">GoalActivity</string>
+
+    <string name="content_desc_spending">Add a spending</string>
+    <string name="content_desc_spending_goal">Add a spending goal</string>
+
+    <!-- Screen name -->
+    <string name="goal_title_activity">Spending goal</string>
+    <string name="spending_title_activity">Spending list</string>
+
+    <!-- Menu title -->
+    <string name="menu_filter">Filter</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_confirm">Confirm</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_save">Save</string>
+
+    <!-- Button text -->
+    <string name="analyze_btn">Tap to analyze</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -9,6 +28,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="bundle_goal_obj">bundleAlarmObj</string>
     <string name="arg_goal_obj">ArgAlarmObj</string>
     <string name="reminder_message">Creating habits is the key to financial success. We are here to remind you to take track down your spending regularly.</string>

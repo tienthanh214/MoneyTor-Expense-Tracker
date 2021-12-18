@@ -26,4 +26,6 @@ public interface ReminderDao {
     //Total data retrieval
     @Query("select * from reminder_table order by date desc")
     public LiveData<List<Reminder>> getAllReminders();
+    @Query("select * from reminder_table where remID = :id")
+    public Reminder[] getReminderByID(int id);
 }

@@ -3,6 +3,7 @@ package com.hcmus.group14.moneytor.data.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -22,6 +23,11 @@ public class Spending implements Serializable {
     String description;
     @ColumnInfo(name = "date")
     long date;
+
+    @Ignore
+    public Spending() {
+        this(-1, "", "", "", -1);
+    }
 
     public Spending(long cost, String title, String category, String description, long date) {
         this.cost = cost;

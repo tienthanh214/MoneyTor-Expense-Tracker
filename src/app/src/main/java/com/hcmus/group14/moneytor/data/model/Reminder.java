@@ -21,6 +21,7 @@ or should be 100 characters long or lower.
 
 @Entity(tableName = "reminder_table")
 public class Reminder implements Serializable {
+
     @PrimaryKey(autoGenerate = true)
     private int remID = 0;
     @ColumnInfo(name = "type") @NonNull
@@ -31,6 +32,11 @@ public class Reminder implements Serializable {
     private long date;      // used as the basis to when should the reminder starts
     @ColumnInfo(name = "desc") @Nullable
     private String desc;
+
+    public Reminder()
+    {
+        this("", "", 0L, "");
+    }
 
     public Reminder(@NonNull String type, @NonNull String when,
                     long date, @Nullable String desc)

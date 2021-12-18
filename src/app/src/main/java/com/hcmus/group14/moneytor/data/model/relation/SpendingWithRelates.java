@@ -1,5 +1,6 @@
 package com.hcmus.group14.moneytor.data.model.relation;
 
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Junction;
 import androidx.room.Relation;
@@ -18,6 +19,7 @@ public class SpendingWithRelates {
     )
     public List<Relate> relates;
 
+    @NonNull
     @Override
     public String toString() {
         return "SpendingWithRelates{" +
