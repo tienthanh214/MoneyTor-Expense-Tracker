@@ -1,16 +1,8 @@
 package com.hcmus.group14.moneytor.ui.spending;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
-
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,18 +14,18 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
+
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.databinding.ActivityNoteSpendingBinding;
-import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
 import com.hcmus.group14.moneytor.services.spending.SpendingDetailsViewModel;
-import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
-import com.hcmus.group14.moneytor.utils.InputUtils.Type;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -53,8 +45,15 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         super.onCreate(savedInstanceState);
         this.setTitle("Spending note");
         binding = getViewDataBinding();
-        // binding.setLifecycleOwner(this);
+
+        int spendingId = (int)getIntent().getIntExtra("spending_id", -1);
         viewModel = new ViewModelProvider(this).get(SpendingDetailsViewModel.class);
+        if (spendingId != -1) {
+            // if click on item list view, load full info of a spending
+            viewModel.getSpendingWithRelatesById(spendingId).observe(this, spending -> {
+                viewModel.uploadData(spending);
+            });
+        }
         binding.setViewModel(viewModel);
         setSpinner();
         setDatePickerDialog();
