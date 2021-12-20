@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <EditText
                 android:drawablePadding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -22,10 +22,12 @@
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="30dp"
                 android:padding="10dp"
+                android:inputType="textNoSuggestions"
                 android:focusable="false"
                 android:drawableStart="@drawable/ic_contact"
                 android:background="@drawable/contact_selected_background"
                 android:id="@+id/selectedContact"
+                android:singleLine="true"
               />
 
             <androidx.recyclerview.widget.RecyclerView

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onOpenSpendingGoal(View view){
-        Intent intent = new Intent(this, GoalActivity.class);
+        Intent intent = new Intent(this, ContactActivity.class);
         startActivity(intent);
     }
 }
