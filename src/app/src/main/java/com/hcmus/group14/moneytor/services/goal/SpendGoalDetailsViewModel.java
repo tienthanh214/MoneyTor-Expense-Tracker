@@ -51,33 +51,33 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
         return _description;
     }
 
-    public MutableLiveData<String> getAmount() {
-        return _amount;
-    }
-
-    public MutableLiveData<String> getDate() {
-        return _date;
-    }
-
-    public MutableLiveData<Integer> getCategory() {
-        return _category;
-    }
-
     public void setDescription(String title) {
         _description.setValue(title);
+    }
+
+    public MutableLiveData<String> getAmount() {
+        return _amount;
     }
 
     public void setAmount(long amount) {
         _amount.setValue(String.valueOf(amount));
     }
 
-    public void setCategory(String id) {
-        int position = CategoriesUtils.findPositionById(id);
-        _category.setValue(position);
+    public MutableLiveData<String> getDate() {
+        return _date;
     }
 
     public void setDate(long date) {
         _date.setValue(DateTimeUtils.getDate(date));
+    }
+
+    public MutableLiveData<Integer> getCategory() {
+        return _category;
+    }
+
+    public void setCategory(String id) {
+        int position = CategoriesUtils.findPositionById(id);
+        _category.setValue(position);
     }
 
     void updateData() {
@@ -104,12 +104,12 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
         if (errors.hasError())
             return errors;
         if (_goal.getGoalID() == 0) {
-            // TODO: schedule notification
-            Timestamp timestamp = new Timestamp(DateTimeUtils.getCurrentTimeMillis());
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             _goal.setGoalID(timestamp.hashCode());
             appRepository.insertSpendGoal(_goal);
         } else {
             appRepository.updateSpendGoal(_goal);
+            NotificationUtils.cancelGoalNotif(getApplication().getApplicationContext(), _goal);
         }
         setUpNotification();
         return errors;
@@ -119,11 +119,10 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
         if (_goal == null || _goal.getGoalID() == 0)
             return;
         appRepository.deleteSpendGoal(_goal);
-        NotificationUtils.cancelGoalNotif(getApplication(), _goal);
+        NotificationUtils.cancelGoalNotif(getApplication().getApplicationContext(), _goal);
     }
 
     private void setUpNotification() {
-        // TODO: (Binh) schedule notification here
-        NotificationUtils.scheduleGoalNotif(getApplication(), this._goal);
+        NotificationUtils.scheduleGoalNotif(getApplication().getApplicationContext(), _goal);
     }
 }

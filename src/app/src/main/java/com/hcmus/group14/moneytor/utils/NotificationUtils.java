@@ -21,7 +21,6 @@ public class NotificationUtils {
 
     public static void scheduleGoalNotif(Context context, SpendGoal goal) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
         Intent intent = new Intent(context, GoalBroadcastReceiver.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(context.getString(R.string.arg_goal_obj), goal);
@@ -33,18 +32,18 @@ public class NotificationUtils {
                 intent,
                 0);
         // Get the time that notification will be evoke from the set time
+        // TODO: change time here for demoing
         Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(goal.getDate());
-        // debug
-        calendar.setTimeInMillis(DateTimeUtils.getCurrentTimeMillis() + 1000 * 10);
-//        calendar.set(Calendar.HOUR_OF_DAY, 17);
-//        calendar.set(Calendar.MINUTE, 28);
+        calendar.setTimeInMillis(goal.getDate());
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
         Log.i("@@@", calendar.toString());
         // if alarm time has already passed, increment day by 1
-        if (goal.getDate() <= System.currentTimeMillis()) {
+        if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
             calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
         }
-        // Choose whether set notification everyday or one-time
+        // Set the notification
         try {
             alarmManager.setExact(
                     AlarmManager.RTC_WAKEUP,
@@ -54,7 +53,7 @@ public class NotificationUtils {
             String toastText = String.format(
                     "Spending goal reminder set %d scheduled at %d:%d:%d",
                     goal.getGoalID(),
-                    calendar.get(Calendar.HOUR),
+                    calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE),
                     calendar.get(Calendar.SECOND));
             Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
