@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_top_text"
                         android:layout_marginBottom="@dimen/margin_bottom_text"
-                        android:hint="Description"
+                        android:text="Description"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size" />
 

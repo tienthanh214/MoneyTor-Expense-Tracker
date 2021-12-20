@@ -1,16 +1,13 @@
-package com.hcmus.group14.moneytor.ui.spending;
+package com.hcmus.group14.moneytor.ui.debtlend;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,40 +19,35 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.hcmus.group14.moneytor.R;
-import com.hcmus.group14.moneytor.databinding.ActivityNoteSpendingBinding;
-import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
-import com.hcmus.group14.moneytor.services.spending.SpendingDetailsViewModel;
-import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
+import com.hcmus.group14.moneytor.databinding.ActivityDebtLendDetailsBinding;
+import com.hcmus.group14.moneytor.services.debtlend.DebtLendDetailsViewModel;
+import com.hcmus.group14.moneytor.services.goal.SpendGoalDetailsViewModel;
+import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
-import com.hcmus.group14.moneytor.utils.CategoriesUtils;
-import com.hcmus.group14.moneytor.utils.InputUtils;
-import com.hcmus.group14.moneytor.utils.InputUtils.Type;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBinding> implements AdapterView.OnItemSelectedListener {
+public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetailsBinding> implements AdapterView.OnItemSelectedListener {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityNoteSpendingBinding binding;
-    private SpendingDetailsViewModel viewModel;
+    private ActivityDebtLendDetailsBinding binding;
+    private DebtLendDetailsViewModel viewModel;
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_note_spending;
+        return R.layout.activity_debt_lend_details;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setTitle("Spending note");
         binding = getViewDataBinding();
-        // binding.setLifecycleOwner(this);
-        viewModel = new ViewModelProvider(this).get(SpendingDetailsViewModel.class);
-        binding.setViewModel(viewModel);
+        viewModel = new ViewModelProvider(this).get(DebtLendDetailsViewModel.class);
+        viewModel = binding.getViewModel();
+        this.setTitle("Manage debt and lend");
         setSpinner();
         setDatePickerDialog();
     }
@@ -64,17 +56,17 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionSave:
-                saveSpending();
+                save();
                 return true;
             case R.id.actionDelete:
-                deleteSpending();
+                delete();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveSpending() {
-        boolean check = checkValidSpending();
+    private void save() {
+        boolean check = checkValid();
         if (check){
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
         }
@@ -83,20 +75,21 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         }
     }
 
-    private boolean checkValidSpending() {
+    private boolean checkValid() {
         EditText cost = binding.inputAmount;
-        InputUtils errors = viewModel.saveSpending();
-        if (errors.hasError()){
-            if (errors.isValid(InputUtils.Type.COST))
-                cost.setError("Amount of spending is required!");
-            // if (errors.isValid(InputUtils.Type.CATEGORY))
+        //InputUtils errors = viewModel.saveGoal();
+        //if (errors.hasError()){
+        if (cost.length() == 0){
+            // if error type is cost
+            cost.setError("Amount of spending is required!");
+            // if error type is category
             // cost.setError("Category of spending is required!");
             return false;
         }
         return true;
     }
 
-    private void deleteSpending() {
+    private void delete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setMessage("Do you really want to delete?");
@@ -141,7 +134,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
                 int mMonth = c.get(Calendar.MONTH);
                 int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AddSpendingActivity.this,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddDebtLendActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year,
@@ -158,14 +151,13 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         Spinner spinner = binding.spinnerCategory;
 
         spinner.setOnItemSelectedListener(this);
-        /*
+
         List<String> categories = new ArrayList<String>();
         categories.add("cat1");
         categories.add("cat2");
         categories.add("cat3");
         categories.add("cat4");
-        */
-        List<String> categories = CategoriesUtils.getDefaultCategories();
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
