@@ -2,28 +2,46 @@ package com.hcmus.group14.moneytor.ui.contact;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.Relate;
+import com.hcmus.group14.moneytor.data.model.Spending;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
     private LayoutInflater layoutInflater;
     private List<Relate> contacts;
+    private List<Relate> selectedContacts;
+    private List<String> selectedString;
     private Context context;
+    private TextView selectedTextView;
 
-    public ContactAdapter(Context context, List<Relate> contactsList) {
+    public List<Relate> getSelectedContacts(){
+        return this.selectedContacts;
+    }
+
+    public ContactAdapter(Context context, List<Relate> contactsList, TextView selectedData) {
+        selectedTextView = selectedData;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.contacts = contactsList;
+        this.selectedContacts = new ArrayList<Relate>();
+        this.selectedString = new ArrayList<String>();
     }
 
     @NonNull
@@ -38,9 +56,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         Relate currentContact = contacts.get(position);
         holder.setPhone(currentContact.getTel());
-        holder.setName(currentContact.getName());
+        String name = currentContact.getName();
+        holder.setName(name);
+        if(selectedString.contains(name)){
+            holder.toggleDoneIcon(true);
+        }
+        else holder.toggleDoneIcon(false);
     }
 
+    public void filterList(List<Relate> filteredList) {
+        contacts = filteredList;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {
@@ -66,12 +93,30 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             this.adapter = adapter;
             this.nameView = itemView.findViewById(R.id.nameContactItem);
             this.phoneView = itemView.findViewById(R.id.phoneNumberContactItem);
+            itemView.setOnClickListener(this);
         }
 
+        void toggleDoneIcon(boolean isDone) {
+            if(isDone) nameView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
+            else  nameView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View v) {
-            Drawable img = context.getResources().getDrawable(R.drawable.ic_done);
-            ((TextView)(v.findViewById(R.id.nameContactItem))).setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+            int position = this.getAdapterPosition();
+            Relate currentContact = contacts.get(position);
+            String currentName = currentContact.getName();
+            if (selectedString.contains(currentName)) {
+                selectedContacts.remove(currentContact);
+                selectedString.remove(currentName);
+                toggleDoneIcon(false);
+            } else {
+                selectedContacts.add(currentContact);
+                selectedString.add(currentName);
+                toggleDoneIcon(true);
+            }
+            selectedTextView.setText(String.join(", ", selectedString));
         }
     }
 }
