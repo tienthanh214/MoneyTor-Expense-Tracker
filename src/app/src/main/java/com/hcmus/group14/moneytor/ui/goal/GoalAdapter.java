@@ -45,6 +45,11 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
         holder.setDate(currentSpendingGoal.getDate());
     }
 
+    public void filterList(List<SpendGoal> filteredList){
+        goals=filteredList;
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {

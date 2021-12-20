@@ -67,7 +67,6 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
                 spendingAdapter.setSpending(spendings);
             }
         });
-        //spendings = getData();
         initializeViews();
 
         binding.fab.setOnClickListener(new View.OnClickListener() {

@@ -1,16 +1,13 @@
 package com.hcmus.group14.moneytor.ui.main;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmus.group14.moneytor.R;
-import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
+import com.hcmus.group14.moneytor.ui.debtlend.DebtLendActivity;
 import com.hcmus.group14.moneytor.ui.goal.GoalActivity;
 import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
 
@@ -28,7 +25,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onOpenSpendingGoal(View view){
-        Intent intent = new Intent(this, ContactActivity.class);
+        Intent intent = new Intent(this, GoalActivity.class);
+        startActivity(intent);
+    }
+
+    public void opOpenDebtLend(View view){
+        Intent intent = new Intent(this, DebtLendActivity.class);
         startActivity(intent);
     }
 }

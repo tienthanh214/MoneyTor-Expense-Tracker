@@ -8,11 +8,14 @@ import com.google.android.material.snackbar.Snackbar;
 
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.hcmus.group14.moneytor.data.model.DebtLend;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
 import com.hcmus.group14.moneytor.databinding.ActivityGoalBinding;
 import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
@@ -33,6 +36,7 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
     private List<SpendGoal> spendGoals;
     private GoalAdapter goalAdapter;
     private Context context;
+    private SearchView searchView;
 
     @Override
     public int getLayoutId() {
@@ -47,14 +51,6 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
 
         this.setTitle("Spending goal");
 
-        /*spendingViewModel = new ViewModelProvider(this).get(SpendingViewModel.class);
-        spendingViewModel.getAllRentals().observe(this, new Observer<List<Rental>>() {
-            @Override
-            public void onChanged(@Nullable final List<Spending> spendingList) {
-                spendings = spendingList;
-                SpendingAdapter.setRental(rentalsList);
-            }
-        });*/
         spendGoals = getData();
         initializeViews();
 
@@ -89,11 +85,36 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
         binding.spendingGoalList.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    private List<SpendGoal> filter(String text) {
+        List<SpendGoal> filteredList = new ArrayList<>();
+        for (SpendGoal item : spendGoals) {
+            if (item.getDesc().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        return filteredList;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.spending_menu, menu);
-        //MenuItem searchItem = menu.findItem(R.id.actionSearch);
-        return super.onCreateOptionsMenu(menu);
+        MenuItem searchItem = menu.findItem(R.id.actionSearch);
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                searchView.clearFocus();
+                goalAdapter.filterList(filter(s));
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                goalAdapter.filterList(filter(s));
+                return false;
+            }
+        });
+        return true;
     }
 }
