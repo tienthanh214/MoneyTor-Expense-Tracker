@@ -2,8 +2,7 @@ package com.hcmus.group14.moneytor.ui.goal;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import android.app.DatePickerDialog;
@@ -21,34 +20,30 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.hcmus.group14.moneytor.R;
-import com.hcmus.group14.moneytor.databinding.ActivityGoalSpendingBinding;
-import com.hcmus.group14.moneytor.databinding.ActivityNoteSpendingBinding;
-import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
-import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
-import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
+import com.hcmus.group14.moneytor.databinding.ActivityGoalDetailsBinding;
+import com.hcmus.group14.moneytor.services.goal.SpendGoalDetailsViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
-import com.hcmus.group14.moneytor.ui.spending.AddSpendingActivity;
-import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AddGoalActivity extends NoteBaseActivity<ActivityGoalSpendingBinding> implements AdapterView.OnItemSelectedListener {
+public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding> implements AdapterView.OnItemSelectedListener {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityGoalSpendingBinding binding;
-    private SpendGoalViewModel viewModel;
+    private ActivityGoalDetailsBinding binding;
+    private SpendGoalDetailsViewModel viewModel;
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_goal_spending;
+        return R.layout.activity_goal_details;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
+        viewModel = new ViewModelProvider(this).get(SpendGoalDetailsViewModel.class);
         viewModel = binding.getViewModel();
         this.setTitle("Spending goal");
         setSpinner();
