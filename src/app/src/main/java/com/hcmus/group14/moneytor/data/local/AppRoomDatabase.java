@@ -89,7 +89,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                             new Spending(10000000, "Hello 7", "Study", "say to show", 141));
 
                     Relate r1 = new Relate("NDTT", "123123123");
-                    Relate r2 = new Relate("hauhau", "000012111");
+                    Relate r2 = new Relate("uyen", "000012111");
                     Relate r3 = new Relate("binh", "123321123");
 
 

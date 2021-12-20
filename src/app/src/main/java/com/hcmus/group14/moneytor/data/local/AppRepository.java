@@ -44,7 +44,7 @@ public class AppRepository {
     }
 
     // -------------- spending note --------------
-    public SpendingWithRelates[] getSpendingWithRelatesById(int id) {
+    public LiveData<List<SpendingWithRelates>> getSpendingWithRelatesById(int id) {
         return spendingDao.getSpendingWithRelatesById(id);
     }
 
@@ -146,8 +146,11 @@ public class AppRepository {
     public void deleteSpendGoal(SpendGoal spendGoal) {
         AppRoomDatabase.databaseWriteExecutor.execute(()->spendGoalDao.deleteSpendGoal(spendGoal));
     }
+    public void updateSpendGoal(SpendGoal spendGoal) {
+        AppRoomDatabase.databaseWriteExecutor.execute(()->spendGoalDao.update(spendGoal));
+    }
     //---------------------Debt Lend------------------
-    public SpendGoal[] getSpendGoalById(int id)
+    public LiveData<List<SpendGoal>> getSpendGoalById(int id)
     {
         return spendGoalDao.getSpendGoalByID(id);
     }

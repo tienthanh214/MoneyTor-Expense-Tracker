@@ -1,71 +1,101 @@
 package com.hcmus.group14.moneytor.services.goal;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.hcmus.group14.moneytor.data.local.AppViewModel;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
+import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
+import com.hcmus.group14.moneytor.utils.NotificationUtils;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 public class SpendGoalDetailsViewModel extends AppViewModel {
-    public MutableLiveData<SpendGoal> goal;
-    private final SpendGoal _goal;
+    final MutableLiveData<String> _amount;
+    final MutableLiveData<Integer> _category;
+    final MutableLiveData<String> _date;
+    final MutableLiveData<String> _description;
+
+    private SpendGoal _goal;
 
     public SpendGoalDetailsViewModel(@NonNull Application application) {
         super(application);
-        _goal = new SpendGoal("", 0, DateTimeUtils.getCurrentTimeMillis(), "");
-        goal = new MutableLiveData<>(_goal);
+        _amount = new MutableLiveData<>("");
+        _category = new MutableLiveData<>(0);
+        _date = new MutableLiveData<>(DateTimeUtils.getDate(-1));
+        _description = new MutableLiveData<>("");
     }
 
-    public String getDescription() {
-        return _goal.getDesc();
+    public LiveData<List<SpendGoal>> getSpendGoalById(int goalId) {
+        return appRepository.getSpendGoalById(goalId);
     }
 
-    public String getDate() {
-        return DateTimeUtils.getDate(_goal.getDate());
-    }
-
-    public String getCategory() {
-        return _goal.getCategory();
-    }
-
-    public String getAmount() {
-        return String.valueOf(_goal.getSpendingCap());
-    }
-
-    public void setDescription(String desc) {
-        if (!desc.equals(_goal.getDesc())) {
-            _goal.setDesc(desc);
-            goal.setValue(_goal);
+    public void uploadData(List<SpendGoal> goalList) {
+        if (goalList.size() > 0) {
+            _goal = goalList.get(0);
+            setAmount(_goal.getSpendingCap());
+            setCategory(_goal.getCategory());
+            setDescription(_goal.getDesc());
+            setDate(_goal.getDate());
         }
     }
 
-    public void setDate(String date) {
-        long millis = DateTimeUtils.getDateInMillis(date);
-        if (millis != _goal.getDate()) {
-            _goal.setDate(millis);
-            goal.setValue(_goal);
-        }
+    public MutableLiveData<String> getDescription() {
+        return _description;
     }
 
-    public void setCategory(String category) {
-
+    public MutableLiveData<String> getAmount() {
+        return _amount;
     }
 
-    public void setAmount(String amount) {
-        long value = -1;
-        if (!amount.isEmpty())
-            value = Long.parseLong(amount);
-        if (value != _goal.getSpendingCap()) {
-            _goal.setSpendingCap(value);
-            goal.setValue(_goal);
+    public MutableLiveData<String> getDate() {
+        return _date;
+    }
+
+    public MutableLiveData<Integer> getCategory() {
+        return _category;
+    }
+
+    public void setDescription(String title) {
+        _description.setValue(title);
+    }
+
+    public void setAmount(long amount) {
+        _amount.setValue(String.valueOf(amount));
+    }
+
+    public void setCategory(String id) {
+        int position = CategoriesUtils.findPositionById(id);
+        _category.setValue(position);
+    }
+
+    public void setDate(long date) {
+        _date.setValue(DateTimeUtils.getDate(date));
+    }
+
+    void updateData() {
+        if (_goal == null)
+            _goal = new SpendGoal();
+        _goal.setDesc(_description.getValue());
+        _goal.setDate(DateTimeUtils.getDateInMillis(_date.getValue()));
+        _goal.setCategory(CategoriesUtils.getCategoryIdByPosition(_category.getValue()));
+        if (_amount.getValue() != null && !_amount.getValue().isEmpty()) {
+            _goal.setSpendingCap(Long.parseLong(_amount.getValue()));
+        } else {
+            _goal.setSpendingCap(0);
         }
     }
 
     public InputUtils saveSpending() {
+        updateData();
+        Log.i("@@@ goal", _goal.toString());
         InputUtils errors = new InputUtils();
         if (_goal.getCategory().isEmpty())
             errors.setError(InputUtils.Type.CATEGORY);
@@ -73,16 +103,27 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
             errors.setError(InputUtils.Type.COST);
         if (errors.hasError())
             return errors;
-        appRepository.insertSpendGoal(_goal);
+        if (_goal.getGoalID() == 0) {
+            // TODO: schedule notification
+            Timestamp timestamp = new Timestamp(DateTimeUtils.getCurrentTimeMillis());
+            _goal.setGoalID(timestamp.hashCode());
+            appRepository.insertSpendGoal(_goal);
+        } else {
+            appRepository.updateSpendGoal(_goal);
+        }
         setUpNotification();
         return errors;
     }
 
     public void deleteGoal() {
+        if (_goal == null || _goal.getGoalID() == 0)
+            return;
         appRepository.deleteSpendGoal(_goal);
+        NotificationUtils.cancelGoalNotif(getApplication(), _goal);
     }
 
     private void setUpNotification() {
-        // TODO: schedule notification here
+        // TODO: (Binh) schedule notification here
+        NotificationUtils.scheduleGoalNotif(getApplication(), this._goal);
     }
 }

@@ -27,6 +27,6 @@ public interface SpendGoalDao {
     //Total data retrieval
     @Query("select * from spend_goal_table order by date desc")
     public LiveData<List<SpendGoal>> getAllSpendGoals();
-    @Query("select * from spend_goal_table where goalID = :id")
-    public SpendGoal[] getSpendGoalByID(int id);
+    @Query("select * from spend_goal_table where goalID = :id LIMIT 1")
+    public LiveData<List<SpendGoal>> getSpendGoalByID(int id);
 }

@@ -13,6 +13,8 @@ public class DateTimeUtils {
     final private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
     public static String getDate(long time) {
+        if (time < 0)
+            return DATE_FORMAT.format(getCurrentTimeMillis());
         return DATE_FORMAT.format(time);
     }
 

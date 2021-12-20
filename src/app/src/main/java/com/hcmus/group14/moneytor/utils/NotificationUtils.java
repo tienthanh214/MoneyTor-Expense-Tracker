@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.hcmus.group14.moneytor.R;
@@ -33,7 +34,12 @@ public class NotificationUtils {
                 0);
         // Get the time that notification will be evoke from the set time
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(goal.getDate());
+//        calendar.setTimeInMillis(goal.getDate());
+        // debug
+        calendar.setTimeInMillis(DateTimeUtils.getCurrentTimeMillis() + 1000 * 10);
+//        calendar.set(Calendar.HOUR_OF_DAY, 17);
+//        calendar.set(Calendar.MINUTE, 28);
+        Log.i("@@@", calendar.toString());
         // if alarm time has already passed, increment day by 1
         if (goal.getDate() <= System.currentTimeMillis()) {
             calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);

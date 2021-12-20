@@ -1,6 +1,8 @@
 package com.hcmus.group14.moneytor.ui.spending;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.Spending;
+import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -61,11 +64,11 @@ public class SpendingAdapter extends RecyclerView.Adapter<SpendingAdapter.Spendi
     }
 
     public class SpendingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private SpendingAdapter adapter;
-        private TextView titleView;
-        private TextView descView;
-        private TextView dateView;
-        private TextView valueView;
+        final private SpendingAdapter adapter;
+        final private TextView titleView;
+        final private TextView descView;
+        final private TextView dateView;
+        final private TextView valueView;
 
         public void setTitle(String title) {
             titleView.setText(title);
@@ -76,9 +79,7 @@ public class SpendingAdapter extends RecyclerView.Adapter<SpendingAdapter.Spendi
         }
 
         public void setDate(long date) {
-            Date temp = new Date(date);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            dateView.setText(dateFormat.format(temp));
+            dateView.setText(DateTimeUtils.getDate(date));
         }
 
         public void setValue(long value) {
@@ -92,11 +93,16 @@ public class SpendingAdapter extends RecyclerView.Adapter<SpendingAdapter.Spendi
             this.descView = itemView.findViewById(R.id.descSpendingItem);
             this.dateView = itemView.findViewById(R.id.dateSpendingItem);
             this.valueView = itemView.findViewById(R.id.valueSpendingItem);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             // open activity
+            int position = this.getAdapterPosition();
+            Intent intent = new Intent(context, AddSpendingActivity.class);
+            intent.putExtra("spending_id", spendings.get(position).getSpendingId());
+            context.startActivity(intent);
         }
     }
 }

@@ -45,8 +45,8 @@ public abstract class SpendingDao {
     public abstract LiveData<List<SpendingWithRelates>> getAllSpendingWithRelates();
 
     @Transaction
-    @Query("SELECT * FROM spending_table WHERE spending_id = :id")
-    public abstract SpendingWithRelates[] getSpendingWithRelatesById(int id);
+    @Query("SELECT * FROM spending_table WHERE spending_id = :id LIMIT 1")
+    public abstract LiveData<List<SpendingWithRelates>> getSpendingWithRelatesById(int id);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract void insertSpendingRelateCrossRef(SpendingRelateCrossRef crossRef);
@@ -67,6 +67,8 @@ public abstract class SpendingDao {
     public void insertSpendingWithRelates(Spending spending, List<Relate> relates) {
         final long spendingId = insertSpending(spending);
         if (spendingId == -1) return;
+        if (relates == null) return;
+        // insert all relates
         for (Relate relate : relates) {
             long relateId = insertRelate(relate);
             // if exists relate = -1, query to get relate index
@@ -80,18 +82,22 @@ public abstract class SpendingDao {
     }
     @Transaction
     public void updateSpendingWithRelates(Spending spending, List<Relate> olds, List<Relate> news) {
-        for (Relate relate : olds) {
-            deleteSpendingRelateCrossRef(new SpendingRelateCrossRef(spending.getSpendingId(), relate.getRelateId()));
+        updateSpending(spending);
+        if (olds != null) {
+            for (Relate relate : olds) {
+                deleteSpendingRelateCrossRef(new SpendingRelateCrossRef(spending.getSpendingId(), relate.getRelateId()));
+            }
         }
-        for (Relate relate : news) {
-            long relateId = insertRelate(relate);
-            insertSpendingRelateCrossRef(new SpendingRelateCrossRef(spending.getSpendingId(), (int)relateId));
+        if (news != null) {
+            for (Relate relate : news) {
+                long relateId = insertRelate(relate);
+                insertSpendingRelateCrossRef(new SpendingRelateCrossRef(spending.getSpendingId(), (int) relateId));
+            }
         }
     }
 
     @Transaction
     public void deleteSpendingWithRelatesById(int id) {
-        Log.i("@@@ delete", id + " ");
         deleteSpendingById(id);
         deleteRelateBySpendingId(id);
     }

@@ -36,7 +36,9 @@ public class CategoriesUtils {
         return -1;
     }
 
-    public static String getCategoryIdByPosition(int position) {
+    public static String getCategoryIdByPosition(Integer position) {
+        if (position == null)
+            return categories.get(0).getId();
         return categories.get(position).getId();
     }
 }
