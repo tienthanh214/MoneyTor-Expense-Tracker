@@ -118,6 +118,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/text_view_background"
                             android:hint="Target"
+                            android:focusable="false"
                             android:paddingVertical="@dimen/text_padding_vertical"
                             android:paddingLeft="@dimen/text_padding_horizontal"
                             android:textSize="@dimen/text_size" />

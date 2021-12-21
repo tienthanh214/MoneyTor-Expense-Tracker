@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -43,6 +44,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     private AppBarConfiguration appBarConfiguration;
     private ActivityNoteSpendingBinding binding;
     private SpendingDetailsViewModel viewModel;
+    private final int REQUEST_CODE_RELATE_CONTACT = 1234;
 
     @Override
     public int getLayoutId() {
@@ -71,23 +73,20 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this, ContactActivity.class);
-        mLauncher.launch(intent);
+        startActivityForResult(intent, REQUEST_CODE_RELATE_CONTACT);
     }
 
-    ActivityResultLauncher<Intent> mLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent intent = result.getData();
-                        Bundle bundle = intent.getExtras();
-                        List<Relate> selectedContacts = (List<Relate>) bundle.getSerializable("contacts");
-                        viewModel.setRelates(selectedContacts);
-                        // set text
-                    }
-                }
-            });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE_RELATE_CONTACT){
+            if (resultCode == RESULT_OK){
+                Bundle bundle = data.getExtras();
+                List<Relate> selectedContacts = (List<Relate>) bundle.getSerializable("contacts");
+                viewModel.setRelates(selectedContacts);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
