@@ -194,12 +194,16 @@ public class AppRepository {
     {
         return debtLendDao.getDebtLendByID(id);
     }
-    public List<DebtLendAndRelate> getAllDebtLendAndRelate()
+    public LiveData<List<DebtLendAndRelate>> getAllDebtLendAndRelate()
     {
         return debtLendDao.getAllDebtLendAndRelate();
     }
-    public DebtLendAndRelate getDebtLendAndRelateById(int id)
+    public LiveData<List<DebtLendAndRelate>> getDebtLendAndRelateById(int id)
     {
-        return debtLendDao.getDebtLendAndRelateById(id).get(0);
+        return debtLendDao.getDebtLendAndRelateById(id);
+    }
+    public void updateDebtLend(DebtLend debtLend)
+    {
+        AppRoomDatabase.databaseWriteExecutor.execute(()->debtLendDao.update(debtLend));
     }
 }

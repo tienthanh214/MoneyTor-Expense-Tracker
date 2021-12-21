@@ -36,7 +36,7 @@ public interface DebtLendDao {
     public DebtLend[] getDebtLendByID(int id);
     //Cross reference data retrieval
     @Transaction @Query("select * from debt_lend_table")
-    public List<DebtLendAndRelate> getAllDebtLendAndRelate();
+    public LiveData<List<DebtLendAndRelate>> getAllDebtLendAndRelate();
     @Transaction @Query("select * from debt_lend_table where recordId = :id")
-    public List<DebtLendAndRelate> getDebtLendAndRelateById(int id);
+    public LiveData<List<DebtLendAndRelate>> getDebtLendAndRelateById(int id);
 }
