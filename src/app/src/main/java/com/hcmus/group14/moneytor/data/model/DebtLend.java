@@ -43,6 +43,11 @@ public class DebtLend implements Serializable {
     @ColumnInfo(name = "desc") @Nullable
     private String desc;
 
+    public DebtLend()
+    {
+        this("", 0, 0, 0, 0L, "");
+    }
+
     public DebtLend(@Nullable String category, int value, int target,
                     int debt, long date, @Nullable String desc)
     {

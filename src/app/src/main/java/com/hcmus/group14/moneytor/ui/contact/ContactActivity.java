@@ -119,7 +119,6 @@ public class ContactActivity extends NoteBaseActivity<ActivityContactBinding> {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("contacts", (Serializable) selectedContacts);
                 replyIntent.putExtras(bundle);
-                //replyIntent.putExtra("Selected", (Serializable) selectedContacts);
                 setResult(RESULT_OK, replyIntent);
                 finish();
                 return true;

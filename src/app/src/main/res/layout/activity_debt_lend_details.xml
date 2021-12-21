@@ -41,6 +41,7 @@
                     android:inputType="number"
                     android:paddingVertical="@dimen/text_padding_vertical"
                     android:hint="Amount"
+                    android:text="@={viewModel.value}"
                     android:textSize="@dimen/amount_size" />
             </LinearLayout>
 
@@ -77,9 +78,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/text_view_background"
-                            android:drawableStart="@drawable/ic_question_mark"
-                            android:paddingVertical="@dimen/text_padding_vertical"
-                            android:paddingLeft="@dimen/text_padding_horizontal" />
+                            android:drawableStart="@drawable/ic_question_mark"/>
 
                         <TextView
                             android:id="@+id/textViewDateTitle"
@@ -101,7 +100,7 @@
                             android:focusable="false"
                             android:paddingVertical="@dimen/text_padding_vertical"
                             android:paddingLeft="@dimen/text_padding_horizontal"
-                            android:text="The date" />
+                            android:text="@={viewModel.date}" />
 
                         <TextView
                             android:id="@+id/textViewTarget"
@@ -139,6 +138,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/text_view_background"
                             android:hint="Description"
+                            android:text="@={viewModel.desc}"
                             android:paddingVertical="@dimen/text_padding_vertical"
                             android:paddingLeft="@dimen/text_padding_horizontal"
                             android:textSize="@dimen/text_size" />

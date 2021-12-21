@@ -18,6 +18,8 @@ public abstract class NoteBaseActivity<T extends ViewDataBinding> extends AppCom
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
+        viewDataBinding.setLifecycleOwner(this);
+        viewDataBinding.executePendingBindings();
     }
 
     protected T getViewDataBinding() {

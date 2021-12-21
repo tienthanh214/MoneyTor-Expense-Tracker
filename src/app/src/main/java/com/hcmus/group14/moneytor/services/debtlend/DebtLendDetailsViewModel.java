@@ -1,42 +1,52 @@
 package com.hcmus.group14.moneytor.services.debtlend;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.hcmus.group14.moneytor.data.local.AppViewModel;
+import com.hcmus.group14.moneytor.utils.DateTimeUtils;
+import com.hcmus.group14.moneytor.utils.InputUtils;
 import com.hcmus.group14.moneytor.data.model.DebtLend;
 
-public class DebtLendDetailsViewModel extends AndroidViewModel {
+public class DebtLendDetailsViewModel extends AppViewModel {
     private MutableLiveData<DebtLend> debtLend;
     private DebtLend _debtLend;
 
     public DebtLendDetailsViewModel(@NonNull Application application) {
         super(application);
+        _debtLend = new DebtLend();
+        debtLend = new MutableLiveData<>(_debtLend);
+    }
+    public DebtLendDetailsViewModel(@NonNull Application application, int recordId)
+    {
+        super(application);
+        DebtLend[] list = appRepository.getDebtLendById(recordId);
+        _debtLend = list.length > 0? list[0] : new DebtLend();
+        debtLend = new MutableLiveData<>(_debtLend);
     }
 
     //gets
-    public int getRecordId() {
-        return _debtLend.getRecordId();
-    }
-
     public @Nullable
     String getCategory() {
         return _debtLend.getCategory();
     }
 
-    public int getValue() {
-        return _debtLend.getValue();
+    public String getValue() {
+        return String.valueOf(_debtLend.getValue());
     }
 
-    public int getDebt() {
-        return _debtLend.getDebt();
+    public String getDebt() {
+        return _debtLend.getDebt() == 1 ? "Debt" : "Lend";
     }
 
-    public long getDate() {
-        return _debtLend.getDate();
+    public String getDate() {
+        if (_debtLend.getDate() == -1)
+            return DateTimeUtils.getDate(DateTimeUtils.getCurrentTimeMillis());
+        return DateTimeUtils.getDate(_debtLend.getDate());
     }
 
     public int getTarget() {
@@ -55,22 +65,25 @@ public class DebtLendDetailsViewModel extends AndroidViewModel {
         debtLend.setValue(_debtLend);
     }
 
-    public void setValue(int value) {
-        if (_debtLend.getValue() == value) return;
-        _debtLend.setValue(value);
+    public void setValue(String value) {
+        if (value.isEmpty()) return;
+        if (_debtLend.getValue() == Integer.parseInt(value)) return;
+        _debtLend.setValue(Integer.parseInt(value));
         debtLend.setValue(_debtLend);
     }
 
-    public void setDebt(int debt) {
-        if (_debtLend.getDebt() == debt) return;
-        _debtLend.setDebt(debt);
+    public void setDebt(String debt) {
+        if (_debtLend.getDebt() == Integer.parseInt(debt)) return;
+        _debtLend.setDebt(Integer.parseInt(debt));
         debtLend.setValue(_debtLend);
     }
 
-    public void setDate(long date) {
-        if (_debtLend.getDate() == date) return;
-        _debtLend.setDate(date);
-        debtLend.setValue(_debtLend);
+    public void setDate(String date) {
+        long millis = DateTimeUtils.getDateInMillis(date);
+        if (millis != _debtLend.getDate()) {
+            _debtLend.setDate(millis);
+            debtLend.setValue(_debtLend);
+        }
     }
 
     public void setTarget(int target) {
@@ -85,8 +98,20 @@ public class DebtLendDetailsViewModel extends AndroidViewModel {
         debtLend.setValue(_debtLend);
     }
 
-    public void insertDebtLend(@NonNull DebtLendViewModel debtLendViewModel)
+    public InputUtils saveDebtLend()
     {
-        debtLendViewModel.insertDebtLend(debtLend.getValue());
+        Log.i("@@@ saved", "Debt/lend record");
+        InputUtils errors = new InputUtils();
+        if (_debtLend.getCategory().isEmpty())
+            errors.setError(InputUtils.Type.CATEGORY);
+        if (_debtLend.getValue() == -1)
+            errors.setError(InputUtils.Type.COST);
+        if (errors.hasError())
+            return errors;
+        if (_debtLend.getDate() == -1) {
+            _debtLend.setDate(DateTimeUtils.getCurrentTimeMillis());
+        }
+        appRepository.insertDebtLend(debtLend.getValue());
+        return errors;
     }
 }

@@ -28,4 +28,6 @@ public interface DebtLendDao {
     public LiveData<List<DebtLend>> getAllDebtLends();
     @Query("select * from debt_lend_table where category = :category order by date desc")
     public LiveData<List<DebtLend>> getDebtLends(String category);
+    @Query("select * from debt_lend_table where recordId = :id")
+    public DebtLend[] getDebtLendByID(int id);
 }

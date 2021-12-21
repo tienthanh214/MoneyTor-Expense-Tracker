@@ -32,6 +32,7 @@
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/menu/contact_menu.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/menu/spending_menu.xml" value="0.1" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/btn_radius_background.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/category_icon_background.xml" value="0.2203125" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_baseline_directions_run_24.xml" value="0.2203125" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_appliances.xml" value="0.2203125" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_bills.xml" value="0.2203125" />
@@ -50,6 +51,7 @@
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal_details.xml" value="0.20416666666666666" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal_spending.xml" value="0.22" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_note_spending.xml" value="0.20416666666666666" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/category_item.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

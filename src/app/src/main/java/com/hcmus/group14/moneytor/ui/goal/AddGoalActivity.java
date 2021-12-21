@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,9 +21,12 @@ import android.widget.Toast;
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.databinding.ActivityGoalDetailsBinding;
 import com.hcmus.group14.moneytor.services.goal.SpendGoalDetailsViewModel;
+import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
+import com.hcmus.group14.moneytor.utils.CategoryAdapter;
+import com.hcmus.group14.moneytor.utils.CategoriesUtils;
+import com.hcmus.group14.moneytor.utils.InputUtils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -42,10 +44,19 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTitle("Spending goal");
         binding = getViewDataBinding();
         viewModel = new ViewModelProvider(this).get(SpendGoalDetailsViewModel.class);
-        viewModel = binding.getViewModel();
-        this.setTitle("Spending goal");
+        binding.setViewModel(viewModel);
+
+        int goalId = (int)getIntent().getIntExtra("goal_id", -1);
+        if (goalId != -1) {
+            // if click on item list view, load full info of a goal
+            viewModel.getSpendGoalById(goalId).observe(this, goal -> {
+                viewModel.uploadData(goal);
+            });
+        }
+
         setSpinner();
         setDatePickerDialog();
     }
@@ -64,6 +75,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
     }
 
     private void saveGoal() {
+        InputUtils error = viewModel.saveSpending();
         boolean check = checkValidGoal();
         if (check){
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
@@ -147,20 +159,14 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
 
     private void setSpinner() {
         Spinner spinner = binding.spinnerCategory;
-
         spinner.setOnItemSelectedListener(this);
 
-        List<String> categories = new ArrayList<String>();
-        categories.add("cat1");
-        categories.add("cat2");
-        categories.add("cat3");
-        categories.add("cat4");
+        final List<Category> categories = CategoriesUtils.getDefaultCategories();
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this,
+                R.layout.category_item, categories);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(dataAdapter);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(categoryAdapter);
     }
 
 

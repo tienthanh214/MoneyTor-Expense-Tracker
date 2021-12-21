@@ -44,8 +44,9 @@
                     android:gravity="center_horizontal"
                     android:hint="Amount"
                     android:inputType="number"
+                    android:maxLength="18"
                     android:paddingVertical="@dimen/text_padding_vertical"
-                    android:text="@={viewModel.cost}"
+                    android:text='@={viewModel.cost}'
                     android:textSize="@dimen/amount_size" />
             </LinearLayout>
 
@@ -72,8 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/text_view_background"
-                    android:paddingHorizontal="@dimen/text_padding_horizontal"
-                    android:paddingVertical="@dimen/text_padding_vertical" />
+                    android:selectedItemPosition="@={viewModel.category}"/>
 
                 <TextView
                     android:id="@+id/textViewDateTitle"
@@ -172,7 +172,8 @@
                     android:focusable="false"
                     android:paddingHorizontal="@dimen/text_padding_horizontal"
                     android:paddingVertical="@dimen/text_padding_vertical"
-                    android:text="No one"
+                    android:hint="Tap to choose relate contacts"
+                    android:text="@{viewModel.relates}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size" />
             </LinearLayout>

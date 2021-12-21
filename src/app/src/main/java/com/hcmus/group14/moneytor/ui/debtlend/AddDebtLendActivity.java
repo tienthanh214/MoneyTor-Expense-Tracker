@@ -14,13 +14,11 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -30,13 +28,12 @@ import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.Relate;
 import com.hcmus.group14.moneytor.databinding.ActivityDebtLendDetailsBinding;
 import com.hcmus.group14.moneytor.services.debtlend.DebtLendDetailsViewModel;
-import com.hcmus.group14.moneytor.services.goal.SpendGoalDetailsViewModel;
-import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
+import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
-import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
+import com.hcmus.group14.moneytor.utils.CategoryAdapter;
+import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -186,20 +183,14 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
 
     private void setSpinner() {
         Spinner spinner = binding.spinnerCategory;
-
         spinner.setOnItemSelectedListener(this);
 
-        List<String> categories = new ArrayList<String>();
-        categories.add("cat1");
-        categories.add("cat2");
-        categories.add("cat3");
-        categories.add("cat4");
+        final List<Category> categories = CategoriesUtils.getDefaultCategories();
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this,
+                R.layout.category_item, categories);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(dataAdapter);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(categoryAdapter);
     }
 
 

@@ -44,7 +44,7 @@ public class AppRepository {
     }
 
     // -------------- spending note --------------
-    public SpendingWithRelates[] getSpendingWithRelatesById(int id) {
+    public LiveData<List<SpendingWithRelates>> getSpendingWithRelatesById(int id) {
         return spendingDao.getSpendingWithRelatesById(id);
     }
 
@@ -130,6 +130,10 @@ public class AppRepository {
     {
         AppRoomDatabase.databaseWriteExecutor.execute(()->reminderDao.insert(reminder));
     }
+    public Reminder[] getReminderById(int id)
+    {
+        return reminderDao.getReminderByID(id);
+    }
     //---------------------Spending goals------------------
     public LiveData<List<SpendGoal>> getAllSpendGoals()
     {
@@ -139,6 +143,18 @@ public class AppRepository {
     {
         AppRoomDatabase.databaseWriteExecutor.execute(()->spendGoalDao.insert(spendGoal));
     }
+    public void deleteSpendGoal(SpendGoal spendGoal) {
+        AppRoomDatabase.databaseWriteExecutor.execute(()->spendGoalDao.deleteSpendGoal(spendGoal));
+    }
+    public void updateSpendGoal(SpendGoal spendGoal) {
+        AppRoomDatabase.databaseWriteExecutor.execute(()->spendGoalDao.update(spendGoal));
+    }
+    //---------------------Debt Lend------------------
+    public LiveData<List<SpendGoal>> getSpendGoalById(int id)
+    {
+        return spendGoalDao.getSpendGoalByID(id);
+    }
+    //---------------------Debt/lends----------------------
     public LiveData<List<DebtLend>> getAllDebtLends()
     {
         return allDebtLends;
@@ -146,5 +162,9 @@ public class AppRepository {
     public void insertDebtLend(DebtLend debtLend)
     {
         AppRoomDatabase.databaseWriteExecutor.execute(()->debtLendDao.insert(debtLend));
+    }
+    public DebtLend[] getDebtLendById(int id)
+    {
+        return debtLendDao.getDebtLendByID(id);
     }
 }
