@@ -39,6 +39,9 @@ public abstract class SpendingDao {
     @Query("SELECT * FROM spending_table ORDER BY date")
     public abstract LiveData<List<Spending>> getAllSpending();
 
+    @Query("select * from spending_table where category in (:cats)")
+    public abstract List<Spending> getSpendingByCategories(List<String> cats);
+
     // for bill sharing
     @Transaction
     @Query("SELECT * FROM spending_table")

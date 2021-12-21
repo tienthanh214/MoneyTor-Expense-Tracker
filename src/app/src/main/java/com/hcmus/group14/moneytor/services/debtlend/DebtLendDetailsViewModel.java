@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.hcmus.group14.moneytor.data.local.AppViewModel;
+import com.hcmus.group14.moneytor.data.model.Relate;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 import com.hcmus.group14.moneytor.data.model.DebtLend;
@@ -49,8 +50,10 @@ public class DebtLendDetailsViewModel extends AppViewModel {
         return DateTimeUtils.getDate(_debtLend.getDate());
     }
 
-    public int getTarget() {
-        return _debtLend.getTarget();
+    public String getTarget() {
+        Relate relate = appRepository.getDebtLendAndRelateById(_debtLend.getRecordId())
+                .relate;
+        return relate.getName();
     }
 
     public @Nullable

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.hcmus.group14.moneytor.data.local.dao.*;
 import com.hcmus.group14.moneytor.data.model.*;
+import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingRelateCrossRef;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingWithRelates;
 
@@ -52,6 +53,11 @@ public class AppRepository {
         return allSpending;
     }
 
+    public List<Spending> getSpendingByCategories(List<String> cats)
+    {
+        return spendingDao.getSpendingByCategories(cats);
+    }
+
     public void insertSpending(Spending spending) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             spendingDao.insertSpending(spending);
@@ -63,6 +69,7 @@ public class AppRepository {
             spendingDao.insertAllSpendingRelateCrossRef(crossRefList);
         });
     }
+
 
     public void insertSpendingWithRelates(Spending spending, List<Relate> relates) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
@@ -115,6 +122,10 @@ public class AppRepository {
     }
 
     // -------------- Relate (share bill, debt target) --------------
+    public Relate getRelateById(int id)
+    {
+        return relateDao.getRelateById(id)[0];
+    }
     public void insertRelate(Relate relate) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             relateDao.insertRelate(relate);
@@ -149,7 +160,7 @@ public class AppRepository {
     public void updateSpendGoal(SpendGoal spendGoal) {
         AppRoomDatabase.databaseWriteExecutor.execute(()->spendGoalDao.update(spendGoal));
     }
-    //---------------------Debt Lend------------------
+    //---------------------Spending goals------------------
     public LiveData<List<SpendGoal>> getSpendGoalById(int id)
     {
         return spendGoalDao.getSpendGoalByID(id);
@@ -166,5 +177,13 @@ public class AppRepository {
     public DebtLend[] getDebtLendById(int id)
     {
         return debtLendDao.getDebtLendByID(id);
+    }
+    public List<DebtLendAndRelate> getAllDebtLendAndRelate()
+    {
+        return debtLendDao.getAllDebtLendAndRelate();
+    }
+    public DebtLendAndRelate getDebtLendAndRelateById(int id)
+    {
+        return debtLendDao.getDebtLendAndRelateById(id).get(0);
     }
 }
