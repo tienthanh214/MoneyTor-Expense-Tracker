@@ -2,9 +2,11 @@ package com.hcmus.group14.moneytor.services.analyze;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 
 
 import com.hcmus.group14.moneytor.data.local.AppViewModel;
+import com.hcmus.group14.moneytor.data.local.dao.SpendingDao;
 import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
@@ -15,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 //TODO: proper parameterization
-public class AnalyzeViewModel extends AppViewModel {
+public class AnalyzeViewModel extends AndroidViewModel {
     private List<Spending> allSpending;
 
     private static final long DAILY = 1000 * 24 * 60 * 60;
@@ -25,44 +27,40 @@ public class AnalyzeViewModel extends AppViewModel {
 
     public AnalyzeViewModel(@NonNull Application application) {
         super(application);
-        allSpending = appRepository.getAllSpending().getValue();
     }
 
-    public ArrayList<Spending> getSpendingDetails(long duration)
-    {
-        long now = DateTimeUtils.getCurrentTimeMillis();
-        assert(duration == WEEKLY ||
-                duration == MONTHLY || duration == ANNUALLY);
-        ArrayList<Spending> spendingInDuration = new ArrayList<>();
-        for (Spending spending: allSpending)
-        {
-            if (now - spending.getDate() <= duration)
-                spendingInDuration.add(spending);
-        }
-        return spendingInDuration;
-    }
+//    public ArrayList<Spending> getSpendingDetails(L)
+//    {
+//        long now = DateTimeUtils.getCurrentTimeMillis();
+//        assert(duration == WEEKLY ||
+//                duration == MONTHLY || duration == ANNUALLY);
+//        ArrayList<Spending> spendingInDuration = new ArrayList<>();
+//        for (Spending spending: allSpending)
+//        {
+//            if (now - spending.getDate() <= duration)
+//                spendingInDuration.add(spending);
+//        }
+//        return spendingInDuration;
+//    }
 
-    public long getTotal(long duration)
+    public long getTotal(List<Spending> spendings)
     {
-        ArrayList<Spending> spendings = getSpendingDetails(duration);
         long sum = 0l;
         for (Spending spending: spendings)
             sum += spending.getCost();
         return sum;
     }
 
-    public long getAverage(long duration)
+    public long getAverage(List<Spending> spendings)
     {
-        ArrayList<Spending> spendings = getSpendingDetails(duration);
         long sum = 0l;
         for (Spending spending: spendings)
             sum += spending.getCost();
         return sum / (long)spendings.size();
     }
 
-    public long getMaxSpending(long duration)
+    public long getMaxSpending(List<Spending> spendings)
     {
-        ArrayList<Spending> spendings = getSpendingDetails(duration);
         long max = 0;
         for (Spending spending: spendings)
             if (max < spending.getCost())
@@ -71,27 +69,26 @@ public class AnalyzeViewModel extends AppViewModel {
     }
 
     public HashMap<Category, Long> getDetailsForCategories
-            (List<Category> categories, long duration)
+            (List<Spending> spendings)
     {
-        assert(duration == WEEKLY ||
-                duration == MONTHLY || duration == ANNUALLY);
-        long now = DateTimeUtils.getCurrentTimeMillis();
-        ArrayList<String> categoriesInString = new ArrayList<>();
-
-        for (Category category: categories)
-            categoriesInString.add(category.toString());
-        ArrayList<Spending> filteredSpending =
-                (ArrayList<Spending>) appRepository.getSpendingByCategories(categoriesInString);
-
         HashMap<Category, Long> returnResult = new HashMap<>();
 
+        ArrayList<Category> categories = new ArrayList<>();
 
-        for (Category category: categories)
+        for (Spending spending : spendings) {
+            try {
+                if (!categories.contains(Category.valueOf(spending.getCategory())))
+                    categories.add(Category.valueOf(spending.getCategory()));
+            } catch (IllegalArgumentException e) {
+                continue;
+            }
+        }
+
+        for (Category category : categories)
         {
             long val = 0l;
-            for (Spending spending: filteredSpending)
-                if (spending.getCategory().equals(category.toString())
-                        && now - spending.getDate() <= duration)
+            for (Spending spending: spendings)
+                if (spending.getCategory().equals(category.toString()))
                     val += spending.getCost();
             returnResult.put(category, val);
         }
