@@ -1,9 +1,11 @@
 package com.hcmus.group14.moneytor.ui.contact;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +27,7 @@ import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,7 +115,13 @@ public class ContactActivity extends NoteBaseActivity<ActivityContactBinding> {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 List<Relate> selectedContacts= contactAdapter.getSelectedContacts();
-                // Trả về cho activity gọi activity này
+                Intent replyIntent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("contacts", (Serializable) selectedContacts);
+                replyIntent.putExtras(bundle);
+                //replyIntent.putExtra("Selected", (Serializable) selectedContacts);
+                setResult(RESULT_OK, replyIntent);
+                finish();
                 return true;
             }
         });

@@ -1,13 +1,20 @@
 package com.hcmus.group14.moneytor.ui.debtlend;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,17 +27,20 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.model.Relate;
 import com.hcmus.group14.moneytor.databinding.ActivityDebtLendDetailsBinding;
 import com.hcmus.group14.moneytor.services.debtlend.DebtLendDetailsViewModel;
 import com.hcmus.group14.moneytor.services.goal.SpendGoalDetailsViewModel;
 import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
+import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
+import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetailsBinding> implements AdapterView.OnItemSelectedListener {
+public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetailsBinding> implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityDebtLendDetailsBinding binding;
@@ -47,10 +57,37 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
         binding = getViewDataBinding();
         viewModel = new ViewModelProvider(this).get(DebtLendDetailsViewModel.class);
         viewModel = binding.getViewModel();
-        this.setTitle("Manage debt and lend");
+        this.setTitle("Manage debt");
         setSpinner();
         setDatePickerDialog();
+        setAddTarget();
     }
+
+    private void setAddTarget() {
+        EditText target = binding.editTextTarget;
+        target.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(this, ContactActivity.class);
+        mLauncher.launch(intent);
+    }
+
+    ActivityResultLauncher<Intent> mLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent intent = result.getData();
+                        Bundle bundle = intent.getExtras();
+                        List<Relate> selectedContacts = (List<Relate>) bundle.getSerializable("contacts");
+                        // set target
+                        // set text
+                    }
+                }
+            });
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

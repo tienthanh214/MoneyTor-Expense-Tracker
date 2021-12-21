@@ -1,5 +1,9 @@
 package com.hcmus.group14.moneytor.ui.spending;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,8 +11,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,22 +26,25 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.model.Relate;
 import com.hcmus.group14.moneytor.databinding.ActivityNoteSpendingBinding;
 import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
 import com.hcmus.group14.moneytor.services.spending.SpendingDetailsViewModel;
 import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
+import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBinding> implements AdapterView.OnItemSelectedListener {
+public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBinding> implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityNoteSpendingBinding binding;
@@ -56,7 +65,35 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         binding.setViewModel(viewModel);
         setSpinner();
         setDatePickerDialog();
+        setAddShareWith();
     }
+
+    private void setAddShareWith() {
+        EditText share = binding.editTextShareWith;
+        share.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(this, ContactActivity.class);
+        mLauncher.launch(intent);
+    }
+
+    ActivityResultLauncher<Intent> mLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent intent = result.getData();
+                        Bundle bundle = intent.getExtras();
+                        List<Relate> selectedContacts = (List<Relate>) bundle.getSerializable("contacts");
+                        // set relate
+                        // set text
+                    }
+                }
+            });
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
