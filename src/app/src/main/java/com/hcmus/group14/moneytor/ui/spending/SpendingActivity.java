@@ -3,38 +3,24 @@ package com.hcmus.group14.moneytor.ui.spending;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.hcmus.group14.moneytor.data.model.Spending;
-import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
 
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.model.Spending;
+import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
 import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
-import com.hcmus.group14.moneytor.ui.goal.AddGoalActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> {
 

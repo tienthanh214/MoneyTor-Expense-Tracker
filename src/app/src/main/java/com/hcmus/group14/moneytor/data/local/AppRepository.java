@@ -81,6 +81,22 @@ public class AppRepository {
             spendingDao.updateSpending(spending);
         });
     }
+
+    public LiveData<List<Spending>> filterByCategoryAndTime(List<String> cats, long startDate, long endDate) {
+        if (startDate > endDate) {
+            long temp = startDate;
+            startDate = endDate;
+            endDate = temp;
+        }
+        if ((cats == null || cats.isEmpty()) && endDate == -1) // wrong filter
+            return spendingDao.getAllSpending();
+        if ((cats != null && !cats.isEmpty()) && endDate != -1) // valid filter
+            return spendingDao.filterByCategoryAndTime(cats, startDate, endDate);
+        else if (endDate != -1)  // if only time valid
+            return spendingDao.filterByTime(startDate, endDate);
+        else  // if only cats valid
+            return spendingDao.filterByCategories(cats);
+    }
     // update spending with new relates, remove old relates
     public void updateSpendingWithRelates(Spending spending, List<Relate> olds, List<Relate> news) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
