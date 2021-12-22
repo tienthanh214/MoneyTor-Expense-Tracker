@@ -35,4 +35,7 @@ public interface RelateDao {
     @Transaction
     @Query("SELECT * FROM relate_table WHERE rel_id = :id")
     LiveData<List<RelateWithSpending>> getRelateBySpendingId(int id);
+
+    @Query("select * from relate_table where rel_id = :id")
+    Relate[] getRelateById(int id);
 }

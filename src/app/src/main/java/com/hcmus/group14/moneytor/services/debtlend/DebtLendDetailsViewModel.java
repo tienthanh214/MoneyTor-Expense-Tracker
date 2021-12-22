@@ -5,113 +5,162 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.ColumnInfo;
 
 import com.hcmus.group14.moneytor.data.local.AppViewModel;
+import com.hcmus.group14.moneytor.data.model.Relate;
+import com.hcmus.group14.moneytor.data.model.Spending;
+import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
+import com.hcmus.group14.moneytor.data.model.relation.SpendingWithRelates;
+import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 import com.hcmus.group14.moneytor.data.model.DebtLend;
 
+import java.util.List;
+
 public class DebtLendDetailsViewModel extends AppViewModel {
-    private MutableLiveData<DebtLend> debtLend;
     private DebtLend _debtLend;
+
+    private MutableLiveData<Integer> category;
+    private MutableLiveData<String> value;
+    private MutableLiveData<String> target;
+    private MutableLiveData<Boolean> debt; //assert(debt==0||debt==1);
+    private MutableLiveData<String> date;
+    private MutableLiveData<String> desc;
+
+
+    private Relate oldRelate;
+    private Relate newRelate;
 
     public DebtLendDetailsViewModel(@NonNull Application application) {
         super(application);
         _debtLend = new DebtLend();
-        debtLend = new MutableLiveData<>(_debtLend);
-    }
-    public DebtLendDetailsViewModel(@NonNull Application application, int recordId)
-    {
-        super(application);
-        DebtLend[] list = appRepository.getDebtLendById(recordId);
-        _debtLend = list.length > 0? list[0] : new DebtLend();
-        debtLend = new MutableLiveData<>(_debtLend);
+        desc = new MutableLiveData<>("");
+        value = new MutableLiveData<>("");
+        category = new MutableLiveData<>(0);
+        date = new MutableLiveData<>(DateTimeUtils.getDate(-1));
+        target = new MutableLiveData<>("");
+        debt = new MutableLiveData<>(true);
     }
 
-    //gets
-    public @Nullable
-    String getCategory() {
-        return _debtLend.getCategory();
+    public LiveData<List<DebtLendAndRelate>> getDebtLendAndRelateById(int id) {
+        return appRepository.getDebtLendAndRelateById(id);
     }
-
-    public String getValue() {
-        return String.valueOf(_debtLend.getValue());
-    }
-
-    public String getDebt() {
-        return _debtLend.getDebt() == 1 ? "Debt" : "Lend";
-    }
-
-    public String getDate() {
-        if (_debtLend.getDate() == -1)
-            return DateTimeUtils.getDate(DateTimeUtils.getCurrentTimeMillis());
-        return DateTimeUtils.getDate(_debtLend.getDate());
-    }
-
-    public int getTarget() {
-        return _debtLend.getTarget();
-    }
-
-    public @Nullable
-    String getDesc() {
-        return _debtLend.getDesc();
-    }
-
-    //sets
-    public void setCategory(@Nullable String category) {
-        if (_debtLend.getCategory().equals(category)) return;
-        _debtLend.setCategory(category);
-        debtLend.setValue(_debtLend);
-    }
-
-    public void setValue(String value) {
-        if (value.isEmpty()) return;
-        if (_debtLend.getValue() == Integer.parseInt(value)) return;
-        _debtLend.setValue(Integer.parseInt(value));
-        debtLend.setValue(_debtLend);
-    }
-
-    public void setDebt(String debt) {
-        if (_debtLend.getDebt() == Integer.parseInt(debt)) return;
-        _debtLend.setDebt(Integer.parseInt(debt));
-        debtLend.setValue(_debtLend);
-    }
-
-    public void setDate(String date) {
-        long millis = DateTimeUtils.getDateInMillis(date);
-        if (millis != _debtLend.getDate()) {
-            _debtLend.setDate(millis);
-            debtLend.setValue(_debtLend);
+    public void uploadData(List<DebtLendAndRelate> debtLendAndRelateList) {
+        if (debtLendAndRelateList.size() > 0) {
+            _debtLend = debtLendAndRelateList.get(0).debtLend;
+            oldRelate = debtLendAndRelateList.get(0).relate;
+            setDate(_debtLend.getDate());
+            setCategory(_debtLend.getCategory());
+            setDesc(_debtLend.getDesc());
+            setValue(_debtLend.getValue());
+            setTarget(oldRelate);
+            if (_debtLend.getDebt() == 0) setDebt(false);
+            else setDebt(true);
         }
     }
 
-    public void setTarget(int target) {
-        if (_debtLend.getTarget() == target) return;
-        _debtLend.setTarget(target);
-        debtLend.setValue(_debtLend);
+    //gets
+    public MutableLiveData<String> getDesc() {
+        return desc;
     }
 
-    public void setDesc(@Nullable String desc) {
-        if (_debtLend.getDesc().equals(desc)) return;
-        _debtLend.setDesc(desc);
-        debtLend.setValue(_debtLend);
+    public MutableLiveData<String> getValue() {
+        return value;
+    }
+
+    public MutableLiveData<String> getDate() {
+        return date;
+    }
+
+    public MutableLiveData<Integer> getCategory() {
+        return category;
+    }
+
+    public MutableLiveData<String> getTarget() {
+        return target;
+    }
+    public MutableLiveData<Boolean> getDebt() {
+        return debt;
+    }
+
+    //sets
+    public void setCategory(@Nullable String pCategory) {
+        int position = CategoriesUtils.findPositionById(pCategory);
+        category.setValue(position);
+    }
+
+    public void setValue(long pValue) {value.setValue(String.valueOf(pValue));
+    }
+
+    public void setDebt(boolean pDebt) {
+        debt.setValue(pDebt);
+    }
+
+    public void setDate(long pDate) {
+        date.setValue(DateTimeUtils.getDate(pDate));
+    }
+
+    public void setTarget(Relate pTarget) {
+        target.setValue(pTarget.getName());
+        newRelate = pTarget;
+    }
+
+    public void setDesc(@Nullable String pDesc) {
+        desc.setValue(pDesc);
+    }
+
+    void updateData() {
+        if (_debtLend == null)
+            _debtLend = new DebtLend();
+        _debtLend.setCategory(CategoriesUtils.getCategoryIdByPosition(category.getValue()));
+        _debtLend.setDesc(desc.getValue());
+        _debtLend.setDate(DateTimeUtils.getDateInMillis(date.getValue()));
+        //_debtLend.setDebt(debt.getValue());
+        boolean pDebt = debt.getValue();
+        if (pDebt) _debtLend.setDebt(1);
+        else _debtLend.setDebt(0);
+        if (newRelate == null)
+        {
+            if (oldRelate != null)
+                _debtLend.setTarget(oldRelate.getRelateId());
+            else
+                _debtLend.setTarget(0);
+        }
+        else
+            _debtLend.setTarget(newRelate.getRelateId());
+
+
+        if (value.getValue() != null && ! value.getValue().isEmpty()) {
+            _debtLend.setValue(Long.parseLong(value.getValue()));
+        } else {
+            _debtLend.setValue(-1);
+        }
     }
 
     public InputUtils saveDebtLend()
     {
-        Log.i("@@@ saved", "Debt/lend record");
+        updateData();
         InputUtils errors = new InputUtils();
         if (_debtLend.getCategory().isEmpty())
             errors.setError(InputUtils.Type.CATEGORY);
         if (_debtLend.getValue() == -1)
             errors.setError(InputUtils.Type.COST);
+        if (_debtLend.getTarget() <= 0)
+            errors.setError((InputUtils.Type.DEBT_LEND_TARGET));
         if (errors.hasError())
             return errors;
+        
+        
         if (_debtLend.getDate() == -1) {
             _debtLend.setDate(DateTimeUtils.getCurrentTimeMillis());
         }
-        appRepository.insertDebtLend(debtLend.getValue());
+
+        if (_debtLend.getRecordId() == 0) appRepository.insertDebtLend(_debtLend);
+        else appRepository.updateDebtLend(_debtLend);
         return errors;
     }
 }

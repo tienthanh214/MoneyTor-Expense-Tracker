@@ -3,7 +3,7 @@ package com.hcmus.group14.moneytor.utils;
 // utils for validation user's input
 public class InputUtils {
     public static enum Type {
-        COST, CATEGORY
+        COST, CATEGORY, DEBT_LEND_TARGET
     }
     // bitmask store error
     private byte errorMask = 0;

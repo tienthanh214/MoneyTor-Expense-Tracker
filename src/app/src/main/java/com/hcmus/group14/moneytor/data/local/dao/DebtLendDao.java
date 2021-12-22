@@ -2,10 +2,14 @@ package com.hcmus.group14.moneytor.data.local.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.Transaction;
 import androidx.room.Update;
 import androidx.room.Delete;
 import androidx.room.Query;
 import com.hcmus.group14.moneytor.data.model.DebtLend;
+import com.hcmus.group14.moneytor.data.model.Relate;
+import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
+
 import androidx.lifecycle.LiveData;
 import java.util.List;
 
@@ -30,4 +34,9 @@ public interface DebtLendDao {
     public LiveData<List<DebtLend>> getDebtLends(String category);
     @Query("select * from debt_lend_table where recordId = :id")
     public DebtLend[] getDebtLendByID(int id);
+    //Cross reference data retrieval
+    @Transaction @Query("select * from debt_lend_table")
+    public LiveData<List<DebtLendAndRelate>> getAllDebtLendAndRelate();
+    @Transaction @Query("select * from debt_lend_table where recordId = :id")
+    public LiveData<List<DebtLendAndRelate>> getDebtLendAndRelateById(int id);
 }

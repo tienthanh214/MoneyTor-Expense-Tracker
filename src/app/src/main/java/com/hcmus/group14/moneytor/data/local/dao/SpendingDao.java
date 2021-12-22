@@ -1,7 +1,5 @@
 package com.hcmus.group14.moneytor.data.local.dao;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -38,6 +36,9 @@ public abstract class SpendingDao {
 
     @Query("SELECT * FROM spending_table ORDER BY date")
     public abstract LiveData<List<Spending>> getAllSpending();
+
+    @Query("select * from spending_table where category in (:cats)")
+    public abstract List<Spending> getSpendingByCategories(List<String> cats);
 
     // for bill sharing
     @Transaction
@@ -107,4 +108,12 @@ public abstract class SpendingDao {
     public abstract long insertRelate(Relate relate);
     @Query("SELECT rel_id FROM relate_table WHERE tel LIKE :tel")
     public abstract long[] getRelateIdByTel(String tel);
+
+    // filter
+    @Query("SELECT * FROM spending_table WHERE (date BETWEEN :startDate AND :endDate) AND (category IN (:cats))")
+    public abstract LiveData<List<Spending>> filterByCategoryAndTime(List<String> cats, long startDate, long endDate);
+    @Query("SELECT * FROM spending_table WHERE category IN (:cats)")
+    public abstract LiveData<List<Spending>> filterByCategories(List<String> cats);
+    @Query("SELECT * FROM spending_table WHERE date BETWEEN :startDate AND :endDate")
+    public abstract LiveData<List<Spending>> filterByTime(long startDate, long endDate);
 }
