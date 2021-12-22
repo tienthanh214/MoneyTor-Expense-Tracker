@@ -5,10 +5,11 @@
 
     <string name="content_desc_spending">Add a spending</string>
     <string name="content_desc_spending_goal">Add a spending goal</string>
-
+    <string name="content_desc_debt_lend">Add a debt/lend</string>
     <!-- Screen name -->
     <string name="goal_title_activity">Spending goal</string>
     <string name="spending_title_activity">Spending list</string>
+    <string name="debt_lend_title_activity">Manage debt</string>
 
     <!-- Menu title -->
     <string name="menu_filter">Filter</string>

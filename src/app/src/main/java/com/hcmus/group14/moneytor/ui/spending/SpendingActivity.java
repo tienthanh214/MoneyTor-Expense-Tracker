@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,14 +45,16 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         this.context = this.getApplicationContext();
         // do what you want
         this.setTitle("List spending");
-        initializeViews();
 
         spendingViewModel = new ViewModelProvider(this).get(SpendingViewModel.class);
-        spendingViewModel.getAllSpending().observe(this, spendingList -> {
-            spendings=spendingList;
-            spendingAdapter.setSpending(spendings);
+        spendingViewModel.getAllSpending().observe(this, new Observer<List<Spending>>() {
+            @Override
+            public void onChanged(List<Spending> spendingList) {
+                spendings=spendingList;
+                spendingAdapter.setSpending(spendings);
+            }
         });
-        //spendings = getData();
+        initializeViews();
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override

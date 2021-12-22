@@ -43,12 +43,13 @@ public class DebtLend implements Serializable {
     @ColumnInfo(name = "desc") @Nullable
     private String desc;
 
+    @Ignore
     public DebtLend()
     {
         this("", 0, 0, 0, 0L, "");
     }
 
-    public DebtLend(@Nullable String category, int value, int target,
+    public DebtLend(@Nullable String category, long value, int target,
                     int debt, long date, @Nullable String desc)
     {
         assert(debt == 0 || debt == 1);

@@ -33,6 +33,7 @@ public class Reminder implements Serializable {
     @ColumnInfo(name = "desc") @Nullable
     private String desc;
 
+    @Ignore
     public Reminder()
     {
         this("", "", 0L, "");
