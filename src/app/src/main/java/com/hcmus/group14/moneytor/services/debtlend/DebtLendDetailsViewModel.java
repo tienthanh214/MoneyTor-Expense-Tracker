@@ -83,7 +83,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
         return target;
     }
     public MutableLiveData<Boolean> getDebt() {
-        return debt
+        return debt;
     }
 
     //sets
@@ -118,8 +118,10 @@ public class DebtLendDetailsViewModel extends AppViewModel {
         _debtLend.setCategory(CategoriesUtils.getCategoryIdByPosition(category.getValue()));
         _debtLend.setDesc(desc.getValue());
         _debtLend.setDate(DateTimeUtils.getDateInMillis(date.getValue()));
-        _debtLend.setDebt(debt.getValue());
-
+        //_debtLend.setDebt(debt.getValue());
+        boolean pDebt = debt.getValue();
+        if (pDebt) _debtLend.setDebt(1);
+        else _debtLend.setDebt(0);
         if (newRelate == null)
         {
             if (oldRelate != null)
