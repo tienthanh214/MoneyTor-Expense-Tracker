@@ -79,7 +79,8 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
             if (resultCode == RESULT_OK){
                 Bundle bundle = data.getExtras();
                 List<Relate> selectedContacts = (List<Relate>) bundle.getSerializable("contacts");
-                // view model set target
+                // get(0) temp
+                viewModel.setTarget(selectedContacts.get(0));
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
