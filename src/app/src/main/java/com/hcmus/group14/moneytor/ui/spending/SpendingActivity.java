@@ -15,10 +15,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.model.FilterState;
 import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
+import com.hcmus.group14.moneytor.services.options.Category;
+import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
+import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,8 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
     private Context context;
     private SearchView searchView;
 
+    private FilterViewModel filterViewModel;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_spending;
@@ -46,14 +52,24 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         // do what you want
         this.setTitle("List spending");
 
-        spendingViewModel = new ViewModelProvider(this).get(SpendingViewModel.class);
-        spendingViewModel.getAllSpending().observe(this, new Observer<List<Spending>>() {
+//        spendingViewModel = new ViewModelProvider(this).get(SpendingViewModel.class);
+//        spendingViewModel.getAllSpending().observe(this, new Observer<List<Spending>>() {
+//            @Override
+//            public void onChanged(List<Spending> spendingList) {
+//                spendings=spendingList;
+//                spendingAdapter.setSpending(spendings);
+//            }
+//        });
+        // test
+        filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
+        filterViewModel.getAllSpending().observe(this, new Observer<List<Spending>>() {
             @Override
             public void onChanged(List<Spending> spendingList) {
-                spendings=spendingList;
+                spendings = spendingList;
                 spendingAdapter.setSpending(spendings);
             }
         });
+        filterViewModel.setFilterState(new FilterState());
         initializeViews();
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +79,14 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
                 startActivity(intent);
             }
         });
+    }
+
+    // for test filter, should be delete
+    void testFilter() {
+        List<String> cats = new ArrayList<>();
+        cats.add(Category.FOOD_AND_DRINK.getId());
+//        filterViewModel.setFilterState(new FilterState(cats, DateTimeUtils.getDateInMillis(9, 12, 2021), DateTimeUtils.getDateInMillis(22, 12, 2021)));
+        filterViewModel.setFilterState(new FilterState(cats, DateTimeUtils.getMillisByDate(10, 12, 2021), DateTimeUtils.getMillisByDate(22, 12, 2021)));
     }
 
     List<Spending> getData() {

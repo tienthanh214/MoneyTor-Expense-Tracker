@@ -1,6 +1,6 @@
 package com.hcmus.group14.moneytor.utils;
 
-import static com.hcmus.group14.moneytor.receiver.NoteBroadcastReceiver.notifId;
+import static com.hcmus.group14.moneytor.services.notification.receiver.NoteBroadcastReceiver.notifId;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
-import com.hcmus.group14.moneytor.receiver.GoalBroadcastReceiver;
-import com.hcmus.group14.moneytor.receiver.NoteBroadcastReceiver;
+import com.hcmus.group14.moneytor.services.notification.receiver.GoalBroadcastReceiver;
+import com.hcmus.group14.moneytor.services.notification.receiver.NoteBroadcastReceiver;
 
 import java.util.Calendar;
 

@@ -47,14 +47,14 @@
         </activity>
 
         <receiver
-            android:name=".receiver.GoalBroadcastReceiver"
+            android:name=".services.notification.receiver.GoalBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".receiver.NoteBroadcastReceiver"
+            android:name=".services.notification.receiver.NoteBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

@@ -1,16 +1,5 @@
 package com.hcmus.group14.moneytor.ui.spending;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
-
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +13,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.Relate;
@@ -56,9 +51,17 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         super.onCreate(savedInstanceState);
         this.setTitle("Spending note");
         binding = getViewDataBinding();
-        // binding.setLifecycleOwner(this);
+
         viewModel = new ViewModelProvider(this).get(SpendingDetailsViewModel.class);
         binding.setViewModel(viewModel);
+
+        int spendingId = (int)getIntent().getIntExtra("spending_id", -1);
+        if (spendingId != -1) {
+            // if click on item list view, load full info of a spending
+            viewModel.getSpendingWithRelatesById(spendingId).observe(this, spending -> {
+                viewModel.uploadData(spending);
+            });
+        }
         setSpinner();
         setDatePickerDialog();
         setAddShareWith();
@@ -196,9 +199,8 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
         String item = parent.getItemAtPosition(position).toString();
-
+        viewModel.setCategory(CategoriesUtils.getCategoryIdByPosition(position));
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {
