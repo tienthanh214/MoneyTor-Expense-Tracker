@@ -30,7 +30,9 @@ public enum Category
     MAKEUP("Makeup", R.drawable.ic_category_makeup,
             Color.parseColor("#689f38")),       //Beauty expenses
     ENTERTAINMENT("Entertainment", R.drawable.ic_category_entertainment,
-            Color.parseColor("#afb42b"));       //For fun stuff
+            Color.parseColor("#afb42b")),       //For fun stuff
+    OTHERS("Others", R.drawable.ic_category_others,
+            Color.parseColor("#455a64"));
 
     private final String name;
     private final int resourceId;

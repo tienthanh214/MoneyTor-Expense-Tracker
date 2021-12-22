@@ -43,15 +43,19 @@
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_health.xml" value="0.2203125" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_maintenance.xml" value="0.2203125" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_makeup.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_others.xml" value="0.2203125" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_pets.xml" value="0.2203125" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_traffic.xml" value="0.2203125" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_utilities.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_analysis.xml" value="0.33" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_debt_lend_detail.xml" value="0.25" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal.xml" value="0.20416666666666666" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal_details.xml" value="0.20416666666666666" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal_spending.xml" value="0.22" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_note_spending.xml" value="0.20416666666666666" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/category_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/category_item_statistics.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

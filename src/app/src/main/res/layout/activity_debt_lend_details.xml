@@ -162,17 +162,19 @@
                             android:orientation="horizontal"
                             android:layout_centerInParent="true">
                             <RadioButton
+                                android:id="@+id/radioLend"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lend"
+                                android:checked="true"
+                                android:layout_marginRight="20dp"/>
+                            <RadioButton
                                 android:id="@+id/radioDebt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Debt"
-                                android:checked="@={viewModel.debt}"
-                                android:layout_marginRight="20dp"/>
-                            <RadioButton
-                                android:id="@+id/radioLend"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Lend" />
+                                android:checked="@={viewModel.debt}"/>
+
                         </RadioGroup>
 
                     </LinearLayout>
