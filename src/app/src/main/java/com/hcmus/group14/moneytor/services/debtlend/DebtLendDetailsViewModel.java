@@ -27,7 +27,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
     private MutableLiveData<Integer> category;
     private MutableLiveData<String> value;
     private MutableLiveData<String> target;
-    private MutableLiveData<Integer> debt; //assert(debt==0||debt==1);
+    private MutableLiveData<Boolean> debt; //assert(debt==0||debt==1);
     private MutableLiveData<String> date;
     private MutableLiveData<String> desc;
 
@@ -43,7 +43,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
         category = new MutableLiveData<>(0);
         date = new MutableLiveData<>(DateTimeUtils.getDate(-1));
         target = new MutableLiveData<>("");
-        debt = new MutableLiveData<>(0);
+        debt = new MutableLiveData<>(true);
     }
 
     public LiveData<List<DebtLendAndRelate>> getDebtLendAndRelateById(int id) {
@@ -82,6 +82,9 @@ public class DebtLendDetailsViewModel extends AppViewModel {
     public MutableLiveData<String> getTarget() {
         return target;
     }
+    public MutableLiveData<Boolean> getDebt() {
+        return debt
+    }
 
     //sets
     public void setCategory(@Nullable String pCategory) {
@@ -92,7 +95,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
     public void setValue(long pValue) {value.setValue(String.valueOf(pValue));
     }
 
-    public void setDebt(int pDebt) {
+    public void setDebt(boolean pDebt) {
         debt.setValue(pDebt);
     }
 
@@ -147,7 +150,8 @@ public class DebtLendDetailsViewModel extends AppViewModel {
             errors.setError((InputUtils.Type.DEBT_LEND_TARGET));
         if (errors.hasError())
             return errors;
-
+        
+        
         if (_debtLend.getDate() == -1) {
             _debtLend.setDate(DateTimeUtils.getCurrentTimeMillis());
         }
