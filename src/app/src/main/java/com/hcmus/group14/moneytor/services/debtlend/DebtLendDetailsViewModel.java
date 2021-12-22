@@ -58,7 +58,8 @@ public class DebtLendDetailsViewModel extends AppViewModel {
             setDesc(_debtLend.getDesc());
             setValue(_debtLend.getValue());
             setTarget(oldRelate);
-            setDebt(_debtLend.getDebt());
+            if (_debtLend.getDebt() == 0) setDebt(false);
+            else setDebt(true);
         }
     }
 
