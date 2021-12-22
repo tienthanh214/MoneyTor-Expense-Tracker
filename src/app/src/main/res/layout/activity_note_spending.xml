@@ -73,8 +73,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/text_view_background"
-                    android:paddingHorizontal="@dimen/text_padding_horizontal"
-                    android:paddingVertical="@dimen/text_padding_vertical"
                     android:selectedItemPosition="@={viewModel.category}"/>
 
                 <TextView
@@ -166,7 +164,7 @@
                     android:textSize="@dimen/text_size" />
 
                 <EditText
-                    android:id="@+id/textViewSelectWho"
+                    android:id="@+id/editTextShareWith"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_bottom_text"
@@ -174,6 +172,7 @@
                     android:focusable="false"
                     android:paddingHorizontal="@dimen/text_padding_horizontal"
                     android:paddingVertical="@dimen/text_padding_vertical"
+                    android:hint="Tap to choose contacts"
                     android:text="@{viewModel.relates}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size" />

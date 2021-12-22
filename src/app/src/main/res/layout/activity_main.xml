@@ -28,4 +28,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonSpendingGoal" />
 
+    <Button
+        android:id="@+id/buttonManageDebt"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="opOpenDebtLend"
+        android:text="@string/debt_lend_title_activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSpendingView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

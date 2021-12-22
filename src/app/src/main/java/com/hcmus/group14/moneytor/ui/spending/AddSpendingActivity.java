@@ -1,39 +1,50 @@
 package com.hcmus.group14.moneytor.ui.spending;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
+
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
-
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.model.Relate;
 import com.hcmus.group14.moneytor.databinding.ActivityNoteSpendingBinding;
+import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.services.spending.SpendingDetailsViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
+import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
+import com.hcmus.group14.moneytor.utils.CategoryAdapter;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.Calendar;
 import java.util.List;
 
-public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBinding> implements AdapterView.OnItemSelectedListener {
+public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBinding> implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityNoteSpendingBinding binding;
     private SpendingDetailsViewModel viewModel;
+    private final int REQUEST_CODE_RELATE_CONTACT = 1234;
 
     @Override
     public int getLayoutId() {
@@ -45,18 +56,36 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         super.onCreate(savedInstanceState);
         this.setTitle("Spending note");
         binding = getViewDataBinding();
-
-        int spendingId = (int)getIntent().getIntExtra("spending_id", -1);
+        // binding.setLifecycleOwner(this);
         viewModel = new ViewModelProvider(this).get(SpendingDetailsViewModel.class);
-        if (spendingId != -1) {
-            // if click on item list view, load full info of a spending
-            viewModel.getSpendingWithRelatesById(spendingId).observe(this, spending -> {
-                viewModel.uploadData(spending);
-            });
-        }
         binding.setViewModel(viewModel);
         setSpinner();
         setDatePickerDialog();
+        setAddShareWith();
+    }
+
+    private void setAddShareWith() {
+        EditText share = binding.editTextShareWith;
+        share.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(this, ContactActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_RELATE_CONTACT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE_RELATE_CONTACT){
+            if (resultCode == RESULT_OK){
+                Bundle bundle = data.getExtras();
+                List<Relate> selectedContacts = (List<Relate>) bundle.getSerializable("contacts");
+                viewModel.setRelates(selectedContacts);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -155,23 +184,15 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
 
     private void setSpinner() {
         Spinner spinner = binding.spinnerCategory;
-
         spinner.setOnItemSelectedListener(this);
-        /*
-        List<String> categories = new ArrayList<String>();
-        categories.add("cat1");
-        categories.add("cat2");
-        categories.add("cat3");
-        categories.add("cat4");
-        */
-        List<String> categories = CategoriesUtils.getDefaultCategories();
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        final List<Category> categories = CategoriesUtils.getDefaultCategories();
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this,
+                R.layout.category_item, categories);
 
-        spinner.setAdapter(dataAdapter);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(categoryAdapter);
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

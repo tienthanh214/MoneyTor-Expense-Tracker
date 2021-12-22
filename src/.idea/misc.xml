@@ -3,11 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal.xml" value="0.1956521739130435" />
-        <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal_details.xml" value="0.23777173913043478" />
-        <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal_spending.xml" value="0.2515625" />
         <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_main.xml" value="0.22146739130434784" />
-        <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_note_spending.xml" value="0.25" />
         <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_spending.xml" value="0.2" />
         <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/content_spending.xml" value="0.1" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/drawable-v24/detail_view_background.xml" value="0.1" />
@@ -23,9 +19,11 @@
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_contact_list.xml" value="0.1" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal.xml" value="0.1" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal_spending.xml" value="0.2234375" />
+        <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_note_spending.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_spending.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/content_contact.xml" value="0.22" />
+        <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/content_debt_lend.xml" value="0.1" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/content_goal.xml" value="0.1" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/content_spending.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/fragment_list.xml" value="0.1" />
@@ -34,11 +32,26 @@
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/menu/contact_menu.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/menu/spending_menu.xml" value="0.1" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/btn_radius_background.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/category_icon_background.xml" value="0.2203125" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_baseline_directions_run_24.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_appliances.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_bills.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_education.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_entertainment.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_fitness.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_food_and_drink.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_health.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_maintenance.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_makeup.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_pets.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_traffic.xml" value="0.2203125" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/drawable/ic_category_utilities.xml" value="0.2203125" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_debt_lend_detail.xml" value="0.25" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal.xml" value="0.20416666666666666" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal_details.xml" value="0.20416666666666666" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal_spending.xml" value="0.22" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_note_spending.xml" value="0.20416666666666666" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/category_item.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>
