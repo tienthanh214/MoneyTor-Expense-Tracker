@@ -34,6 +34,7 @@ public class SpendGoal implements Serializable {
     @ColumnInfo(name = "desc") @Nullable
     private String desc;
 
+    @Ignore
     public SpendGoal()
     {
         this("", 0, 0L, "");
