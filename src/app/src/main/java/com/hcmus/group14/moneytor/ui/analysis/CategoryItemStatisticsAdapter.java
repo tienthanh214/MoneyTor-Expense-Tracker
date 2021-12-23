@@ -47,6 +47,7 @@ public class CategoryItemStatisticsAdapter extends ArrayAdapter<String> {
 
         iconImageView.setImageResource(items.get(position).getResourceId());
         iconImageView.setBackgroundTintList(ColorStateList.valueOf(items.get(position).getColor()));
+        // TODO: get category statistics from view model
         textView.setText("X.XXX.XXX");
         //textView.setText(viewModel.getDetailsForCategories());
         return view;

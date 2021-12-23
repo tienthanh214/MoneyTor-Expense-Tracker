@@ -70,6 +70,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this, ContactActivity.class);
+        // TODO: add option to choose only one contact
         startActivityForResult(intent, REQUEST_CODE_RELATE_CONTACT);
     }
 
@@ -111,6 +112,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
 
     private boolean checkValid() {
         EditText cost = binding.inputAmount;
+        // TODO: call check amount and category from utils
         //InputUtils errors = viewModel.saveGoal();
         //if (errors.hasError()){
         if (cost.length() == 0){

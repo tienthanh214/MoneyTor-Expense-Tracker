@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "760120534759",
+    "project_id": "moneytor-58099",
+    "storage_bucket": "moneytor-58099.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760120534759:android:a79891e552a57b94126442",
+        "android_client_info": {
+          "package_name": "com.hcmus.group14.moneytor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760120534759-d6ambioj2sdjsktcpkb9p0cbb4epch6e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4cNnP77yO4Hs4_Qze3uV39GMbyg-q6_0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760120534759-d6ambioj2sdjsktcpkb9p0cbb4epch6e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

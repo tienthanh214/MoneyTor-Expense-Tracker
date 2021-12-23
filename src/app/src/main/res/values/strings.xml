@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Moneytor</string>
+    <string name="app_name">MoneyTor</string>
     <string name="title_activity_spending">SpendingActivity</string>
     <string name="title_spending_goal">GoalActivity</string>
 

@@ -87,6 +87,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
 
     private boolean checkValidGoal() {
         EditText cost = binding.inputAmount;
+        // TODO: call check amount and category from utils
         //InputUtils errors = viewModel.saveGoal();
         //if (errors.hasError()){
         if (cost.length() == 0){
@@ -109,8 +110,8 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // view model delete spending
-                Toast.makeText(getApplicationContext(), "Spending deleted",
+                viewModel.deleteGoal();
+                Toast.makeText(getApplicationContext(), "Goal deleted",
                         Toast.LENGTH_LONG).show();
             }
         });
