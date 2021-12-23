@@ -117,6 +117,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     private boolean checkValidSpending() {
         EditText cost = binding.inputAmount;
         InputUtils errors = viewModel.saveSpending();
+        // TODO: check category
         if (errors.hasError()){
             if (errors.isValid(InputUtils.Type.COST))
                 cost.setError("Amount of spending is required!");
@@ -137,7 +138,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // view model delete spending
+                viewModel.deleteSpending();
                 Toast.makeText(getApplicationContext(), "Spending deleted",
                         Toast.LENGTH_LONG).show();
             }

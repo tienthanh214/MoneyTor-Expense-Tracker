@@ -23,6 +23,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.analysis.AnalysisActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.debtlend.DebtLendActivity"
             android:exported="true" />
         <activity

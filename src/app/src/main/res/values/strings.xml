@@ -10,6 +10,7 @@
     <string name="goal_title_activity">Spending goal</string>
     <string name="spending_title_activity">Spending list</string>
     <string name="debt_lend_title_activity">Manage debt</string>
+    <string name="analysis_activity">Analysis</string>
 
     <!-- Menu title -->
     <string name="menu_filter">Filter</string>
