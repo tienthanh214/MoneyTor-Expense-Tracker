@@ -8,17 +8,12 @@ import java.util.List;
 
 public class CategoriesUtils {
     static public List<Category> categories = null;
-    public static List<String> getDefaultCategories() {
+    public static List<Category> getDefaultCategories() {
         if (categories == null) {
             categories = new ArrayList<>();
             Collections.addAll(categories, Category.values());
         }
-        // TODO: if add image then update this
-        List<String> _categories = new ArrayList<>();
-        for (Category cat: categories)
-            _categories.add(cat.getName());
-//        Collections.addAll(categories, Category.values());
-        return _categories;
+        return categories;
     }
 
     public static Category findCategoryById(String id) {
