@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
         tvUsername.setText(PreferenceUtils.getString(
                 PreferenceUtils.getInstance(this, "user_profile"),
                 "user_name",
-                "New user"));
+                getString(R.string.default_username)));
     }
 
     void logout(View view) {
