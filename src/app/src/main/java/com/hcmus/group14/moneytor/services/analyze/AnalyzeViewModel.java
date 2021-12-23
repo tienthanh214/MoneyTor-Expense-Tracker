@@ -59,16 +59,21 @@ public class AnalyzeViewModel extends AndroidViewModel {
     }
 
     //Get the day where the amount of spending is highest
-    public String getMaxSpendingDay(List<Spending> spendings)
+    public ArrayList<Category> getMaxSpendingCategory(List<Spending> spendings)
     {
         long max = 0;
-        String day = "";
+        ArrayList<Category> categories = new ArrayList<>();
         for (Spending spending: spendings)
             if (max < spending.getCost()) {
                 max = spending.getCost();
-                day = DateTimeUtils.getDate(spending.getDate());
             }
-        return day;
+        for (Spending spending: spendings)
+        {
+            if (max == spending.getCost())
+                categories.add(Category.valueOf(spending.getCategory()));
+        }
+        
+        return categories;
     }
 
     //Count how much have been spent in categories in appearance across all spendings filtered.
