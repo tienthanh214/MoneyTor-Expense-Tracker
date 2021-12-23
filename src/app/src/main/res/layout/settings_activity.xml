@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/PreferenceTheme">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,7 +29,7 @@
             android:fontFamily="@font/poppins_medium"
             android:maxLines="1"
             android:text="@string/default_username"
-            android:textColor="@color/candy_pink"
+            android:textColor="@color/orange_soda"
             android:textSize="20sp" />
 
         <Button
