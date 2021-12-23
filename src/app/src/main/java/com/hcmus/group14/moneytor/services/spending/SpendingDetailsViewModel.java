@@ -35,7 +35,7 @@ public class SpendingDetailsViewModel extends AppViewModel {
         _title = new MutableLiveData<>("");
         _description = new MutableLiveData<>("");
         _cost = new MutableLiveData<>("");
-        _category = new MutableLiveData<>(3);
+        _category = new MutableLiveData<>();
         _date = new MutableLiveData<>(DateTimeUtils.getDate(-1));
         _relates = new MutableLiveData<>("");
     }
@@ -74,7 +74,6 @@ public class SpendingDetailsViewModel extends AppViewModel {
     }
 
     public MutableLiveData<Integer> getCategory() {
-        Log.i("@@@", _category.getValue() + " ");
         return _category;
     }
 

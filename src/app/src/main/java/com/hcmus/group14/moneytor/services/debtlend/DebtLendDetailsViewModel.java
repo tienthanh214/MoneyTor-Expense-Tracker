@@ -7,29 +7,26 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.ColumnInfo;
 
 import com.hcmus.group14.moneytor.data.local.AppViewModel;
+import com.hcmus.group14.moneytor.data.model.DebtLend;
 import com.hcmus.group14.moneytor.data.model.Relate;
-import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
-import com.hcmus.group14.moneytor.data.model.relation.SpendingWithRelates;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
-import com.hcmus.group14.moneytor.data.model.DebtLend;
 
 import java.util.List;
 
 public class DebtLendDetailsViewModel extends AppViewModel {
     private DebtLend _debtLend;
 
-    private MutableLiveData<Integer> category;
-    private MutableLiveData<String> value;
-    private MutableLiveData<String> target;
-    private MutableLiveData<Boolean> debt; //assert(debt==0||debt==1);
-    private MutableLiveData<String> date;
-    private MutableLiveData<String> desc;
+    private final MutableLiveData<Integer> category;
+    private final MutableLiveData<String> value;
+    private final MutableLiveData<String> target;
+    private final MutableLiveData<Boolean> debt; //assert(debt==0||debt==1);
+    private final MutableLiveData<String> date;
+    private final MutableLiveData<String> desc;
 
 
     private Relate oldRelate;
@@ -49,6 +46,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
     public LiveData<List<DebtLendAndRelate>> getDebtLendAndRelateById(int id) {
         return appRepository.getDebtLendAndRelateById(id);
     }
+
     public void uploadData(List<DebtLendAndRelate> debtLendAndRelateList) {
         if (debtLendAndRelateList.size() > 0) {
             _debtLend = debtLendAndRelateList.get(0).debtLend;
@@ -58,8 +56,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
             setDesc(_debtLend.getDesc());
             setValue(_debtLend.getValue());
             setTarget(oldRelate);
-            if (_debtLend.getDebt() == 0) setDebt(false);
-            else setDebt(true);
+            setDebt(_debtLend.getDebt() != 0);
         }
     }
 
@@ -83,6 +80,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
     public MutableLiveData<String> getTarget() {
         return target;
     }
+
     public MutableLiveData<Boolean> getDebt() {
         return debt;
     }
@@ -119,7 +117,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
         _debtLend.setCategory(CategoriesUtils.getCategoryIdByPosition(category.getValue()));
         _debtLend.setDesc(desc.getValue());
         _debtLend.setDate(DateTimeUtils.getDateInMillis(date.getValue()));
-        //_debtLend.setDebt(debt.getValue());
+        // _debtLend.setDebt(debt.getValue());
         boolean pDebt = debt.getValue();
         if (pDebt) _debtLend.setDebt(1);
         else _debtLend.setDebt(0);
@@ -128,7 +126,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
             if (oldRelate != null)
                 _debtLend.setTarget(oldRelate.getRelateId());
             else
-                _debtLend.setTarget(0);
+                _debtLend.setTarget(-1);
         }
         else
             _debtLend.setTarget(newRelate.getRelateId());
@@ -144,12 +142,13 @@ public class DebtLendDetailsViewModel extends AppViewModel {
     public InputUtils saveDebtLend()
     {
         updateData();
+        Log.i("@@@ debt", _debtLend.toString());
         InputUtils errors = new InputUtils();
         if (_debtLend.getCategory().isEmpty())
             errors.setError(InputUtils.Type.CATEGORY);
         if (_debtLend.getValue() == -1)
             errors.setError(InputUtils.Type.COST);
-        if (_debtLend.getTarget() <= 0)
+        if (_debtLend.getTarget() < 0)
             errors.setError((InputUtils.Type.DEBT_LEND_TARGET));
         if (errors.hasError())
             return errors;
@@ -159,8 +158,12 @@ public class DebtLendDetailsViewModel extends AppViewModel {
             _debtLend.setDate(DateTimeUtils.getCurrentTimeMillis());
         }
 
-        if (_debtLend.getRecordId() == 0) appRepository.insertDebtLend(_debtLend);
-        else appRepository.updateDebtLend(_debtLend);
+        if (_debtLend.getRecordId() == 0) {
+            appRepository.insertDebtLendWithTarget(_debtLend, newRelate);
+        }
+        else {
+            appRepository.updateDebtLendWithTarget(_debtLend, newRelate);
+        }
         return errors;
     }
 }

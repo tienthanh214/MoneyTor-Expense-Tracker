@@ -51,6 +51,7 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         this.context = this.getApplicationContext();
         // do what you want
         this.setTitle("List spending");
+        initializeViews();
 
 //        spendingViewModel = new ViewModelProvider(this).get(SpendingViewModel.class);
 //        spendingViewModel.getAllSpending().observe(this, new Observer<List<Spending>>() {
@@ -70,7 +71,6 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
             }
         });
         filterViewModel.setFilterState(new FilterState());
-        initializeViews();
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override

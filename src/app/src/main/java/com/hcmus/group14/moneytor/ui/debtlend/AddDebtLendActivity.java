@@ -29,6 +29,7 @@ import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
 import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
+import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -49,9 +50,19 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
-        viewModel = new ViewModelProvider(this).get(DebtLendDetailsViewModel.class);
-        viewModel = binding.getViewModel();
         this.setTitle("Manage debt");
+
+        viewModel = new ViewModelProvider(this).get(DebtLendDetailsViewModel.class);
+        binding.setViewModel(viewModel);
+
+        int debtLendId = (int)getIntent().getIntExtra("debt_id", -1);
+        if (debtLendId != -1) {
+            // if click on item list view, load full info of a spending
+            viewModel.getDebtLendAndRelateById(debtLendId).observe(this, debtLend -> {
+                viewModel.uploadData(debtLend);
+            });
+        }
+
         setSpinner();
         setDatePickerDialog();
         setAddTarget();
@@ -76,7 +87,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
                 Bundle bundle = data.getExtras();
                 List<Relate> selectedContacts = (List<Relate>) bundle.getSerializable("contacts");
                 // bug here
-                //viewModel.setTarget(selectedContacts.get(0));
+                viewModel.setTarget(selectedContacts.get(0));
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -96,6 +107,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     }
 
     private void save() {
+        InputUtils errors = viewModel.saveDebtLend();
         boolean check = checkValid();
         if (check){
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();

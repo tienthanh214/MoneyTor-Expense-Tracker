@@ -19,6 +19,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class SpendingAdapter extends RecyclerView.Adapter<SpendingAdapter.SpendingViewHolder> {
     private LayoutInflater layoutInflater;
@@ -83,7 +84,7 @@ public class SpendingAdapter extends RecyclerView.Adapter<SpendingAdapter.Spendi
         }
 
         public void setValue(long value) {
-            valueView.setText(String.format("%,d", value) + " VNĐ");
+            valueView.setText(String.format(Locale.US, "%,d", value) + " VNĐ");
         }
 
         public SpendingViewHolder(@NonNull View itemView, SpendingAdapter adapter) {

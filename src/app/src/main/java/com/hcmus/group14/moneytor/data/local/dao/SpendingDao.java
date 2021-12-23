@@ -94,6 +94,11 @@ public abstract class SpendingDao {
         if (news != null) {
             for (Relate relate : news) {
                 long relateId = insertRelate(relate);
+                if (relateId == -1) {
+                    long[] result = getRelateIdByTel(relate.getTel());
+                    if (result.length > 0)
+                        relateId = result[0];
+                }
                 insertSpendingRelateCrossRef(new SpendingRelateCrossRef(spending.getSpendingId(), (int) relateId));
             }
         }
@@ -101,7 +106,6 @@ public abstract class SpendingDao {
 
     @Transaction
     public void deleteSpendingWithRelatesById(int id) {
-        Log.i("@@@ del speid", id + "");
         deleteSpendingById(id);
         deleteRelateBySpendingId(id);
     }
