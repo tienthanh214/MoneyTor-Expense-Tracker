@@ -14,6 +14,7 @@ import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.ui.analysis.AnalysisActivity;
 import com.hcmus.group14.moneytor.ui.debtlend.DebtLendActivity;
 import com.hcmus.group14.moneytor.ui.goal.GoalActivity;
+import com.hcmus.group14.moneytor.ui.setting.SettingsActivity;
 import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionSetting:
-
+                // Open setting activity
+                Intent settingIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(settingIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

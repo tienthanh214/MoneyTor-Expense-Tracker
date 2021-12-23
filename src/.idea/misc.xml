@@ -69,6 +69,8 @@
         <entry key="app/src/main/res/menu/contact_menu.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/menu/spending_menu.xml" value="0.35104166666666664" />
+        <entry key="app/src/main/res/xml/app_setting.xml" value="0.2390625" />
+        <entry key="app/src/main/res/xml/root_preferences.xml" value="0.23958333333333334" />
       </map>
     </option>
   </component>
