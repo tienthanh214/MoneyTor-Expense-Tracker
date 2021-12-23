@@ -28,7 +28,7 @@ import com.hcmus.group14.moneytor.services.spending.SpendingDetailsViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
-import com.hcmus.group14.moneytor.utils.CategoryAdapter;
+import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.Calendar;

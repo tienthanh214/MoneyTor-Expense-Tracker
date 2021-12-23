@@ -1,5 +1,7 @@
 package com.hcmus.group14.moneytor.data.local.dao;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -99,6 +101,7 @@ public abstract class SpendingDao {
 
     @Transaction
     public void deleteSpendingWithRelatesById(int id) {
+        Log.i("@@@ del speid", id + "");
         deleteSpendingById(id);
         deleteRelateBySpendingId(id);
     }

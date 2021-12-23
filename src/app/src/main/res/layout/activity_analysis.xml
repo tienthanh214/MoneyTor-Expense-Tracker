@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="Total"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/black"/>
 
@@ -31,8 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top_text"
                 android:layout_marginBottom="20dp"
-                android:text="X.XXX.XXX"
-                android:textSize="40dp"
+                android:id="@+id/totalAmountAnalyze"
+                android:textSize="40sp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/black"/>
 
@@ -53,7 +53,7 @@
                     android:paddingVertical="@dimen/text_padding_vertical"
                     android:layout_weight="3"
                     android:text="Average by date"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:gravity="center"
                     android:textColor="@color/black"/>
 
@@ -68,8 +68,8 @@
                     android:paddingHorizontal="@dimen/text_padding_horizontal"
                     android:paddingVertical="@dimen/text_padding_vertical"
                     android:layout_weight="2"
-                    android:text="X.XXX.XXX"
-                    android:textSize="25dp"
+                    android:id="@+id/averageByDateAnalyze"
+                    android:textSize="25sp"
                     android:gravity="center"
                     android:textColor="@color/black"/>
 
@@ -92,7 +92,7 @@
                     android:paddingVertical="@dimen/text_padding_vertical"
                     android:layout_weight="3"
                     android:text="Spending categories"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:gravity="center"
                     android:textColor="@color/black"/>
 
@@ -126,7 +126,7 @@
                 android:paddingVertical="@dimen/text_padding_vertical"
                 android:paddingHorizontal="@dimen/text_padding_horizontal"
                 android:text="Highest spending"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:gravity="left"
                 android:textColor="@color/black"/>
 
@@ -136,7 +136,7 @@
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/margin_top_text"
                 android:text="X.XXX.XXX"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:gravity="center"
                 android:textColor="@color/black"/>
 
@@ -146,7 +146,7 @@
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/margin_top_text"
                 android:text="for cat"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:gravity="center"
                 android:textColor="@color/black"/>
 

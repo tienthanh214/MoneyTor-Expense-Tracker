@@ -23,7 +23,7 @@ import com.hcmus.group14.moneytor.databinding.ActivityGoalDetailsBinding;
 import com.hcmus.group14.moneytor.services.goal.SpendGoalDetailsViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
-import com.hcmus.group14.moneytor.utils.CategoryAdapter;
+import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 

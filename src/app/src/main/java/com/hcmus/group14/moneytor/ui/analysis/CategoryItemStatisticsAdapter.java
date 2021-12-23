@@ -13,19 +13,21 @@ import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.services.analyze.AnalyzeViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CategoryItemStatisticsAdapter extends ArrayAdapter<String> {
 
     private final List<Category> items;
     private final Context context;
-    private final AnalyzeViewModel viewModel;
 
-    public CategoryItemStatisticsAdapter(Context context, int resource, List objects, AnalyzeViewModel viewModel) {
+    // statistics data
+    private HashMap<Category, Long> categoryDetail;
+
+    public CategoryItemStatisticsAdapter(Context context, int resource, List objects) {
         super(context, resource, 0, objects);
         this.context = context;
         items = objects;
-        this.viewModel = viewModel;
     }
 
     @Override
@@ -45,12 +47,23 @@ public class CategoryItemStatisticsAdapter extends ArrayAdapter<String> {
         TextView textView = view.findViewById(R.id.amount_stt);
         ImageView iconImageView = view.findViewById(R.id.icon_imageview_stt);
 
-        iconImageView.setImageResource(items.get(position).getResourceId());
-        iconImageView.setBackgroundTintList(ColorStateList.valueOf(items.get(position).getColor()));
+        Category category = items.get(position);
+        iconImageView.setImageResource(category.getResourceId());
+        iconImageView.setBackgroundTintList(ColorStateList.valueOf(category.getColor()));
         // TODO: get category statistics from view model
-        textView.setText("X.XXX.XXX");
-        //textView.setText(viewModel.getDetailsForCategories());
+        if (categoryDetail != null) {
+            Long value = categoryDetail.get(category);
+            if (value == null) value = 0L;
+            textView.setText(String.format("%,d", value) + " VNĐ");
+        }
         return view;
+    }
+
+    // function for update data
+    void setItems(HashMap<Category, Long> categoriesDetails) {
+        // if want to sort by value -> reorder items by value
+        this.categoryDetail = categoriesDetails;
+        notifyDataSetChanged();
     }
 
 }
