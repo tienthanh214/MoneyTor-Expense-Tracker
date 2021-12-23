@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,6 +41,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     private ActivityNoteSpendingBinding binding;
     private SpendingDetailsViewModel viewModel;
     private final int REQUEST_CODE_RELATE_CONTACT = 1234;
+    private int spendingId;
 
     @Override
     public int getLayoutId() {
@@ -55,7 +57,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         viewModel = new ViewModelProvider(this).get(SpendingDetailsViewModel.class);
         binding.setViewModel(viewModel);
 
-        int spendingId = (int)getIntent().getIntExtra("spending_id", -1);
+        spendingId = (int)getIntent().getIntExtra("spending_id", -1);
         if (spendingId != -1) {
             // if click on item list view, load full info of a spending
             viewModel.getSpendingWithRelatesById(spendingId).observe(this, spending -> {
@@ -92,6 +94,15 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (spendingId == -1) {
+            menu.findItem(R.id.actionDelete).setEnabled(false);
+            menu.findItem(R.id.actionDelete).setVisible(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionSave:
@@ -108,6 +119,8 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         boolean check = checkValidSpending();
         if (check){
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, SpendingActivity.class);
+            startActivity(intent);
         }
         else{
             Toast.makeText(getApplicationContext(), "Not a valid spending", Toast.LENGTH_SHORT).show();
@@ -117,12 +130,9 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     private boolean checkValidSpending() {
         EditText cost = binding.inputAmount;
         InputUtils errors = viewModel.saveSpending();
-        // TODO: check category
         if (errors.hasError()){
-            if (errors.isValid(InputUtils.Type.COST))
-                cost.setError("Amount of spending is required!");
-            // if (errors.isValid(InputUtils.Type.CATEGORY))
-            // cost.setError("Category of spending is required!");
+            if (!errors.isValid(InputUtils.Type.COST))
+                cost.setError("Amount is required!");
             return false;
         }
         return true;
@@ -141,6 +151,8 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
                 viewModel.deleteSpending();
                 Toast.makeText(getApplicationContext(), "Spending deleted",
                         Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(AddSpendingActivity.this, SpendingActivity.class);
+                AddSpendingActivity.this.startActivity(intent);
             }
         });
 
@@ -200,12 +212,9 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String item = parent.getItemAtPosition(position).toString();
         viewModel.setCategory(CategoriesUtils.getCategoryIdByPosition(position));
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
 
     }
 
