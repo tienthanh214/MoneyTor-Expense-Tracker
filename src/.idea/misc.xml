@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_analysis.xml" value="0.19747899159663865" />
         <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_main.xml" value="0.22146739130434784" />
         <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_spending.xml" value="0.2" />
         <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/content_spending.xml" value="0.1" />
@@ -53,6 +52,23 @@
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal_spending.xml" value="0.22" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_note_spending.xml" value="0.20416666666666666" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/category_item.xml" value="0.20416666666666666" />
+        <entry key="app/src/main/res/drawable/btn_bg.xml" value="0.21041666666666667" />
+        <entry key="app/src/main/res/drawable/ic_setting_background.xml" value="0.3671875" />
+        <entry key="app/src/main/res/drawable/ic_setting_foreground.xml" value="0.3671875" />
+        <entry key="app/src/main/res/layout/activity_contact.xml" value="0.2504528985507246" />
+        <entry key="app/src/main/res/layout/activity_debt_lend_details.xml" value="0.22291666666666668" />
+        <entry key="app/src/main/res/layout/activity_goal.xml" value="0.2504528985507246" />
+        <entry key="app/src/main/res/layout/activity_goal_details.xml" value="0.22291666666666668" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22291666666666668" />
+        <entry key="app/src/main/res/layout/activity_note_spending.xml" value="0.22291666666666668" />
+        <entry key="app/src/main/res/layout/activity_spending.xml" value="0.2504528985507246" />
+        <entry key="app/src/main/res/layout/content_contact.xml" value="0.2504528985507246" />
+        <entry key="app/src/main/res/layout/content_goal.xml" value="0.2504528985507246" />
+        <entry key="app/src/main/res/menu/appbar_spending_menu.xml" value="0.35104166666666664" />
+        <entry key="app/src/main/res/menu/contact_menu.xml" value="0.35104166666666664" />
+        <entry key="app/src/main/res/menu/main_menu.xml" value="0.35052083333333334" />
+        <entry key="app/src/main/res/menu/spending_menu.xml" value="0.35104166666666664" />
       </map>
     </option>
   </component>
