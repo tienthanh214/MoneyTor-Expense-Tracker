@@ -1,29 +1,25 @@
 package com.hcmus.group14.moneytor.ui.debtlend;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.DebtLend;
-import com.hcmus.group14.moneytor.data.model.SpendGoal;
-import com.hcmus.group14.moneytor.data.model.Spending;
+import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 import com.hcmus.group14.moneytor.databinding.ActivityDebtLendBinding;
-import com.hcmus.group14.moneytor.databinding.ActivityGoalBinding;
 import com.hcmus.group14.moneytor.services.debtlend.DebtLendViewModel;
-import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
-import com.hcmus.group14.moneytor.ui.goal.AddGoalActivity;
-import com.hcmus.group14.moneytor.ui.goal.GoalAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +29,7 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
     private AppBarConfiguration appBarConfiguration;
     private ActivityDebtLendBinding binding;
     private DebtLendViewModel debtLendViewModel;
-    private List<DebtLend> debtLends;
+    private List<DebtLendAndRelate> debtLends;
     private DebtLendAdapter debtLendAdapter;
     private Context context;
     SearchView searchView;
@@ -50,8 +46,20 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
         context = this.getApplicationContext();
 
         this.setTitle("Manage debt");
-        debtLends = getData();
         initializeViews();
+
+
+        debtLendViewModel = new ViewModelProvider(this).get(DebtLendViewModel.class);
+        debtLendViewModel.getAllDebtLends().observe(this, debtLends -> {
+            this.debtLends = debtLends;
+            debtLendAdapter.setDebtLends(debtLends);
+            // TODO: bug query not correct target id
+            for (int i = 0; i < debtLends.size(); ++i) {
+                Log.i("@@@ debt ", debtLends.get(i).debtLend.toString());
+                Log.i("@@@ target", debtLends.get(i).relate.getRelateId() + " ");
+            }
+        });
+//        filterViewModel.setFilterState(new FilterState());
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,13 +74,13 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
         List<DebtLend> data = new ArrayList<>();
         data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
         data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend("A",100000,2,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend("A",100000,3,1,1639586109000L,"this is a description"));
         data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
+        data.add(new DebtLend("A",100000,2,0,1639586109000L,"this is a description"));
         data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
         data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend("A",100000,3,0,1639586109000L,"this is a description"));
         data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
         data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
         data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
@@ -85,10 +93,10 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
         binding.debtLendList.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private List<DebtLend> filter(String text) {
-        List<DebtLend> filteredList = new ArrayList<>();
-        for (DebtLend item : debtLends) {
-            if (item.getDesc().toLowerCase().contains(text.toLowerCase())) {
+    private List<DebtLendAndRelate> filter(String text) {
+        List<DebtLendAndRelate> filteredList = new ArrayList<>();
+        for (DebtLendAndRelate item : debtLends) {
+            if (item.debtLend.getDesc().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }

@@ -118,4 +118,17 @@ public class DebtLend implements Serializable {
     {
         this.target = target;
     }
+
+    @Override
+    public String toString() {
+        return "DebtLend{" +
+                "recordId=" + recordId +
+                ", category='" + category + '\'' +
+                ", value=" + value +
+                ", target=" + target +
+                ", debt=" + debt +
+                ", date=" + date +
+                ", desc='" + desc + '\'' +
+                '}';
+    }
 }
