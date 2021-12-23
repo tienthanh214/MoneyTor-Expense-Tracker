@@ -65,7 +65,9 @@ public class ContactUtils {
                     relate.setTel(phoneNumber);
                 }
 
-                nameList.add(relate);
+                if (!relate.getTel().equals("N/A")) {
+                    nameList.add(relate);
+                }
 
                 if (cur.getInt(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
                     Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
