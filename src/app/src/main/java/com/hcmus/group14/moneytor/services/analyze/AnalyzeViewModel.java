@@ -42,7 +42,9 @@ public class AnalyzeViewModel extends AndroidViewModel {
     //Get the average
     public long getAverage(List<Spending> spendings)
     {
+        if (spendings.size() == 0) return 0;
         long sum = 0L;
+        
         for (Spending spending: spendings)
             sum += spending.getCost();
         return sum / (long)spendings.size();
