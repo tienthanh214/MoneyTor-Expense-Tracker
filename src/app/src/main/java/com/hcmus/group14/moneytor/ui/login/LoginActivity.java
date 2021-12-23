@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.firebase.UserProfile;
 import com.hcmus.group14.moneytor.ui.main.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         btnGoogleAuth = findViewById(R.id.btn_google_auth);
-        btnGoogleAuth.setOnClickListener(v -> signIn());
+        btnGoogleAuth.setOnClickListener(v -> logIn());
         btnNoAuth = findViewById(R.id.btn_no_auth);
         btnNoAuth.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -69,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-    private void signIn() {
+    private void logIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -120,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "No user",
                     Toast.LENGTH_SHORT).show();
         } else {
+            UserProfile.importUserProfile(this, user);
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
