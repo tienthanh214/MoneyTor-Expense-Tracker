@@ -142,7 +142,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
     public InputUtils saveDebtLend()
     {
         updateData();
-        Log.i("@@@ debt", _debtLend.toString());
+
         InputUtils errors = new InputUtils();
         if (_debtLend.getCategory().isEmpty())
             errors.setError(InputUtils.Type.CATEGORY);
@@ -166,4 +166,10 @@ public class DebtLendDetailsViewModel extends AppViewModel {
         }
         return errors;
     }
+    public void deleteDebtLend()
+    {
+        if (_debtLend != null && _debtLend.getRecordId() != 0)
+            appRepository.deleteDebtLend(_debtLend);
+    }
+
 }

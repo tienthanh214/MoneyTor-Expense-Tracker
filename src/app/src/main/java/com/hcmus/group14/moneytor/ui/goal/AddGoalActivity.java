@@ -160,7 +160,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
 
     private void setSpinner() {
         Spinner spinner = binding.spinnerCategory;
-        spinner.setOnItemSelectedListener(this);
+//        spinner.setOnItemSelectedListener(this);
 
         final List<Category> categories = CategoriesUtils.getDefaultCategories();
         CategoryAdapter categoryAdapter = new CategoryAdapter(this,

@@ -2,7 +2,6 @@ package com.hcmus.group14.moneytor.ui.spending;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +14,13 @@ import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class SpendingAdapter extends RecyclerView.Adapter<SpendingAdapter.SpendingViewHolder> {
-    private LayoutInflater layoutInflater;
+    private final LayoutInflater layoutInflater;
     private List<Spending> spendings;
-    private Context context;
+    private final Context context;
 
     public SpendingAdapter(Context context, List<Spending> spendingList) {
         layoutInflater = LayoutInflater.from(context);
@@ -36,8 +32,7 @@ public class SpendingAdapter extends RecyclerView.Adapter<SpendingAdapter.Spendi
     @Override
     public SpendingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = layoutInflater.inflate(R.layout.content_spending, parent, false);
-        SpendingViewHolder holder = new SpendingViewHolder(itemView, this);
-        return holder;
+        return new SpendingViewHolder(itemView, this);
     }
 
     @Override

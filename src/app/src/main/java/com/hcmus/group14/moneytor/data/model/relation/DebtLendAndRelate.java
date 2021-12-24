@@ -7,7 +7,7 @@ import androidx.room.*;
 public class DebtLendAndRelate {
     @Embedded public DebtLend debtLend;
     @Relation(
-            parentColumn = "recordId",
+            parentColumn = "target",
             entityColumn = "rel_id"
     ) public Relate relate;
 }

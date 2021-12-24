@@ -14,10 +14,10 @@ import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.DebtLend;
 import com.hcmus.group14.moneytor.data.model.Relate;
 import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
+import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DebtLendAdapter extends RecyclerView.Adapter<DebtLendAdapter.DebtLendViewHolder> {
     private final LayoutInflater layoutInflater;
@@ -81,13 +81,11 @@ public class DebtLendAdapter extends RecyclerView.Adapter<DebtLendAdapter.DebtLe
         }
 
         public void setDate(long date) {
-            Date temp = new Date(date);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            dateView.setText(dateFormat.format(temp));
+            dateView.setText(DateTimeUtils.getDate(date));
         }
 
         public void setValue(long value) {
-            valueView.setText(String.format("%,d", value) + " VNĐ");
+            valueView.setText(String.format(Locale.US, "%,d", value) + " VNĐ");
         }
 
         public DebtLendViewHolder(@NonNull View itemView, DebtLendAdapter adapter) {
