@@ -54,16 +54,6 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
         this.setTitle("Manage debt");
         initializeViews();
 
-//        debtLendViewModel = new ViewModelProvider(this).get(DebtLendViewModel.class);
-//        debtLendViewModel.getAllDebtLends().observe(this, debtLends -> {
-//            this.debtLends = debtLends;
-//            debtLendAdapter.setDebtLends(debtLends);
-//            // TODO: bug query not correct target id
-//            for (int i = 0; i < debtLends.size(); ++i) {
-//                Log.i("@@@ debt ", debtLends.get(i).debtLend.toString());
-//                Log.i("@@@ target", debtLends.get(i).relate.getRelateId() + " ");
-//            }
-//        });
         viewModel = new ViewModelProvider(this).get(FilterViewModel.class);
         viewModel.getAllDebtLend().observe(this, debtLends -> {
             this.debtLends = debtLends;

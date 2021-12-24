@@ -54,7 +54,6 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         this.setTitle("List spending");
         initializeViews();
 
-        // test
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
         filterViewModel.getAllSending().observe(this, spendingList -> {
             spendings = spendingList;

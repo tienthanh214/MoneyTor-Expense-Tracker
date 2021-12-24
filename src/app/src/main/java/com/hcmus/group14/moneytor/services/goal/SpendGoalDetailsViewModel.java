@@ -18,19 +18,20 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class SpendGoalDetailsViewModel extends AppViewModel {
-    final MutableLiveData<String> _amount;
-    final MutableLiveData<Integer> _category;
-    final MutableLiveData<String> _date;
-    final MutableLiveData<String> _description;
+    private final MutableLiveData<String> _amount;
+    private final MutableLiveData<Integer> _category;
+    private final MutableLiveData<String> _date;
+    private final MutableLiveData<String> _description;
 
     private SpendGoal _goal;
 
     public SpendGoalDetailsViewModel(@NonNull Application application) {
         super(application);
         _amount = new MutableLiveData<>("");
-        _category = new MutableLiveData<>(0);
         _date = new MutableLiveData<>(DateTimeUtils.getDate(-1));
         _description = new MutableLiveData<>("");
+        _category = new MutableLiveData<>();
+
     }
 
     public LiveData<List<SpendGoal>> getSpendGoalById(int goalId) {
@@ -38,13 +39,14 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
     }
 
     public void uploadData(List<SpendGoal> goalList) {
-        if (goalList.size() > 0) {
+        if (goalList.size() > 0 && _goal == null) {
             _goal = goalList.get(0);
+            Log.i("@@@ load", _goal.toString());
             setAmount(_goal.getSpendingCap());
-            setCategory(_goal.getCategory());
             setDescription(_goal.getDesc());
             setDate(_goal.getDate());
-            Log.i("@@@", _goal.toString());
+            setCategory(_goal.getCategory());
+
         }
     }
 
@@ -78,7 +80,9 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
 
     public void setCategory(String id) {
         int position = CategoriesUtils.findPositionById(id);
-        _category.setValue(position);
+        Log.i("set @@@", position + " " + id);
+        if (position != -1)
+            _category.setValue(position);
     }
 
     void updateData() {
@@ -94,7 +98,7 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
         }
     }
 
-    public InputUtils saveSpending() {
+    public InputUtils saveSpendGoal() {
         updateData();
         Log.i("@@@ goal", _goal.toString());
         InputUtils errors = new InputUtils();
@@ -102,17 +106,18 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
             errors.setError(InputUtils.Type.CATEGORY);
         if (_goal.getSpendingCap() <= 0)
             errors.setError(InputUtils.Type.COST);
+
         if (errors.hasError())
             return errors;
         if (_goal.getGoalID() == 0) {
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            Timestamp timestamp = new Timestamp(DateTimeUtils.getCurrentTimeMillis());
             _goal.setGoalID(timestamp.hashCode());
             appRepository.insertSpendGoal(_goal);
         } else {
             appRepository.updateSpendGoal(_goal);
-            NotificationUtils.cancelGoalNotif(getApplication().getApplicationContext(), _goal);
+//            NotificationUtils.cancelGoalNotif(getApplication().getApplicationContext(), _goal);
         }
-        setUpNotification();
+//        setUpNotification();
         return errors;
     }
 

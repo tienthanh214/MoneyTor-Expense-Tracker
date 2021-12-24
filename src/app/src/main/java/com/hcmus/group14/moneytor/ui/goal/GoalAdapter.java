@@ -14,11 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
-import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
-import com.hcmus.group14.moneytor.utils.DateTimeUtils;
-import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
+import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 
 import java.util.List;
 import java.util.Locale;
@@ -69,11 +67,11 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
     }
 
     public class GoalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView descView;
-        private TextView dateView;
-        private TextView valueView;
-        private GoalAdapter adapter;
-        private ImageView imageView;
+        private final TextView descView;
+        private final TextView dateView;
+        private final TextView valueView;
+        private final GoalAdapter adapter;
+        private final ImageView imageView;
 
 
         public void setDesc(String desc) {

@@ -1,6 +1,7 @@
 package com.hcmus.group14.moneytor.data.local.dao;
 
 import androidx.room.Dao;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Insert;
 import androidx.lifecycle.LiveData;
@@ -14,7 +15,7 @@ import androidx.room.Delete;
 @Dao
 public interface SpendGoalDao {
     //Data manipulation queries
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(SpendGoal spendGoal);
     @Update
     void update(SpendGoal... spendGoals);

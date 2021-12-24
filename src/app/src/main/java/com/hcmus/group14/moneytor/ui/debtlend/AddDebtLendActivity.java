@@ -117,7 +117,6 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     }
 
     private void save() {
-        InputUtils errors = viewModel.saveDebtLend();
         boolean check = checkValid();
         if (check){
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
@@ -213,10 +212,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        String item = parent.getItemAtPosition(position).toString();
-
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        viewModel.setCategory(CategoriesUtils.getCategoryIdByPosition(position));
     }
     public void onNothingSelected(AdapterView<?> arg0) {
 
