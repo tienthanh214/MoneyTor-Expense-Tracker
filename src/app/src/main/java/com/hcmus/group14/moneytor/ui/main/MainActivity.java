@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.model.UserPref;
 import com.hcmus.group14.moneytor.firebase.FirebaseHelper;
 import com.hcmus.group14.moneytor.ui.analysis.AnalysisActivity;
 import com.hcmus.group14.moneytor.ui.debtlend.DebtLendActivity;
@@ -36,12 +37,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Sync user data for first login
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            // TODO: skip update data for users who have logged in this phone before
-            updateData(user);
-        }
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        // TODO: skip update data for users who have logged in this phone before
+        // TODO: show a loading circle while synchronizing data
+        if (user != null) updateData(user);
     }
 
     public void onOpenSpendingList(View view) {
@@ -94,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    // TODO: let user choose between import cloud data or upload current data
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Cloud data detected");
                     builder.setPositiveButton("Retrieve progress",
@@ -130,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void downloadUserPref(FirebaseUser user) {
-
+        // TODO: implmemt this
     }
 
     private void uploadData(FirebaseUser user) {
@@ -140,8 +138,10 @@ public class MainActivity extends AppCompatActivity {
     private void uploadUserPref(FirebaseUser user) {
         // Update user name
         String name = PreferenceUtils.getString(
-                PreferenceUtils.getInstance(this, getString(R.string.user_profile)),
-                getString(R.string.user_name),
+                PreferenceUtils.getInstance(this, PreferenceUtils.USER_PROFILE),
+                PreferenceUtils.USER_NAME,
                 getString(R.string.default_username));
+        UserPref userPref = new UserPref(name, user.getUid(), user.getEmail());
+        FirebaseHelper.putUser(userPref, user);
     }
 }

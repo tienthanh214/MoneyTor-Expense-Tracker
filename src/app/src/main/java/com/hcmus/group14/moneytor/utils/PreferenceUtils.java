@@ -4,6 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class PreferenceUtils {
+    //    <string name="user_profile">user_profile</string>
+//    <string name="user_photo">user_photo</string>
+//    <string name="user_name">user_name</string>
+    public static final String USER_PROFILE = "user_profile";
+    public static final String USER_NAME = "user_name";
+    public static final String USER_ID = "user_id";
+    public static final String USER_EMAIL = "user_email";
 
     public static SharedPreferences getInstance(Context context, String prefName) {
         return context.getSharedPreferences(prefName, Context.MODE_PRIVATE);

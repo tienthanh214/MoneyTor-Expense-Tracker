@@ -54,7 +54,4 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="user_profile_preference">user_profile_preference</string>
     <string name="default_username">New user</string>
-    <string name="user_profile">user_profile</string>
-    <string name="user_photo">user_photo</string>
-    <string name="user_name">user_name</string>
 </resources>
