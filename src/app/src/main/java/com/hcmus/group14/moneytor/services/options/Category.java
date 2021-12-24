@@ -7,6 +7,8 @@ import com.hcmus.group14.moneytor.R;
 
 public enum Category
 {
+    OTHERS("Others", R.drawable.ic_category_others,
+            Color.parseColor("#455a64")),
     FOOD_AND_DRINK("Food & Drink", R.drawable.ic_category_food_and_drink,
             Color.parseColor("#d32f2f")),       //Food and drink related
     TRAFFIC("Traffic", R.drawable.ic_category_traffic,
@@ -30,9 +32,7 @@ public enum Category
     MAKEUP("Makeup", R.drawable.ic_category_makeup,
             Color.parseColor("#689f38")),       //Beauty expenses
     ENTERTAINMENT("Entertainment", R.drawable.ic_category_entertainment,
-            Color.parseColor("#afb42b")),       //For fun stuff
-    OTHERS("Others", R.drawable.ic_category_others,
-            Color.parseColor("#455a64"));
+            Color.parseColor("#afb42b"));       //For fun stuff
 
     private final String name;
     private final int resourceId;

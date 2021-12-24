@@ -2,9 +2,11 @@ package com.hcmus.group14.moneytor.ui.goal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,9 @@ import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
 import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
+import com.hcmus.group14.moneytor.data.model.Spending;
+import com.hcmus.group14.moneytor.services.options.Category;
+import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 
 import java.util.List;
 import java.util.Locale;
@@ -42,6 +47,8 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
         holder.setDesc(currentSpendingGoal.getDesc());
         holder.setValue(currentSpendingGoal.getSpendingCap());
         holder.setDate(currentSpendingGoal.getDate());
+        Category category = CategoriesUtils.findCategoryById(currentSpendingGoal.getCategory());
+        holder.setImage(category.getColor(),category.getResourceId());
     }
 
     public void setSpendGoals(List<SpendGoal> goalList){
@@ -66,6 +73,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
         private TextView dateView;
         private TextView valueView;
         private GoalAdapter adapter;
+        private ImageView imageView;
 
 
         public void setDesc(String desc) {
@@ -80,12 +88,18 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
             valueView.setText(String.format(Locale.US, "%,d", value) + " VNĐ");
         }
 
+        public void setImage(int color, int resource){
+            imageView.setImageResource(resource);
+            imageView.setBackgroundTintList(ColorStateList.valueOf(color));
+        }
+
         public GoalViewHolder(@NonNull View itemView, GoalAdapter adapter) {
             super(itemView);
             this.adapter = adapter;
             this.descView = itemView.findViewById(R.id.descSpendingGoalItem);
             this.dateView = itemView.findViewById(R.id.dateSpendingGoalItem);
             this.valueView = itemView.findViewById(R.id.valueSpendingGoalItem);
+            this.imageView = itemView.findViewById(R.id.categorySpendingGoalItem);
             itemView.setOnClickListener(this);
         }
 

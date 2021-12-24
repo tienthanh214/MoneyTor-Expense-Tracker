@@ -7,12 +7,15 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Moneytor">
+        <activity
+            android:name=".ui.analysis.Visualize"
+            android:exported="false" />
         <activity
             android:name=".ui.setting.SettingsActivity"
             android:exported="true"
@@ -59,7 +62,7 @@
             android:label="@string/title_activity_spending" />
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="true" />
+            android:exported="true"></activity>
 
         <receiver
             android:name=".services.notification.receiver.GoalBroadcastReceiver"

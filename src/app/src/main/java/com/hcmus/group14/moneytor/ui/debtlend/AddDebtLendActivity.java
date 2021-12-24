@@ -1,11 +1,5 @@
 package com.hcmus.group14.moneytor.ui.debtlend;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
-
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +13,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.Relate;
@@ -40,6 +40,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     private ActivityDebtLendDetailsBinding binding;
     private DebtLendDetailsViewModel viewModel;
     private final int REQUEST_CODE_RELATE_CONTACT = 1234;
+    private int debtLendId;
 
     @Override
     public int getLayoutId() {
@@ -94,6 +95,15 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (debtLendId == -1) {
+            menu.findItem(R.id.actionDelete).setEnabled(false);
+            menu.findItem(R.id.actionDelete).setVisible(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionSave:
@@ -111,6 +121,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
         boolean check = checkValid();
         if (check){
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
+            finish();
         }
         else{
             Toast.makeText(getApplicationContext(), "Not a valid spending", Toast.LENGTH_SHORT).show();
@@ -119,14 +130,10 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
 
     private boolean checkValid() {
         EditText cost = binding.inputAmount;
-        // TODO: call check amount and category from utils
-        //InputUtils errors = viewModel.saveGoal();
-        //if (errors.hasError()){
-        if (cost.length() == 0){
-            // if error type is cost
-            cost.setError("Amount of spending is required!");
-            // if error type is category
-            // cost.setError("Category of spending is required!");
+        InputUtils errors = viewModel.saveDebtLend();
+        if (errors.hasError()){
+            if (!errors.isValid(InputUtils.Type.COST))
+                cost.setError("Amount is required!");
             return false;
         }
         return true;
@@ -142,9 +149,10 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // view model delete spending
-                Toast.makeText(getApplicationContext(), "Spending deleted",
+                // TODO: viewModel.delete()
+                Toast.makeText(getApplicationContext(), "Debt/Lend deleted",
                         Toast.LENGTH_LONG).show();
+                AddDebtLendActivity.this.finish();
             }
         });
 
@@ -211,7 +219,6 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
 
     }
 
