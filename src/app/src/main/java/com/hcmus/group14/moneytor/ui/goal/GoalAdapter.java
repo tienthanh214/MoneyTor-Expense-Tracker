@@ -1,6 +1,7 @@
 package com.hcmus.group14.moneytor.ui.goal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
-import com.hcmus.group14.moneytor.data.model.Spending;
+import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder> {
-    private LayoutInflater layoutInflater;
+    private final LayoutInflater layoutInflater;
     private List<SpendGoal> goals;
-    private Context context;
+    private final Context context;
 
     public GoalAdapter(Context context, List<SpendGoal> goalList) {
         layoutInflater = LayoutInflater.from(context);
@@ -33,8 +32,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
     @Override
     public GoalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = layoutInflater.inflate(R.layout.content_goal, parent, false);
-        GoalViewHolder holder = new GoalViewHolder(itemView, this);
-        return holder;
+        return new GoalViewHolder(itemView, this);
     }
 
     @Override
@@ -69,13 +67,11 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
         }
 
         public void setDate(long date) {
-            Date temp = new Date(date);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            dateView.setText(dateFormat.format(temp));
+            dateView.setText(DateTimeUtils.getDate(date));
         }
 
         public void setValue(long value) {
-            valueView.setText(String.format("%,d", value) + " VNĐ");
+            valueView.setText(String.format(Locale.US, "%,d", value) + " VNĐ");
         }
 
         public GoalViewHolder(@NonNull View itemView, GoalAdapter adapter) {
@@ -84,11 +80,16 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
             this.descView = itemView.findViewById(R.id.descSpendingGoalItem);
             this.dateView = itemView.findViewById(R.id.dateSpendingGoalItem);
             this.valueView = itemView.findViewById(R.id.valueSpendingGoalItem);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             // open activity
+            int position = this.getAdapterPosition();
+            Intent intent = new Intent(context, AddGoalActivity.class);
+            intent.putExtra("spending_id", goals.get(position).getGoalID());
+            context.startActivity(intent);
         }
     }
 }

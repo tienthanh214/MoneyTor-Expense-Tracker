@@ -142,7 +142,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
     public InputUtils saveDebtLend()
     {
         updateData();
-        Log.i("@@@ debt", _debtLend.toString());
+
         InputUtils errors = new InputUtils();
         if (_debtLend.getCategory().isEmpty())
             errors.setError(InputUtils.Type.CATEGORY);
