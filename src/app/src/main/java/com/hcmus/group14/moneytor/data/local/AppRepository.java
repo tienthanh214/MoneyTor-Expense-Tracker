@@ -206,4 +206,8 @@ public class AppRepository {
     {
         AppRoomDatabase.databaseWriteExecutor.execute(()->debtLendDao.update(debtLend));
     }
+    public void deleteDebtLend(DebtLend debtLend)
+    {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> debtLendDao.deleteDebtLend(debtLend));
+    }
 }
