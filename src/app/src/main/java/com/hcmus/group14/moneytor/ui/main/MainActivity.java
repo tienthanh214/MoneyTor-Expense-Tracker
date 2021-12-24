@@ -45,22 +45,23 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void onOpenSetting() {
+        Intent settingIntent = new Intent(this, SettingsActivity.class);
+        startActivity(settingIntent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionSetting:
-                // Open setting activity
-                Intent settingIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(settingIntent);
-                return true;
+        if (item.getItemId() == R.id.actionSetting) {
+            onOpenSetting();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
