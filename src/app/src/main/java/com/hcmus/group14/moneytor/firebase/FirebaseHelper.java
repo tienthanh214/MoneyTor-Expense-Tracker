@@ -2,10 +2,7 @@ package com.hcmus.group14.moneytor.firebase;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,23 +33,13 @@ public class FirebaseHelper {
                 });
     }
 
-    public static void getUser(FirebaseUser user) {
+    public static void getUser(FirebaseUser user,
+                               OnCompleteListener<DocumentSnapshot> onCompleteListener) {
         if (user == null) return;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(COLLECTION_USERS).document(user.getUid())
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot documentSnapshot = task.getResult();
-                            if (documentSnapshot.exists()) {
-                                UserPref userPref = documentSnapshot.toObject(UserPref.class);
-
-                            } else Log.d(TAG, "No such document");
-                        } else Log.d(TAG, "get failed with ", task.getException());
-                    }
-                });
+                .addOnCompleteListener(onCompleteListener);
     }
 
     public static void putSpending(Spending spending, FirebaseUser user) {

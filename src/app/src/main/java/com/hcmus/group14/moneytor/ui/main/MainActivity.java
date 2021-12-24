@@ -14,6 +14,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -129,6 +131,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void downloadUserPref(FirebaseUser user) {
         // TODO: implmemt this
+        FirebaseHelper.getUser(user, new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()) {
+                        UserPref userPref = documentSnapshot.toObject(UserPref.class);
+                        UserPref.saveToSharedPref(MainActivity.this, userPref);
+                    } else Log.d(TAG, "No such document");
+                } else Log.d(TAG, "get failed with ", task.getException());
+            }
+        });
     }
 
     private void uploadData(FirebaseUser user) {
