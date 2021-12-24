@@ -16,9 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.DebtLend;
+import com.hcmus.group14.moneytor.data.model.FilterState;
 import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 import com.hcmus.group14.moneytor.databinding.ActivityDebtLendBinding;
 import com.hcmus.group14.moneytor.services.debtlend.DebtLendViewModel;
+import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 
 import java.util.ArrayList;
@@ -34,6 +36,8 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
     private Context context;
     SearchView searchView;
 
+    private FilterViewModel viewModel;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_debt_lend;
@@ -48,18 +52,22 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
         this.setTitle("Manage debt");
         initializeViews();
 
-
-        debtLendViewModel = new ViewModelProvider(this).get(DebtLendViewModel.class);
-        debtLendViewModel.getAllDebtLends().observe(this, debtLends -> {
+//        debtLendViewModel = new ViewModelProvider(this).get(DebtLendViewModel.class);
+//        debtLendViewModel.getAllDebtLends().observe(this, debtLends -> {
+//            this.debtLends = debtLends;
+//            debtLendAdapter.setDebtLends(debtLends);
+//            // TODO: bug query not correct target id
+//            for (int i = 0; i < debtLends.size(); ++i) {
+//                Log.i("@@@ debt ", debtLends.get(i).debtLend.toString());
+//                Log.i("@@@ target", debtLends.get(i).relate.getRelateId() + " ");
+//            }
+//        });
+        viewModel = new ViewModelProvider(this).get(FilterViewModel.class);
+        viewModel.getAllDebtLend().observe(this, debtLends -> {
             this.debtLends = debtLends;
             debtLendAdapter.setDebtLends(debtLends);
-            // TODO: bug query not correct target id
-            for (int i = 0; i < debtLends.size(); ++i) {
-                Log.i("@@@ debt ", debtLends.get(i).debtLend.toString());
-                Log.i("@@@ target", debtLends.get(i).relate.getRelateId() + " ");
-            }
         });
-//        filterViewModel.setFilterState(new FilterState());
+        viewModel.setFilterState(new FilterState());
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override

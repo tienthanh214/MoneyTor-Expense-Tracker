@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity(tableName = "spending_table")
-public class Spending implements Serializable {
+public class Spending implements Note {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "spending_id")
     int spendingId;

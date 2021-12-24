@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
+import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 
 import java.util.List;
@@ -41,6 +42,11 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
         holder.setDesc(currentSpendingGoal.getDesc());
         holder.setValue(currentSpendingGoal.getSpendingCap());
         holder.setDate(currentSpendingGoal.getDate());
+    }
+
+    public void setSpendGoals(List<SpendGoal> goalList){
+        goals = goalList;
+        notifyDataSetChanged();
     }
 
     public void filterList(List<SpendGoal> filteredList){
@@ -88,7 +94,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
             // open activity
             int position = this.getAdapterPosition();
             Intent intent = new Intent(context, AddGoalActivity.class);
-            intent.putExtra("spending_id", goals.get(position).getGoalID());
+            intent.putExtra("goal_id", goals.get(position).getGoalID());
             context.startActivity(intent);
         }
     }

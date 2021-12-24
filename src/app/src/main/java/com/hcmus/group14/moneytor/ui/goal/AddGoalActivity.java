@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,6 +53,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
         int goalId = (int)getIntent().getIntExtra("goal_id", -1);
         if (goalId != -1) {
             // if click on item list view, load full info of a goal
+            Log.i("@@@ goal", goalId + " ");
             viewModel.getSpendGoalById(goalId).observe(this, goal -> {
                 viewModel.uploadData(goal);
             });

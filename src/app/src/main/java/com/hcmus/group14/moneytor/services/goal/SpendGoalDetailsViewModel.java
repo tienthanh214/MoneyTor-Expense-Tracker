@@ -44,6 +44,7 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
             setCategory(_goal.getCategory());
             setDescription(_goal.getDesc());
             setDate(_goal.getDate());
+            Log.i("@@@", _goal.toString());
         }
     }
 

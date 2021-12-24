@@ -11,6 +11,7 @@ import androidx.room.Delete;
 import androidx.room.Query;
 import com.hcmus.group14.moneytor.data.model.DebtLend;
 import com.hcmus.group14.moneytor.data.model.Relate;
+import com.hcmus.group14.moneytor.data.model.SpendGoal;
 import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 
 import androidx.lifecycle.LiveData;
@@ -75,4 +76,12 @@ public abstract class DebtLendDao {
         debtLend.setTarget((int)targetId);
         update(debtLend);
     }
+
+    @Query("SELECT * FROM debt_lend_table WHERE (date BETWEEN :startDate AND :endDate) AND (category IN (:cats))")
+    public abstract LiveData<List<DebtLendAndRelate>> filterByCategoryAndTime(List<String> cats, long startDate, long endDate);
+    @Query("SELECT * FROM debt_lend_table WHERE category IN (:cats)")
+    public abstract LiveData<List<DebtLendAndRelate>> filterByCategories(List<String> cats);
+    @Query("SELECT * FROM debt_lend_table WHERE date BETWEEN :startDate AND :endDate")
+    public abstract LiveData<List<DebtLendAndRelate>> filterByTime(long startDate, long endDate);
+
 }

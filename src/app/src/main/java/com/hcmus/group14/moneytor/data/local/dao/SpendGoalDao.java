@@ -7,26 +7,37 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Update;
 import java.util.List;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
+import com.hcmus.group14.moneytor.data.model.Spending;
+
 import androidx.room.Delete;
 
 @Dao
 public interface SpendGoalDao {
     //Data manipulation queries
     @Insert
-    public void insert(SpendGoal spendGoal);
+    void insert(SpendGoal spendGoal);
     @Update
-    public void update(SpendGoal... spendGoals);
+    void update(SpendGoal... spendGoals);
     @Query("delete from spend_goal_table")
-    public void deleteAllSpendGoals();
+    void deleteAllSpendGoals();
     @Query("delete from spend_goal_table where goalID = :id")
-    public void deleteSpendGoal(int id);
+    void deleteSpendGoal(int id);
     @Delete
-    public void deleteSpendGoal(SpendGoal spendGoal);
+    void deleteSpendGoal(SpendGoal spendGoal);
 
 
     //Total data retrieval
     @Query("select * from spend_goal_table order by date desc")
-    public LiveData<List<SpendGoal>> getAllSpendGoals();
+    LiveData<List<SpendGoal>> getAllSpendGoals();
     @Query("select * from spend_goal_table where goalID = :id LIMIT 1")
-    public LiveData<List<SpendGoal>> getSpendGoalByID(int id);
+    LiveData<List<SpendGoal>> getSpendGoalByID(int id);
+
+    //filter
+    @Query("SELECT * FROM spend_goal_table WHERE (date BETWEEN :startDate AND :endDate) AND (category IN (:cats))")
+    LiveData<List<SpendGoal>> filterByCategoryAndTime(List<String> cats, long startDate, long endDate);
+    @Query("SELECT * FROM spend_goal_table WHERE category IN (:cats)")
+    LiveData<List<SpendGoal>> filterByCategories(List<String> cats);
+    @Query("SELECT * FROM spend_goal_table WHERE date BETWEEN :startDate AND :endDate")
+    LiveData<List<SpendGoal>> filterByTime(long startDate, long endDate);
+
 }

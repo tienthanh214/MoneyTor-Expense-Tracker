@@ -21,7 +21,7 @@ goal which should be 100 characters or less, or leave it blank.
 
 
 @Entity(tableName = "spend_goal_table")
-public class SpendGoal implements Serializable {
+public class SpendGoal implements Note {
     @PrimaryKey(autoGenerate = true)
     private int goalID = 0;
 
