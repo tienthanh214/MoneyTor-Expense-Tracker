@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,8 +27,8 @@ import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.services.spending.SpendingDetailsViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
-import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
+import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.Calendar;
@@ -119,8 +118,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         boolean check = checkValidSpending();
         if (check){
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, SpendingActivity.class);
-            startActivity(intent);
+            finish();
         }
         else{
             Toast.makeText(getApplicationContext(), "Not a valid spending", Toast.LENGTH_SHORT).show();
@@ -151,8 +149,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
                 viewModel.deleteSpending();
                 Toast.makeText(getApplicationContext(), "Spending deleted",
                         Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(AddSpendingActivity.this, SpendingActivity.class);
-                AddSpendingActivity.this.startActivity(intent);
+                AddSpendingActivity.this.finish();
             }
         });
 

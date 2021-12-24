@@ -1,11 +1,5 @@
 package com.hcmus.group14.moneytor.ui.debtlend;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
-
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +14,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
+
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.Relate;
 import com.hcmus.group14.moneytor.databinding.ActivityDebtLendDetailsBinding;
@@ -28,8 +28,6 @@ import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
 import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
-import com.hcmus.group14.moneytor.ui.spending.AddSpendingActivity;
-import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 
@@ -112,8 +110,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
         boolean check = checkValid();
         if (check){
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, DebtLendActivity.class);
-            startActivity(intent);
+            finish();
         }
         else{
             Toast.makeText(getApplicationContext(), "Not a valid spending", Toast.LENGTH_SHORT).show();
@@ -124,7 +121,8 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
         EditText cost = binding.inputAmount;
         InputUtils errors = viewModel.saveDebtLend();
         if (errors.hasError()){
-            cost.setError("Amount is required!");
+            if (!errors.isValid(InputUtils.Type.COST))
+                cost.setError("Amount is required!");
             return false;
         }
         return true;
@@ -143,8 +141,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
                 // TODO: viewModel.delete()
                 Toast.makeText(getApplicationContext(), "Debt/Lend deleted",
                         Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(AddDebtLendActivity.this, DebtLendActivity.class);
-                AddDebtLendActivity.this.startActivity(intent);
+                AddDebtLendActivity.this.finish();
             }
         });
 

@@ -1,13 +1,7 @@
 package com.hcmus.group14.moneytor.ui.goal;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
-
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,14 +13,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
+
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.databinding.ActivityGoalDetailsBinding;
 import com.hcmus.group14.moneytor.services.goal.SpendGoalDetailsViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
-import com.hcmus.group14.moneytor.ui.spending.AddSpendingActivity;
-import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 
@@ -92,8 +89,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
         boolean check = checkValidGoal();
         if (check){
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, GoalActivity.class);
-            startActivity(intent);
+            finish();
         }
         else{
             Toast.makeText(getApplicationContext(), "Not a valid spending", Toast.LENGTH_SHORT).show();
@@ -123,8 +119,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
                 viewModel.deleteGoal();
                 Toast.makeText(getApplicationContext(), "Goal deleted",
                         Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(AddGoalActivity.this, GoalActivity.class);
-                AddGoalActivity.this.startActivity(intent);
+                AddGoalActivity.this.finish();
             }
         });
 
