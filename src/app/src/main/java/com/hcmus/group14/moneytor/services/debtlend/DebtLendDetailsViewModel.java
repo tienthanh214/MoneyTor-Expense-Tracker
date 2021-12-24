@@ -171,4 +171,5 @@ public class DebtLendDetailsViewModel extends AppViewModel {
         if (_debtLend != null && _debtLend.getRecordId() != 0)
             appRepository.deleteDebtLend(_debtLend);
     }
+
 }

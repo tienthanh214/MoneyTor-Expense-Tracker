@@ -213,4 +213,7 @@ public class AppRepository {
     public void updateDebtLendWithTarget(DebtLend debtLend, Relate target) {
         AppRoomDatabase.databaseWriteExecutor.execute(()->debtLendDao.updateDebtLendWithTarget(debtLend, target));
     }
+    public void deleteDebtLend(DebtLend debtLend) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> debtLendDao.deleteDebtLend(debtLend));
+    }
 }
