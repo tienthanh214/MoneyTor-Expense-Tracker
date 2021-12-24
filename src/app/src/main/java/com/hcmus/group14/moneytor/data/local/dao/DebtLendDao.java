@@ -1,19 +1,18 @@
 package com.hcmus.group14.moneytor.data.local.dao;
 
-import android.util.Log;
-
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
-import androidx.room.Delete;
-import androidx.room.Query;
+
 import com.hcmus.group14.moneytor.data.model.DebtLend;
 import com.hcmus.group14.moneytor.data.model.Relate;
 import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 
-import androidx.lifecycle.LiveData;
 import java.util.List;
 
 @Dao
@@ -75,4 +74,17 @@ public abstract class DebtLendDao {
         debtLend.setTarget((int)targetId);
         update(debtLend);
     }
+
+    @Transaction
+    @Query("SELECT * FROM debt_lend_table WHERE (date BETWEEN :startDate AND :endDate) AND (category IN (:cats))")
+    public abstract LiveData<List<DebtLendAndRelate>> filterByCategoryAndTime(List<String> cats, long startDate, long endDate);
+
+    @Transaction
+    @Query("SELECT * FROM debt_lend_table WHERE category IN (:cats)")
+    public abstract LiveData<List<DebtLendAndRelate>> filterByCategories(List<String> cats);
+
+    @Transaction
+    @Query("SELECT * FROM debt_lend_table WHERE date BETWEEN :startDate AND :endDate")
+    public abstract LiveData<List<DebtLendAndRelate>> filterByTime(long startDate, long endDate);
+
 }

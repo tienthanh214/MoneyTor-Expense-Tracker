@@ -1,13 +1,9 @@
 package com.hcmus.group14.moneytor.ui.goal;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
-
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +13,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.databinding.ActivityGoalDetailsBinding;
@@ -35,6 +36,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
     private AppBarConfiguration appBarConfiguration;
     private ActivityGoalDetailsBinding binding;
     private SpendGoalDetailsViewModel viewModel;
+    private int goalId;
 
     @Override
     public int getLayoutId() {
@@ -46,11 +48,12 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
         super.onCreate(savedInstanceState);
         this.setTitle("Spending goal");
         binding = getViewDataBinding();
+
         viewModel = new ViewModelProvider(this).get(SpendGoalDetailsViewModel.class);
         binding.setViewModel(viewModel);
 
-        int goalId = (int)getIntent().getIntExtra("goal_id", -1);
-        if (goalId != -1) {
+        goalId = (int)getIntent().getIntExtra("goal_id", 0);
+        if (goalId != 0) {
             // if click on item list view, load full info of a goal
             viewModel.getSpendGoalById(goalId).observe(this, goal -> {
                 viewModel.uploadData(goal);
@@ -59,6 +62,15 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
 
         setSpinner();
         setDatePickerDialog();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (goalId == 0) {
+            menu.findItem(R.id.actionDelete).setEnabled(false);
+            menu.findItem(R.id.actionDelete).setVisible(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -75,10 +87,10 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
     }
 
     private void saveGoal() {
-        InputUtils error = viewModel.saveSpending();
         boolean check = checkValidGoal();
         if (check){
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
+            finish();
         }
         else{
             Toast.makeText(getApplicationContext(), "Not a valid spending", Toast.LENGTH_SHORT).show();
@@ -87,14 +99,9 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
 
     private boolean checkValidGoal() {
         EditText cost = binding.inputAmount;
-        // TODO: call check amount and category from utils
-        //InputUtils errors = viewModel.saveGoal();
-        //if (errors.hasError()){
-        if (cost.length() == 0){
-            // if error type is cost
-            cost.setError("Amount of spending is required!");
-            // if error type is category
-            // cost.setError("Category of spending is required!");
+        InputUtils errors = viewModel.saveSpendGoal();
+        if (errors.hasError()){
+            cost.setError("Amount is required!");
             return false;
         }
         return true;
@@ -113,6 +120,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
                 viewModel.deleteGoal();
                 Toast.makeText(getApplicationContext(), "Goal deleted",
                         Toast.LENGTH_LONG).show();
+                AddGoalActivity.this.finish();
             }
         });
 
@@ -160,7 +168,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
 
     private void setSpinner() {
         Spinner spinner = binding.spinnerCategory;
-//        spinner.setOnItemSelectedListener(this);
+        spinner.setOnItemSelectedListener(this);
 
         final List<Category> categories = CategoriesUtils.getDefaultCategories();
         CategoryAdapter categoryAdapter = new CategoryAdapter(this,
@@ -173,13 +181,10 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        String item = parent.getItemAtPosition(position).toString();
-
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        Log.i("@@@ item selected", position + "");
+        viewModel.setCategory(CategoriesUtils.getCategoryIdByPosition(position));
     }
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
 
     }
 

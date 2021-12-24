@@ -16,9 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.DebtLend;
+import com.hcmus.group14.moneytor.data.model.FilterState;
 import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 import com.hcmus.group14.moneytor.databinding.ActivityDebtLendBinding;
 import com.hcmus.group14.moneytor.services.debtlend.DebtLendViewModel;
+import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
+import com.hcmus.group14.moneytor.services.options.Category;
+import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 
 import java.util.ArrayList;
@@ -34,6 +38,8 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
     private Context context;
     SearchView searchView;
 
+    private FilterViewModel viewModel;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_debt_lend;
@@ -48,18 +54,12 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
         this.setTitle("Manage debt");
         initializeViews();
 
-
-        debtLendViewModel = new ViewModelProvider(this).get(DebtLendViewModel.class);
-        debtLendViewModel.getAllDebtLends().observe(this, debtLends -> {
+        viewModel = new ViewModelProvider(this).get(FilterViewModel.class);
+        viewModel.getAllDebtLend().observe(this, debtLends -> {
             this.debtLends = debtLends;
             debtLendAdapter.setDebtLends(debtLends);
-            // TODO: bug query not correct target id
-            for (int i = 0; i < debtLends.size(); ++i) {
-                Log.i("@@@ debt ", debtLends.get(i).debtLend.toString());
-                Log.i("@@@ target", debtLends.get(i).relate.getRelateId() + " ");
-            }
         });
-//        filterViewModel.setFilterState(new FilterState());
+        viewModel.setFilterState(new FilterState());
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,18 +72,18 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
 
     List<DebtLend> getData() {
         List<DebtLend> data = new ArrayList<>();
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,2,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,3,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,2,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,3,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.PETS.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.MAKEUP.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.ENTERTAINMENT.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.OTHERS.getId(), 100000,1,1,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.HEALTH.getId(), 100000,1,1,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.HEALTH.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.FITNESS.getId(), 100000,1,1,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.TRAFFIC.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.MAINTENANCE.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.FOOD_AND_DRINK.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.BILLS.getId(), 100000,1,1,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.UTILITIES.getId(), 100000,1,1,1639586109000L,"this is a description"));
         return data;
     }
 

@@ -44,7 +44,7 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
         binding.setViewModel(analyzeViewModel);
         // binding observe
-        filterViewModel.getAllSpending().observe(this, this::updateNewData);
+        filterViewModel.getAllSending().observe(this, this::updateNewData);
         // TODO: receive intent and show filter by FilterState()
         filterViewModel.setFilterState(new FilterState());
         setCategoriesStatistics();

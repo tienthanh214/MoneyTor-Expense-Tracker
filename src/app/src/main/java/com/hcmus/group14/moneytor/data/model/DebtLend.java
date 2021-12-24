@@ -1,10 +1,10 @@
 package com.hcmus.group14.moneytor.data.model;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.room.*;
-
-import java.io.Serializable;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 /*
               |-----------record_id: INT NOT NULL PRIMARY KEY
@@ -25,7 +25,7 @@ consists of:
     - Description (up to 100 characters, optional)
  */
 @Entity(tableName = "debt_lend_table")
-public class DebtLend implements Serializable {
+public class DebtLend implements Note {
 
     @PrimaryKey(autoGenerate = true)
     private int recordId = 0;

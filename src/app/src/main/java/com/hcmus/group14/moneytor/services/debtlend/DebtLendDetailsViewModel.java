@@ -34,10 +34,9 @@ public class DebtLendDetailsViewModel extends AppViewModel {
 
     public DebtLendDetailsViewModel(@NonNull Application application) {
         super(application);
-        _debtLend = new DebtLend();
         desc = new MutableLiveData<>("");
         value = new MutableLiveData<>("");
-        category = new MutableLiveData<>(0);
+        category = new MutableLiveData<>();
         date = new MutableLiveData<>(DateTimeUtils.getDate(-1));
         target = new MutableLiveData<>("");
         debt = new MutableLiveData<>(true);
@@ -144,7 +143,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
         updateData();
 
         InputUtils errors = new InputUtils();
-        if (_debtLend.getCategory().isEmpty())
+        if (_debtLend.getCategory() == null || _debtLend.getCategory().isEmpty())
             errors.setError(InputUtils.Type.CATEGORY);
         if (_debtLend.getValue() == -1)
             errors.setError(InputUtils.Type.COST);
