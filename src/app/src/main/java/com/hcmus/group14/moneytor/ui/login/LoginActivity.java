@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -22,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.hcmus.group14.moneytor.R;
-import com.hcmus.group14.moneytor.firebase.UserProfile;
 import com.hcmus.group14.moneytor.ui.main.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,7 +36,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         setContentView(R.layout.activity_login);
 
         btnGoogleAuth = findViewById(R.id.btn_google_auth);
@@ -56,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        onLoginComplete(currentUser);
     }
 
     private void createRequest() {
@@ -106,22 +109,21 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            onLoginComplete(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            updateUI(null);
+                            onLoginComplete(null);
                         }
                     }
                 });
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void onLoginComplete(FirebaseUser user) {
         if (user == null) {
             Toast.makeText(LoginActivity.this, "No user",
                     Toast.LENGTH_SHORT).show();
         } else {
-            UserProfile.importUserProfile(this, user);
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
