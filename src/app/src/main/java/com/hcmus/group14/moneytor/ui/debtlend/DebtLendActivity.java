@@ -21,6 +21,7 @@ import com.hcmus.group14.moneytor.databinding.ActivityDebtLendBinding;
 import com.hcmus.group14.moneytor.databinding.ActivityGoalBinding;
 import com.hcmus.group14.moneytor.services.debtlend.DebtLendViewModel;
 import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
+import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.goal.AddGoalActivity;
 import com.hcmus.group14.moneytor.ui.goal.GoalAdapter;
@@ -64,18 +65,18 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
 
     List<DebtLend> getData() {
         List<DebtLend> data = new ArrayList<>();
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend("A",100000,1,1,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.PETS.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.MAKEUP.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.ENTERTAINMENT.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.OTHERS.getId(), 100000,1,1,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.HEALTH.getId(), 100000,1,1,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.HEALTH.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.FITNESS.getId(), 100000,1,1,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.TRAFFIC.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.MAINTENANCE.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.FOOD_AND_DRINK.getId(), 100000,1,0,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.BILLS.getId(), 100000,1,1,1639586109000L,"this is a description"));
+        data.add(new DebtLend(Category.UTILITIES.getId(), 100000,1,1,1639586109000L,"this is a description"));
         return data;
     }
 

@@ -1,9 +1,11 @@
 package com.hcmus.group14.moneytor.ui.debtlend;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.DebtLend;
+import com.hcmus.group14.moneytor.services.options.Category;
+import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,7 +48,10 @@ public class DebtLendAdapter extends RecyclerView.Adapter<DebtLendAdapter.DebtLe
         int isDebt =currentDebtLend.getDebt();
         String title = isDebt == 1 ? "Debt" : "Lend";
         holder.setTitle(title);
+        Category category = CategoriesUtils.findCategoryById(currentDebtLend.getCategory());
+        holder.setImage(category.getColor(),category.getResourceId());
     }
+
 
     public void setDebtLends(List<DebtLend> debtLendList){
         debtLends=debtLendList;
@@ -68,6 +75,13 @@ public class DebtLendAdapter extends RecyclerView.Adapter<DebtLendAdapter.DebtLe
         private TextView descView;
         private TextView dateView;
         private TextView valueView;
+        private ImageView imageView;
+
+
+        public void setImage(int color, int resource){
+            imageView.setImageResource(resource);
+            imageView.setBackgroundTintList(ColorStateList.valueOf(color));
+        }
 
         public void setTitle(String title) {
             titleView.setText(title);
@@ -94,6 +108,7 @@ public class DebtLendAdapter extends RecyclerView.Adapter<DebtLendAdapter.DebtLe
             this.descView = itemView.findViewById(R.id.descDebtLendItem);
             this.dateView = itemView.findViewById(R.id.dateDebtLendItem);
             this.valueView = itemView.findViewById(R.id.valueDebtLendItem);
+            this.imageView = itemView.findViewById(R.id.categoryDebtLendItem);
         }
 
         @Override

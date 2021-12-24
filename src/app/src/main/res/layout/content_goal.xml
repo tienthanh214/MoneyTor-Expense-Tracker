@@ -3,28 +3,44 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="10dp"
     android:background="@drawable/list_item_background"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    android:paddingHorizontal="10dp"
-    android:paddingVertical="15dp">
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="15dp"
+    >
 
 
-    <LinearLayout
-        android:id="@+id/categorySpendingGoalItem"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_marginEnd="15dp"
 
-    </LinearLayout>
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            android:background="@drawable/category_icon_background"
+            android:src="@drawable/ic_category_fitness"
+            android:id="@+id/categorySpendingGoalItem"
+            app:tint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/contentWrapperSpendingGoalItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
+        android:layout_weight="5"
         android:orientation="vertical">
 
         <TextView
