@@ -1,6 +1,7 @@
 package com.hcmus.group14.moneytor.services.spending;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -10,6 +11,7 @@ import com.hcmus.group14.moneytor.data.local.AppViewModel;
 import com.hcmus.group14.moneytor.data.model.Relate;
 import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingWithRelates;
+import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
@@ -33,7 +35,7 @@ public class SpendingDetailsViewModel extends AppViewModel {
         _title = new MutableLiveData<>("");
         _description = new MutableLiveData<>("");
         _cost = new MutableLiveData<>("");
-        _category = new MutableLiveData<>(0);
+        _category = new MutableLiveData<>();
         _date = new MutableLiveData<>(DateTimeUtils.getDate(-1));
         _relates = new MutableLiveData<>("");
     }
@@ -93,7 +95,8 @@ public class SpendingDetailsViewModel extends AppViewModel {
 
     public void setCategory(String id) {
         int position = CategoriesUtils.findPositionById(id);
-        _category.setValue(position);
+        if (position != -1)
+            _category.setValue(position);
     }
 
     public void setDate(long date) {
@@ -101,6 +104,7 @@ public class SpendingDetailsViewModel extends AppViewModel {
     }
 
     public void setRelates(List<Relate> relates) {
+        // TODO : test relates
         this._newRelates = relates;
         StringBuilder str = new StringBuilder();
         if (relates != null) {
@@ -137,8 +141,8 @@ public class SpendingDetailsViewModel extends AppViewModel {
 
     // save spending, if input invalid return all errors
     public InputUtils saveSpending() {
-
         updateData();
+        Log.i("@@@ spending", _spending.toString());
         InputUtils errors = new InputUtils();
         if (_spending.getCategory().isEmpty())
             errors.setError(InputUtils.Type.CATEGORY);
@@ -147,17 +151,17 @@ public class SpendingDetailsViewModel extends AppViewModel {
         if (errors.hasError())
             return errors;
         if (_spending.getTitle().isEmpty()) {
-            _spending.setTitle(_spending.getCategory());
+            _spending.setTitle(CategoriesUtils.getCategoryNameById(_spending.getCategory()));
         }
         if (_spending.getDate() == -1) {
             _spending.setDate(DateTimeUtils.getCurrentTimeMillis());
         }
 
         if (_spending.getSpendingId() == 0) { // insert new note
-//            appRepository.insertSpendingWithRelates(_spending, _newRelates);
+            appRepository.insertSpendingWithRelates(_spending, _newRelates);
         } else {   // update old note
             computeRelates(); // what relates should be removed, inserted
-//            appRepository.updateSpendingWithRelates(_spending, _oldRelates, _newRelates);
+            appRepository.updateSpendingWithRelates(_spending, _oldRelates, _newRelates);
         }
         return errors;
     }

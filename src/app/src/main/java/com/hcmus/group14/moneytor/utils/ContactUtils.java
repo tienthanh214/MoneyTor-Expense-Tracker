@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.hcmus.group14.moneytor.data.model.Relate;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public class ContactUtils {
     public static final int REQUEST_READ_CONTACTS = 79;
 
-    private void requestPermission(Activity activity) {
+    static private void requestPermission(Activity activity) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
                 android.Manifest.permission.READ_CONTACTS)) {
             Toast.makeText(activity.getApplicationContext(),
@@ -31,7 +32,7 @@ public class ContactUtils {
     }
 
     @SuppressLint("Range")
-    private ArrayList<Relate> getAllContacts(Activity activity, Context context) {
+    public static ArrayList<Relate> getAllContacts(Activity activity, @NonNull Context context) {
         requestPermission(activity);
 
         ArrayList<Relate> nameList = new ArrayList<>();
@@ -65,7 +66,9 @@ public class ContactUtils {
                     relate.setTel(phoneNumber);
                 }
 
-                nameList.add(relate);
+                if (!relate.getTel().equals("N/A")) {
+                    nameList.add(relate);
+                }
 
                 if (cur.getInt(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
                     Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,

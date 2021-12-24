@@ -1,4 +1,4 @@
-package com.hcmus.group14.moneytor.receiver;
+package com.hcmus.group14.moneytor.services.notification.receiver;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

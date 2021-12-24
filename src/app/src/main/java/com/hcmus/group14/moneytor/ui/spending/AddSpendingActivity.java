@@ -1,16 +1,5 @@
 package com.hcmus.group14.moneytor.ui.spending;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
-
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +14,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
+
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.Relate;
 import com.hcmus.group14.moneytor.databinding.ActivityNoteSpendingBinding;
@@ -33,7 +28,7 @@ import com.hcmus.group14.moneytor.services.spending.SpendingDetailsViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
-import com.hcmus.group14.moneytor.utils.CategoryAdapter;
+import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.Calendar;
@@ -56,9 +51,17 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         super.onCreate(savedInstanceState);
         this.setTitle("Spending note");
         binding = getViewDataBinding();
-        // binding.setLifecycleOwner(this);
+
         viewModel = new ViewModelProvider(this).get(SpendingDetailsViewModel.class);
         binding.setViewModel(viewModel);
+
+        int spendingId = (int)getIntent().getIntExtra("spending_id", -1);
+        if (spendingId != -1) {
+            // if click on item list view, load full info of a spending
+            viewModel.getSpendingWithRelatesById(spendingId).observe(this, spending -> {
+                viewModel.uploadData(spending);
+            });
+        }
         setSpinner();
         setDatePickerDialog();
         setAddShareWith();
@@ -114,6 +117,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     private boolean checkValidSpending() {
         EditText cost = binding.inputAmount;
         InputUtils errors = viewModel.saveSpending();
+        // TODO: check category
         if (errors.hasError()){
             if (errors.isValid(InputUtils.Type.COST))
                 cost.setError("Amount of spending is required!");
@@ -134,7 +138,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // view model delete spending
+                viewModel.deleteSpending();
                 Toast.makeText(getApplicationContext(), "Spending deleted",
                         Toast.LENGTH_LONG).show();
             }
@@ -196,9 +200,8 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
         String item = parent.getItemAtPosition(position).toString();
-
+        viewModel.setCategory(CategoriesUtils.getCategoryIdByPosition(position));
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {

@@ -33,7 +33,7 @@ public class AnalyzeViewModel extends AndroidViewModel {
     //Get total amount of spendings filtered
     public long getTotal(List<Spending> spendings)
     {
-        long sum = 0l;
+        long sum = 0L;
         for (Spending spending: spendings)
             sum += spending.getCost();
         return sum;
@@ -42,7 +42,9 @@ public class AnalyzeViewModel extends AndroidViewModel {
     //Get the average
     public long getAverage(List<Spending> spendings)
     {
-        long sum = 0l;
+        if (spendings.size() == 0) return 0;
+        long sum = 0L;
+        
         for (Spending spending: spendings)
             sum += spending.getCost();
         return sum / (long)spendings.size();
@@ -59,16 +61,21 @@ public class AnalyzeViewModel extends AndroidViewModel {
     }
 
     //Get the day where the amount of spending is highest
-    public String getMaxSpendingDay(List<Spending> spendings)
+    public ArrayList<Category> getMaxSpendingCategory(List<Spending> spendings)
     {
         long max = 0;
-        String day = "";
+        ArrayList<Category> categories = new ArrayList<>();
         for (Spending spending: spendings)
             if (max < spending.getCost()) {
                 max = spending.getCost();
-                day = DateTimeUtils.getDate(spending.getDate());
             }
-        return day;
+        for (Spending spending: spendings)
+        {
+            if (max == spending.getCost())
+                categories.add(Category.valueOf(spending.getCategory()));
+        }
+        
+        return categories;
     }
 
     //Count how much have been spent in categories in appearance across all spendings filtered.

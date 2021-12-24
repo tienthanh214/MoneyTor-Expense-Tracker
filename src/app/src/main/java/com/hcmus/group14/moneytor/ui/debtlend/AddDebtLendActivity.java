@@ -1,16 +1,11 @@
 package com.hcmus.group14.moneytor.ui.debtlend;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,8 +27,9 @@ import com.hcmus.group14.moneytor.services.debtlend.DebtLendDetailsViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.contact.ContactActivity;
-import com.hcmus.group14.moneytor.utils.CategoryAdapter;
+import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
+import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -54,9 +50,19 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
-        viewModel = new ViewModelProvider(this).get(DebtLendDetailsViewModel.class);
-        viewModel = binding.getViewModel();
         this.setTitle("Manage debt");
+
+        viewModel = new ViewModelProvider(this).get(DebtLendDetailsViewModel.class);
+        binding.setViewModel(viewModel);
+
+        int debtLendId = (int)getIntent().getIntExtra("debt_id", -1);
+        if (debtLendId != -1) {
+            // if click on item list view, load full info of a spending
+            viewModel.getDebtLendAndRelateById(debtLendId).observe(this, debtLend -> {
+                viewModel.uploadData(debtLend);
+            });
+        }
+
         setSpinner();
         setDatePickerDialog();
         setAddTarget();
@@ -70,6 +76,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this, ContactActivity.class);
+        // TODO: add option to choose only one contact
         startActivityForResult(intent, REQUEST_CODE_RELATE_CONTACT);
     }
 
@@ -79,7 +86,8 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
             if (resultCode == RESULT_OK){
                 Bundle bundle = data.getExtras();
                 List<Relate> selectedContacts = (List<Relate>) bundle.getSerializable("contacts");
-                // view model set target
+                // bug here
+                viewModel.setTarget(selectedContacts.get(0));
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -99,6 +107,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     }
 
     private void save() {
+        InputUtils errors = viewModel.saveDebtLend();
         boolean check = checkValid();
         if (check){
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
@@ -110,6 +119,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
 
     private boolean checkValid() {
         EditText cost = binding.inputAmount;
+        // TODO: call check amount and category from utils
         //InputUtils errors = viewModel.saveGoal();
         //if (errors.hasError()){
         if (cost.length() == 0){

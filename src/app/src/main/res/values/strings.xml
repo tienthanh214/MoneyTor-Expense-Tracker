@@ -10,6 +10,7 @@
     <string name="goal_title_activity">Spending goal</string>
     <string name="spending_title_activity">Spending list</string>
     <string name="debt_lend_title_activity">Manage debt</string>
+    <string name="analysis_activity">Analysis</string>
 
     <!-- Menu title -->
     <string name="menu_filter">Filter</string>
@@ -29,11 +30,28 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="bundle_goal_obj">bundleAlarmObj</string>
     <string name="arg_goal_obj">ArgAlarmObj</string>
     <string name="reminder_message">Creating habits is the key to financial success. We are here to remind you to take track down your spending regularly.</string>
     <string name="reminder_title">MoneyTor Reminder</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="user_profile_preference">user_profile_preference</string>
+    <string name="default_username">New Userdddddddddddddddddddddddddddddddd</string>
 </resources>

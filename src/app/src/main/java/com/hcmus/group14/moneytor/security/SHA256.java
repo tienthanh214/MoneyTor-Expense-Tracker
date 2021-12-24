@@ -12,9 +12,9 @@ public class SHA256 {
         digest.update(messageBytes);
 
         byte[] byteDigest = digest.digest();
-        String hexDigest = new String();
+        StringBuilder hexDigest = new StringBuilder();
         for (int i = 0; i < byteDigest.length; i++)
-            hexDigest += String.format("%02x", byteDigest[i]);
-        return hexDigest;
+            hexDigest.append(String.format("%02x", byteDigest[i]));
+        return hexDigest.toString();
     }
 }

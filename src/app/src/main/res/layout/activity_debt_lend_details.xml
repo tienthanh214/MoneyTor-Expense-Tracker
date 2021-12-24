@@ -78,7 +78,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/text_view_background"
-                            android:drawableStart="@drawable/ic_question_mark"/>
+                            android:drawableStart="@drawable/ic_question_mark"
+                            android:selectedItemPosition="@={viewModel.category}"/>
 
                         <TextView
                             android:id="@+id/textViewDateTitle"
@@ -118,6 +119,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/text_view_background"
                             android:hint="Target"
+                            android:text="@={viewModel.target}"
                             android:focusable="false"
                             android:paddingVertical="@dimen/text_padding_vertical"
                             android:paddingLeft="@dimen/text_padding_horizontal"
@@ -160,17 +162,19 @@
                             android:orientation="horizontal"
                             android:layout_centerInParent="true">
                             <RadioButton
+                                android:id="@+id/radioLend"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lend"
+                                android:checked="true"
+                                android:layout_marginRight="20dp"/>
+                            <RadioButton
                                 android:id="@+id/radioDebt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Debt"
-                                android:checked="true"
-                                android:layout_marginRight="20dp"/>
-                            <RadioButton
-                                android:id="@+id/radioLend"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Lend" />
+                                android:checked="@={viewModel.debt}"/>
+
                         </RadioGroup>
 
                     </LinearLayout>

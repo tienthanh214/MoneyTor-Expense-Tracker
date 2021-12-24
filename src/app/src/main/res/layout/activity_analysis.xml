@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.hcmus.group14.moneytor.services.analyze.AnalyzeViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_green">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Total"
+                android:textSize="25sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_text"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/totalAmountAnalyze"
+                android:textSize="40sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/text_padding_horizontal"
+                    android:paddingVertical="@dimen/text_padding_vertical"
+                    android:layout_weight="3"
+                    android:text="Average by date"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:textColor="@color/black"/>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/text_padding_horizontal"
+                    android:paddingVertical="@dimen/text_padding_vertical"
+                    android:layout_weight="2"
+                    android:id="@+id/averageByDateAnalyze"
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/text_padding_horizontal"
+                    android:paddingVertical="@dimen/text_padding_vertical"
+                    android:layout_weight="3"
+                    android:text="Spending categories"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:textColor="@color/black"/>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"/>
+
+                <GridView
+                    android:id="@+id/categoriesStatistics"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/text_padding_horizontal"
+                    android:paddingVertical="@dimen/text_padding_vertical"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:nestedScrollingEnabled="true"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:paddingVertical="@dimen/text_padding_vertical"
+                android:paddingHorizontal="@dimen/text_padding_horizontal"
+                android:text="Highest spending"
+                android:textSize="25sp"
+                android:gravity="left"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/margin_top_text"
+                android:text="X.XXX.XXX"
+                android:textSize="25sp"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/margin_top_text"
+                android:text="for cat"
+                android:textSize="25sp"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

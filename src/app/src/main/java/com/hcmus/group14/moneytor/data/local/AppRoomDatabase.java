@@ -22,6 +22,7 @@ import com.hcmus.group14.moneytor.data.model.SpendGoal;
 import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.data.model.Wallet;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingRelateCrossRef;
+import com.hcmus.group14.moneytor.services.options.Category;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,19 +75,19 @@ public abstract class AppRoomDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 if (spendingDao.getAllSpendingRelate().length < 1) {
                     Spending s1 = (
-                            new Spending(100000, "Hello 1", "None", "hihi", 123));
+                            new Spending(100000, "Hello 1", Category.BILLS.getId(), "hihi", 123));
                     Spending s2 = (
-                            new Spending(1000000, "Hello 2", "Food", "nothing to show", 1010101));
+                            new Spending(1000000, "Hello 2", Category.FOOD_AND_DRINK.getId(), "nothing to show", 1010101));
                     Spending s3 = (
-                            new Spending(100000, "Hello 3", "Study", "say to show", 141));
+                            new Spending(100000, "Hello 3", Category.EDUCATION.getId(), "say to show", 141));
                     Spending s4 = (
-                            new Spending(1000000, "Hello 4", "Study", "say to show", 141));
+                            new Spending(1000000, "Hello 4", Category.EDUCATION.getId(), "say to show", 141));
                     Spending s5 = (
-                            new Spending(1000000, "Hello 5", "Study", "say to show", 141));
+                            new Spending(1000000, "Hello 5", Category.FOOD_AND_DRINK.getId(), "say to show", 141));
                     Spending s6 = (
-                            new Spending(1000000, "Hello 6", "Study", "say to show", 141));
+                            new Spending(1000000, "Hello 6", Category.MAINTENANCE.getId(), "say to show", 141));
                     Spending s7 = (
-                            new Spending(10000000, "Hello 7", "Study", "say to show", 141));
+                            new Spending(10000000, "Hello 7", Category.BILLS.getId(), "say to show", 141));
 
                     Relate r1 = new Relate("NDTT", "123123123");
                     Relate r2 = new Relate("uyen", "000012111");

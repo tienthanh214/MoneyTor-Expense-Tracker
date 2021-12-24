@@ -1,5 +1,7 @@
 package com.hcmus.group14.moneytor.data.local.dao;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -92,6 +94,11 @@ public abstract class SpendingDao {
         if (news != null) {
             for (Relate relate : news) {
                 long relateId = insertRelate(relate);
+                if (relateId == -1) {
+                    long[] result = getRelateIdByTel(relate.getTel());
+                    if (result.length > 0)
+                        relateId = result[0];
+                }
                 insertSpendingRelateCrossRef(new SpendingRelateCrossRef(spending.getSpendingId(), (int) relateId));
             }
         }

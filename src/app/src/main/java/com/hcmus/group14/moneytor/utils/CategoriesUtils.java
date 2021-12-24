@@ -21,7 +21,7 @@ public class CategoriesUtils {
             if (cat.getId().equals(id))
                 return cat;
         }
-        return null;
+        return Category.OTHERS;
     }
 
     public static int findPositionById(String id) {
@@ -31,9 +31,17 @@ public class CategoriesUtils {
         return -1;
     }
 
+    public static String getCategoryNameById(String id) {
+        Category result = findCategoryById(id);
+        if (result == null)
+            return "";
+        else
+            return result.getName();
+    }
+
     public static String getCategoryIdByPosition(Integer position) {
         if (position == null)
-            return categories.get(0).getId();
+            return Category.OTHERS.getId();
         return categories.get(position).getId();
     }
 }

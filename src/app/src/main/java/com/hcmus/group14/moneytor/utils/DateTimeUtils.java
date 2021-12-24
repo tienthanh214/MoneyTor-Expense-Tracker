@@ -18,9 +18,9 @@ public class DateTimeUtils {
         return DATE_FORMAT.format(time);
     }
 
-    public static long getDateInMillis(int day, int month, int year) {
+    public static long getMillisByDate(int day, int month, int year) {
         calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.MONTH, month - 1);
         calendar.set(Calendar.YEAR, year);
         return calendar.getTimeInMillis();
     }
