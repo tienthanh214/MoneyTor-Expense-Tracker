@@ -11,7 +11,9 @@
     <color name="grey">#8E8E8E</color>
     <color name="light_grey">#CCD2E3</color>
     <color name="dark_green">#80B192</color>
+    <color name="main_screen_btn_color">#D4FFD3</color>
     <color name="analyze_btn_color">#6A8D92</color>
+    <color name="shadow_color">#5C844D</color>
 
     <!--App color palette-->
     <color name="white">#FFFFFFFF</color>
