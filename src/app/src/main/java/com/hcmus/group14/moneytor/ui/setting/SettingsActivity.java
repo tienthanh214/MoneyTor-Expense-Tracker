@@ -54,16 +54,16 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void displayUserInfo() {
         // Set user profile photo
-        Uri photoUri = Uri.parse(PreferenceUtils.getString(PreferenceUtils.getInstance(this,
-                getString(R.string.user_profile)),
-                getString(R.string.user_photo),
+        Uri photoUri = Uri.parse(PreferenceUtils.getString(this,
+                PreferenceUtils.USER_PROFILE,
+                PreferenceUtils.USER_PHOTO,
                 String.format("android.resource://com.hcmus.group14.moneytor/%d",
                         R.drawable.account_circle_fill)));
         ivPhoto.setImageURI(photoUri);
         // Set user name
         tvUsername.setText(PreferenceUtils.getString(
-                PreferenceUtils.getInstance(this, getString(R.string.user_profile)),
-                getString(R.string.user_name),
+                this, PreferenceUtils.USER_PROFILE,
+                PreferenceUtils.USER_NAME,
                 getString(R.string.default_username)));
     }
 

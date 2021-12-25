@@ -19,16 +19,16 @@ public class UserPref {
     }
 
     public static void saveToSharedPref(Context context, UserPref userPref) {
-        PreferenceUtils.putString(PreferenceUtils.getInstance(context,
-                PreferenceUtils.USER_PROFILE),
+        PreferenceUtils.putString(context,
+                PreferenceUtils.USER_PROFILE,
                 PreferenceUtils.USER_NAME,
                 userPref.name);
-        PreferenceUtils.putString(PreferenceUtils.getInstance(context,
-                PreferenceUtils.USER_PROFILE),
+        PreferenceUtils.putString(context,
+                PreferenceUtils.USER_PROFILE,
                 PreferenceUtils.USER_ID,
                 userPref.id);
-        PreferenceUtils.putString(PreferenceUtils.getInstance(context,
-                PreferenceUtils.USER_PROFILE),
+        PreferenceUtils.putString(context,
+                PreferenceUtils.USER_PROFILE,
                 PreferenceUtils.USER_EMAIL,
                 userPref.email);
     }

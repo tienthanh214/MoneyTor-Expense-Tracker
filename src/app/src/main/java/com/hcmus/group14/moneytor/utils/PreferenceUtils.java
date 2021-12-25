@@ -11,39 +11,43 @@ public class PreferenceUtils {
     public static final String USER_NAME = "user_name";
     public static final String USER_ID = "user_id";
     public static final String USER_EMAIL = "user_email";
+    public static final String USER_PHOTO = "user_photo";
 
-    public static SharedPreferences getInstance(Context context, String prefName) {
-        return context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
-    }
-
-    public static void putInt(SharedPreferences sharedPref, String key, int value) {
+    public static void putInt(Context context, String prefName, String key, int value) {
+        SharedPreferences sharedPref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(key, value);
         editor.apply();
     }
 
-    public static int getInt(SharedPreferences sharedPref, String key, int defaultValue) {
+    public static int getInt(Context context, String prefName, String key, int defaultValue) {
+        SharedPreferences sharedPref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         return sharedPref.getInt(key, defaultValue);
     }
 
-    public static void putString(SharedPreferences sharedPref, String key, String value) {
+    public static void putString(Context context, String prefName, String key, String value) {
+        SharedPreferences sharedPref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(key, value);
         editor.apply();
     }
 
-    public static String getString(SharedPreferences sharedPref, String key, String defaultValue) {
+    public static String getString(Context context, String prefName, String key,
+                                   String defaultValue) {
+        SharedPreferences sharedPref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         return sharedPref.getString(key, defaultValue);
     }
 
-    public static void putBoolean(SharedPreferences sharedPref, String key, boolean value) {
+    public static void putBoolean(Context context, String prefName, String key, boolean value) {
+        SharedPreferences sharedPref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(key, value);
         editor.apply();
     }
 
-    public static boolean getBoolean(SharedPreferences sharedPref, String key,
+    public static boolean getBoolean(Context context, String prefName, String key,
                                      boolean defaultValue) {
+        SharedPreferences sharedPref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         return sharedPref.getBoolean(key, defaultValue);
     }
 }

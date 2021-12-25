@@ -151,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void uploadUserPref(FirebaseUser user) {
         // Update user name
-        String name = PreferenceUtils.getString(
-                PreferenceUtils.getInstance(this, PreferenceUtils.USER_PROFILE),
+        String name = PreferenceUtils.getString(this,
+                PreferenceUtils.USER_PROFILE,
                 PreferenceUtils.USER_NAME,
                 getString(R.string.default_username));
         UserPref userPref = new UserPref(name, user.getUid(), user.getEmail());
