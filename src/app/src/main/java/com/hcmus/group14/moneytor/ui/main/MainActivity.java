@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.ui.analysis.AnalysisActivity;
+import com.hcmus.group14.moneytor.ui.analysis.VisualizeActivity;
 import com.hcmus.group14.moneytor.ui.debtlend.DebtLendActivity;
 import com.hcmus.group14.moneytor.ui.goal.GoalActivity;
 import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
@@ -37,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onOpenAnalysis(View view){
         Intent intent = new Intent(this, AnalysisActivity.class);
+        startActivity(intent);
+    }
+
+    public void onOpenVisualize(View view){
+        Intent intent = new Intent(this, VisualizeActivity.class);
         startActivity(intent);
     }
 }
