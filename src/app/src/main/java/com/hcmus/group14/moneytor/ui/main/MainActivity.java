@@ -39,4 +39,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AnalysisActivity.class);
         startActivity(intent);
     }
+
+    public void onOpenVisualize(View view){
+        Intent intent = new Intent(this, AnalysisActivity.class);
+        startActivity(intent);
+    }
+
+    public void onOpenSetting(View view){
+        Intent intent = new Intent(this, AnalysisActivity.class);
+        startActivity(intent);
+    }
 }

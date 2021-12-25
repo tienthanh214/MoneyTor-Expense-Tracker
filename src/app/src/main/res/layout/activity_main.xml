@@ -4,50 +4,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.MainActivity">
+    tools:context=".ui.main.MainActivity"
+    android:background="@color/light_green">
 
-    <Button
-        android:id="@+id/buttonSpendingGoal"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:onClick="onOpenSpendingGoal"
-        android:text="@string/goal_title_activity"
+    <ImageButton
+        android:id="@+id/buttonCenter"
+        android:layout_width="@dimen/main_scr_center_btn_size"
+        android:layout_height="@dimen/main_scr_center_btn_size"
+        android:background="@drawable/circle_btn_background"
+        android:onClick="onOpenSpendingList"
+        android:src="@drawable/ic_app_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonSpendingView"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/buttonSpendingGoal"
+        android:layout_width="@dimen/main_scr_btn_size"
+        android:layout_height="@dimen/main_scr_btn_size"
         android:layout_gravity="center_horizontal"
+        android:background="@drawable/circle_btn_background"
+        android:onClick="onOpenSpendingGoal"
+        android:padding="5dp"
+        android:text="@string/goal_title_activity"
+        android:textSize="@dimen/main_scr_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCenter"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCenter"
+        app:layout_constraintStart_toEndOf="@+id/buttonAnalysis" />
+
+    <Button
+        android:id="@+id/buttonSpendingView"
+        android:layout_width="@dimen/main_scr_btn_size"
+        android:layout_height="@dimen/main_scr_btn_size"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/circle_btn_background"
         android:onClick="onOpenSpendingList"
+        android:padding="10dp"
         android:text="@string/spending_title_activity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSpendingGoal" />
+        android:textSize="@dimen/main_scr_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCenter"
+        app:layout_constraintEnd_toStartOf="@+id/buttonManageDebt"
+        app:layout_constraintStart_toEndOf="@+id/buttonCenter" />
 
     <Button
         android:id="@+id/buttonManageDebt"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/main_scr_btn_size"
+        android:layout_height="@dimen/main_scr_btn_size"
         android:layout_gravity="center_horizontal"
+        android:background="@drawable/circle_btn_background"
         android:onClick="onOpenDebtLend"
+        android:padding="10dp"
         android:text="@string/debt_lend_title_activity"
+        android:textSize="@dimen/main_scr_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSpendingView" />
+        app:layout_constraintStart_toEndOf="@+id/buttonCenter"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonAnalysis"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/main_scr_btn_size"
+        android:layout_height="@dimen/main_scr_btn_size"
         android:layout_gravity="center_horizontal"
         android:onClick="onOpenAnalysis"
         android:text="@string/analysis_activity"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/main_scr_text_size"
+        android:background="@drawable/circle_btn_background"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCenter"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonManageDebt" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/buttonSetting"
+        android:layout_width="@dimen/main_scr_btn_size"
+        android:layout_height="@dimen/main_scr_btn_size"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/circle_btn_background"
+        android:onClick="onOpenSetting"
+        android:text="@string/setting_activity"
+        android:textSize="@dimen/main_scr_text_size"
+        app:layout_constraintEnd_toStartOf="@+id/buttonManageDebt"
+        app:layout_constraintStart_toEndOf="@+id/buttonCenter"
+        app:layout_constraintTop_toBottomOf="@id/buttonCenter" />
+
+    <Button
+        android:id="@+id/buttonVisualize"
+        android:layout_width="@dimen/main_scr_btn_size"
+        android:layout_height="@dimen/main_scr_btn_size"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/circle_btn_background"
+        android:onClick="onOpenVisualize"
+        android:text="@string/visualize_activity"
+        android:textSize="@dimen/main_scr_text_size"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCenter"
+        app:layout_constraintStart_toEndOf="@+id/buttonAnalysis"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCenter" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

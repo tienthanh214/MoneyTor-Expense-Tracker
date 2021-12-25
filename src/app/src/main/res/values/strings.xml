@@ -7,10 +7,12 @@
     <string name="content_desc_spending_goal">Add a spending goal</string>
     <string name="content_desc_debt_lend">Add a debt/lend</string>
     <!-- Screen name -->
-    <string name="goal_title_activity">Spending goal</string>
-    <string name="spending_title_activity">Spending list</string>
-    <string name="debt_lend_title_activity">Manage debt</string>
-    <string name="analysis_activity">Analysis</string>
+    <string name="goal_title_activity">SPENDING GOAL</string>
+    <string name="spending_title_activity">LIST SPENDING</string>
+    <string name="debt_lend_title_activity">MANAGE DEBT</string>
+    <string name="analysis_activity">ANALYZE</string>
+    <string name="setting_activity">SETTING</string>
+    <string name="visualize_activity">VISUALIZE</string>
 
     <!-- Menu title -->
     <string name="menu_filter">Filter</string>
