@@ -19,42 +19,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:padding="10dp"
         android:id="@+id/buttonSpendingGoal"
         android:layout_width="@dimen/main_scr_btn_size"
         android:layout_height="@dimen/main_scr_btn_size"
-        android:layout_gravity="center_horizontal"
         android:background="@drawable/circle_btn_background"
         android:onClick="onOpenSpendingGoal"
-        android:padding="5dp"
         android:text="@string/goal_title_activity"
         android:textSize="@dimen/main_scr_text_size"
         app:layout_constraintBottom_toTopOf="@+id/buttonCenter"
         app:layout_constraintEnd_toStartOf="@+id/buttonCenter"
-        app:layout_constraintStart_toEndOf="@+id/buttonAnalysis" />
+        app:layout_constraintStart_toEndOf="@+id/buttonAnalysis"
+     />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonSpendingView"
         android:layout_width="@dimen/main_scr_btn_size"
         android:layout_height="@dimen/main_scr_btn_size"
-        android:layout_gravity="center_horizontal"
         android:background="@drawable/circle_btn_background"
         android:onClick="onOpenSpendingList"
-        android:padding="10dp"
         android:text="@string/spending_title_activity"
         android:textSize="@dimen/main_scr_text_size"
         app:layout_constraintBottom_toTopOf="@+id/buttonCenter"
         app:layout_constraintEnd_toStartOf="@+id/buttonManageDebt"
+        android:padding="10dp"
         app:layout_constraintStart_toEndOf="@+id/buttonCenter" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:padding="10dp"
         android:id="@+id/buttonManageDebt"
         android:layout_width="@dimen/main_scr_btn_size"
         android:layout_height="@dimen/main_scr_btn_size"
-        android:layout_gravity="center_horizontal"
         android:background="@drawable/circle_btn_background"
         android:onClick="onOpenDebtLend"
-        android:padding="10dp"
         android:text="@string/debt_lend_title_activity"
         android:textSize="@dimen/main_scr_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,11 +60,10 @@
         app:layout_constraintStart_toEndOf="@+id/buttonCenter"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonAnalysis"
         android:layout_width="@dimen/main_scr_btn_size"
         android:layout_height="@dimen/main_scr_btn_size"
-        android:layout_gravity="center_horizontal"
         android:onClick="onOpenAnalysis"
         android:text="@string/analysis_activity"
         android:textSize="@dimen/main_scr_text_size"
@@ -76,11 +73,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonSetting"
         android:layout_width="@dimen/main_scr_btn_size"
         android:layout_height="@dimen/main_scr_btn_size"
-        android:layout_gravity="center_horizontal"
         android:background="@drawable/circle_btn_background"
         android:onClick="onOpenSetting"
         android:text="@string/setting_activity"
@@ -89,11 +85,10 @@
         app:layout_constraintStart_toEndOf="@+id/buttonCenter"
         app:layout_constraintTop_toBottomOf="@id/buttonCenter" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonVisualize"
         android:layout_width="@dimen/main_scr_btn_size"
         android:layout_height="@dimen/main_scr_btn_size"
-        android:layout_gravity="center_horizontal"
         android:background="@drawable/circle_btn_background"
         android:onClick="onOpenVisualize"
         android:text="@string/visualize_activity"
