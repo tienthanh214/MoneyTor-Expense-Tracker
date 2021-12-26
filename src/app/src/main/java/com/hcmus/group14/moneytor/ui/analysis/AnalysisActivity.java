@@ -65,7 +65,11 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         // update total amount
         binding.totalAmountAnalyze.setText(String.format("%,2d", analyzeViewModel.getTotal(spendingList)));
         binding.averageByDateAnalyze.setText(String.format("%,2d", analyzeViewModel.getAverage(spendingList)));
+        binding.highestSpendingAnalyze.setText(String.format("%,2d", analyzeViewModel.getMaxSpending(spendingList)));
 
+        //ArrayList<Category> highestCategory = analyzeViewModel.getMaxSpendingCategory(spendingList);
+        //binding.highestCategoryIcon.setImageResource(highestCategory.get(0).getResourceId());
+        //binding.highestCategoryIcon.setBackgroundTintList(ColorStateList.valueOf(highestCategory.get(0).getColor()));
     }
 
 }
