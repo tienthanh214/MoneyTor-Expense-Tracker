@@ -25,6 +25,7 @@ import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.UserPref;
 import com.hcmus.group14.moneytor.firebase.FirebaseHelper;
 import com.hcmus.group14.moneytor.ui.analysis.AnalysisActivity;
+import com.hcmus.group14.moneytor.ui.analysis.VisualizeActivity;
 import com.hcmus.group14.moneytor.ui.debtlend.DebtLendActivity;
 import com.hcmus.group14.moneytor.ui.goal.GoalActivity;
 import com.hcmus.group14.moneytor.ui.setting.SettingsActivity;
@@ -158,4 +159,15 @@ public class MainActivity extends AppCompatActivity {
         UserPref userPref = new UserPref(name, user.getUid(), user.getEmail());
         FirebaseHelper.putUser(userPref, user);
     }
+
+    public void onOpenVisualize(View view){
+        Intent intent = new Intent(this, VisualizeActivity.class);
+        startActivity(intent);
+    }
+
+    public void onOpenSetting(View view){
+        Intent intent = new Intent(this, AnalysisActivity.class);
+        startActivity(intent);
+    }
+
 }

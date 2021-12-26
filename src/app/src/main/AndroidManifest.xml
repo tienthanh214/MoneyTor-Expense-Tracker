@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moneytor">
         <activity
-            android:name=".ui.analysis.Visualize"
+            android:name=".ui.analysis.VisualizeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.setting.SettingsActivity"
