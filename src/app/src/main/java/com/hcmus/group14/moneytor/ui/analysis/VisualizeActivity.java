@@ -5,15 +5,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.compose.ui.graphics.drawscope.Fill;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -22,17 +19,12 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.MPPointF;
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.FilterState;
 import com.hcmus.group14.moneytor.data.model.Spending;
-import com.hcmus.group14.moneytor.databinding.ActivityAnalysisBinding;
 import com.hcmus.group14.moneytor.databinding.ActivityVisualizeBinding;
-import com.hcmus.group14.moneytor.services.analyze.AnalyzeViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.services.visualize.VisualizeViewModel;
@@ -73,20 +65,27 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         binding.setViewModel(viewModel);
         pieHashMapEntries = new HashMap<>();
         barHashMapEntries = new HashMap<>();
+//        initPieChart();
+//        initBarChart();
         // binding observe
-        filterViewModel.getAllSpending().observe(this, this::updateNewData);
+        filterViewModel.getAllSending().observe(this, this::updateNewData);
         // TODO: receive intent and show filter by FilterState()
         filterViewModel.setFilterState(new FilterState());
 
-        initPieChart();
-        initBarChart();
+
     }
 
     private void updateNewData(List<Spending> spendingList) {
+        Log.i("@@@ vis", spendingList.toString());
         pieHashMapEntries = viewModel.getSpendingProportionByCategory(spendingList);
         barHashMapEntries = viewModel.getDailySpendingAmount(spendingList);
-        pieChart.getData().notifyDataChanged();
-        pieChart.notifyDataSetChanged();
+        initPieChart();
+        initBarChart();
+        // pieChart.getData().notifyDataChanged();
+        // pieChart.notifyDataSetChanged();
+        for (Category data : pieHashMapEntries.keySet()) {
+            Log.i("@@@ data", data.toString() + " " + pieHashMapEntries.get(data).toString());
+        }
     }
 
     private void initPieChart() {

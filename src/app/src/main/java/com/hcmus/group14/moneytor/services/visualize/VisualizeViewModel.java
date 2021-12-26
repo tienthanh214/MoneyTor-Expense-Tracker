@@ -2,6 +2,8 @@ package com.hcmus.group14.moneytor.services.visualize;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
@@ -31,6 +33,14 @@ public class VisualizeViewModel extends AndroidViewModel {
         {
             this.amount = amount;
             this.percentage = percentage;
+        }
+
+        @Override
+        public String toString() {
+            return "SpendingAmountInfo{" +
+                    "amount=" + amount +
+                    ", percentage=" + percentage +
+                    '}';
         }
     }
     public VisualizeViewModel(@NonNull Application application) {
@@ -86,6 +96,7 @@ public class VisualizeViewModel extends AndroidViewModel {
     public HashMap<Category, SpendingAmountInfo>
     getSpendingProportionByCategory(List<Spending> spendings)
     {
+
         HashMap<Category, SpendingAmountInfo> returnResult = new HashMap<>();
         ArrayList<Category> categories = new ArrayList<>();
         double sum = 0;
@@ -108,6 +119,7 @@ public class VisualizeViewModel extends AndroidViewModel {
                     val += spending.getCost();
             returnResult.put(category, new SpendingAmountInfo((long)val, val / sum));
         }
+        Log.i("@@@ result", returnResult.toString());
         return returnResult;
     }
 }
