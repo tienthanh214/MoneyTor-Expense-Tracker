@@ -8,20 +8,23 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.hcmus.group14.moneytor.data.local.AppViewModel;
+import com.hcmus.group14.moneytor.data.model.DebtLend;
 import com.hcmus.group14.moneytor.data.model.FilterState;
+import com.hcmus.group14.moneytor.data.model.SpendGoal;
 import com.hcmus.group14.moneytor.data.model.Spending;
+import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 
 import java.util.List;
 
 public class FilterViewModel extends AppViewModel {
     private final MutableLiveData<FilterState> filterState;
-    private final LiveData<List<Spending>> allSpending;
+    private LiveData<List<Spending>> allSpending = null;
+    private LiveData<List<DebtLendAndRelate>> allDebtLend = null;
+    private LiveData<List<SpendGoal>> allSpendGoal = null;
 
     public FilterViewModel(@NonNull Application application) {
         super(application);
         filterState = new MutableLiveData<>();
-        allSpending = Transformations.switchMap(filterState,
-                input -> appRepository.filterByCategoryAndTime(input.categories, input.startDate, input.endDate));
     }
 
     public void setFilterState(FilterState filterState) {
@@ -29,6 +32,29 @@ public class FilterViewModel extends AppViewModel {
     }
 
     public LiveData<List<Spending>> getAllSpending() {
+        if (allSpending == null) {
+            allSpending = Transformations.switchMap(filterState, input -> {
+                return appRepository.filterSpendingByCategoryAndTime(input.categories, input.startDate, input.endDate);
+            });
+        }
         return allSpending;
+    }
+
+    public LiveData<List<DebtLendAndRelate>> getAllDebtLend() {
+        if (allDebtLend == null) {
+            allDebtLend = Transformations.switchMap(filterState, input -> {
+                return appRepository.filterDebtLendByCategoryAndTime(input.categories, input.startDate, input.endDate);
+            });
+        }
+        return allDebtLend;
+    }
+
+    public LiveData<List<SpendGoal>> getAllSpendGoal() {
+        if (allSpendGoal == null) {
+            allSpendGoal = Transformations.switchMap(filterState, input -> {
+                return appRepository.filterSpendGoalByCategoryAndTime(input.categories, input.startDate, input.endDate);
+            });
+        }
+        return allSpendGoal;
     }
 }

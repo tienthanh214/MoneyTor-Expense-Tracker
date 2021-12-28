@@ -51,9 +51,19 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
-        viewModel = new ViewModelProvider(this).get(DebtLendDetailsViewModel.class);
-        viewModel = binding.getViewModel();
         this.setTitle("Manage debt");
+
+        viewModel = new ViewModelProvider(this).get(DebtLendDetailsViewModel.class);
+        binding.setViewModel(viewModel);
+
+        int debtLendId = (int)getIntent().getIntExtra("debt_id", -1);
+        if (debtLendId != -1) {
+            // if click on item list view, load full info of a spending
+            viewModel.getDebtLendAndRelateById(debtLendId).observe(this, debtLend -> {
+                viewModel.uploadData(debtLend);
+            });
+        }
+
         setSpinner();
         setDatePickerDialog();
         setAddTarget();
@@ -78,7 +88,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
                 Bundle bundle = data.getExtras();
                 List<Relate> selectedContacts = (List<Relate>) bundle.getSerializable("contacts");
                 // bug here
-                //viewModel.setTarget(selectedContacts.get(0));
+                viewModel.setTarget(selectedContacts.get(0));
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -202,10 +212,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        String item = parent.getItemAtPosition(position).toString();
-
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        viewModel.setCategory(CategoriesUtils.getCategoryIdByPosition(position));
     }
     public void onNothingSelected(AdapterView<?> arg0) {
 

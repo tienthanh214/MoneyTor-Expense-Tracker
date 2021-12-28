@@ -1,6 +1,7 @@
 package com.hcmus.group14.moneytor.ui.goal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,19 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
-import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
+import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder> {
-    private LayoutInflater layoutInflater;
+    private final LayoutInflater layoutInflater;
     private List<SpendGoal> goals;
-    private Context context;
+    private final Context context;
 
     public GoalAdapter(Context context, List<SpendGoal> goalList) {
         layoutInflater = LayoutInflater.from(context);
@@ -37,8 +36,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
     @Override
     public GoalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = layoutInflater.inflate(R.layout.content_goal, parent, false);
-        GoalViewHolder holder = new GoalViewHolder(itemView, this);
-        return holder;
+        return new GoalViewHolder(itemView, this);
     }
 
     @Override
@@ -49,6 +47,11 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
         holder.setDate(currentSpendingGoal.getDate());
         Category category = CategoriesUtils.findCategoryById(currentSpendingGoal.getCategory());
         holder.setImage(category.getColor(),category.getResourceId());
+    }
+
+    public void setSpendGoals(List<SpendGoal> goalList){
+        goals = goalList;
+        notifyDataSetChanged();
     }
 
     public void filterList(List<SpendGoal> filteredList){
@@ -64,11 +67,11 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
     }
 
     public class GoalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView descView;
-        private TextView dateView;
-        private TextView valueView;
-        private GoalAdapter adapter;
-        private ImageView imageView;
+        private final TextView descView;
+        private final TextView dateView;
+        private final TextView valueView;
+        private final GoalAdapter adapter;
+        private final ImageView imageView;
 
 
         public void setDesc(String desc) {
@@ -76,13 +79,11 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
         }
 
         public void setDate(long date) {
-            Date temp = new Date(date);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            dateView.setText(dateFormat.format(temp));
+            dateView.setText(DateTimeUtils.getDate(date));
         }
 
         public void setValue(long value) {
-            valueView.setText(String.format("%,d", value) + " VNĐ");
+            valueView.setText(String.format(Locale.US, "%,d", value) + " VNĐ");
         }
 
         public void setImage(int color, int resource){
@@ -97,11 +98,16 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
             this.dateView = itemView.findViewById(R.id.dateSpendingGoalItem);
             this.valueView = itemView.findViewById(R.id.valueSpendingGoalItem);
             this.imageView = itemView.findViewById(R.id.categorySpendingGoalItem);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             // open activity
+            int position = this.getAdapterPosition();
+            Intent intent = new Intent(context, AddGoalActivity.class);
+            intent.putExtra("goal_id", goals.get(position).getGoalID());
+            context.startActivity(intent);
         }
     }
 }

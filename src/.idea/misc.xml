@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_bubble.xml" value="0.1" />
+        <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal.xml" value="0.21770833333333334" />
         <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_main.xml" value="0.22146739130434784" />
+        <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_note_spending.xml" value="0.21770833333333334" />
         <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_spending.xml" value="0.2" />
         <entry key="..\:/HCMUS/NAM3/NMCNPM/Project/NMCNPM-Project-Group14/src/app/src/main/res/layout/content_spending.xml" value="0.1" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/drawable-anydpi/ic_app_logo.xml" value="0.1" />
@@ -28,7 +31,6 @@
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_goal_spending.xml" value="0.2234375" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_note_spending.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_spending.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_spending.xml" value="0.21100917431192662" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/category_item.xml" value="0.1" />
         <entry key="..\:/Users/TGDD/Desktop/nmcnpm2/NMCNPM-Project-Group14/src/app/src/main/res/layout/content_contact.xml" value="0.22" />
@@ -64,8 +66,8 @@
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_note_spending.xml" value="0.20416666666666666" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/activity_visualize.xml" value="0.20416666666666666" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/category_item.xml" value="0.20416666666666666" />
-        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/fragment_pie_chart.xml" value="0.20416666666666666" />
         <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/category_item_statistics.xml" value="0.20416666666666666" />
+        <entry key="..\:/bailam/NM CNPM/final/NMCNPM-Project-Group14/src/app/src/main/res/layout/fragment_pie_chart.xml" value="0.20416666666666666" />
         <entry key="app/src/main/res/drawable/btn_bg.xml" value="0.21041666666666667" />
         <entry key="app/src/main/res/drawable/ic_setting_background.xml" value="0.3671875" />
         <entry key="app/src/main/res/drawable/ic_setting_foreground.xml" value="0.3671875" />

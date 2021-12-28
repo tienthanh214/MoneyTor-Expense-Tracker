@@ -3,28 +3,24 @@ package com.hcmus.group14.moneytor.ui.goal;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.hcmus.group14.moneytor.data.model.DebtLend;
+import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.model.FilterState;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
 import com.hcmus.group14.moneytor.databinding.ActivityGoalBinding;
-import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
-
-import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
+import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
-import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +35,8 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
     private Context context;
     private SearchView searchView;
 
+    private FilterViewModel viewModel;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_goal;
@@ -52,8 +50,15 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
 
         this.setTitle("Spending goal");
 
-        spendGoals = getData();
+//        spendGoals = getData();
         initializeViews();
+
+        viewModel = new ViewModelProvider(this).get(FilterViewModel.class);
+        viewModel.getAllSpendGoal().observe(this, goalList -> {
+            this.spendGoals = goalList;
+            this.goalAdapter.setSpendGoals(goalList);
+        });
+        viewModel.setFilterState(new FilterState());
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -89,7 +89,7 @@ public class AppRepository {
         });
     }
 
-    public LiveData<List<Spending>> filterByCategoryAndTime(List<String> cats, long startDate, long endDate) {
+    public LiveData<List<Spending>> filterSpendingByCategoryAndTime(List<String> cats, long startDate, long endDate) {
         if (startDate > endDate) {
             long temp = startDate;
             startDate = endDate;
@@ -176,10 +176,24 @@ public class AppRepository {
     public void updateSpendGoal(SpendGoal spendGoal) {
         AppRoomDatabase.databaseWriteExecutor.execute(()->spendGoalDao.update(spendGoal));
     }
-    //---------------------Spending goals------------------
     public LiveData<List<SpendGoal>> getSpendGoalById(int id)
     {
         return spendGoalDao.getSpendGoalByID(id);
+    }
+    public LiveData<List<SpendGoal>> filterSpendGoalByCategoryAndTime(List<String> cats, long startDate, long endDate) {
+        if (startDate > endDate) {
+            long temp = startDate;
+            startDate = endDate;
+            endDate = temp;
+        }
+        if ((cats == null || cats.isEmpty()) && endDate == -1) // wrong filter
+            return spendGoalDao.getAllSpendGoals();
+        if ((cats != null && !cats.isEmpty()) && endDate != -1) // valid filter
+            return spendGoalDao.filterByCategoryAndTime(cats, startDate, endDate);
+        else if (endDate != -1)  // if only time valid
+            return spendGoalDao.filterByTime(startDate, endDate);
+        else  // if only cats valid
+            return spendGoalDao.filterByCategories(cats);
     }
     //---------------------Debt/lends----------------------
     public LiveData<List<DebtLend>> getAllDebtLends()
@@ -205,5 +219,30 @@ public class AppRepository {
     public void updateDebtLend(DebtLend debtLend)
     {
         AppRoomDatabase.databaseWriteExecutor.execute(()->debtLendDao.update(debtLend));
+    }
+
+    public void insertDebtLendWithTarget(DebtLend debtLend, Relate target) {
+        AppRoomDatabase.databaseWriteExecutor.execute(()->debtLendDao.insertDebtLendWithTarget(debtLend, target));
+    }
+    public void updateDebtLendWithTarget(DebtLend debtLend, Relate target) {
+        AppRoomDatabase.databaseWriteExecutor.execute(()->debtLendDao.updateDebtLendWithTarget(debtLend, target));
+    }
+    public void deleteDebtLend(DebtLend debtLend) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> debtLendDao.deleteDebtLend(debtLend));
+    }
+    public LiveData<List<DebtLendAndRelate>> filterDebtLendByCategoryAndTime(List<String> cats, long startDate, long endDate) {
+        if (startDate > endDate) {
+            long temp = startDate;
+            startDate = endDate;
+            endDate = temp;
+        }
+        if ((cats == null || cats.isEmpty()) && endDate == -1) // wrong filter
+            return debtLendDao.getAllDebtLendAndRelate();
+        if ((cats != null && !cats.isEmpty()) && endDate != -1) // valid filter
+            return debtLendDao.filterByCategoryAndTime(cats, startDate, endDate);
+        else if (endDate != -1)  // if only time valid
+            return debtLendDao.filterByTime(startDate, endDate);
+        else  // if only cats valid
+            return debtLendDao.filterByCategories(cats);
     }
 }

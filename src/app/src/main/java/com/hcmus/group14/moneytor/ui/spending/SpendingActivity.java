@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.FilterState;
+import com.hcmus.group14.moneytor.data.model.Note;
 import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
 import com.hcmus.group14.moneytor.services.options.Category;
@@ -51,27 +52,15 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         this.context = this.getApplicationContext();
         // do what you want
         this.setTitle("List spending");
-
-//        spendingViewModel = new ViewModelProvider(this).get(SpendingViewModel.class);
-//        spendingViewModel.getAllSpending().observe(this, new Observer<List<Spending>>() {
-//            @Override
-//            public void onChanged(List<Spending> spendingList) {
-//                spendings=spendingList;
-//                spendingAdapter.setSpending(spendings);
-//            }
-//        });
-        // test
-        filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
-        filterViewModel.getAllSpending().observe(this, new Observer<List<Spending>>() {
-            @Override
-            public void onChanged(List<Spending> spendingList) {
-                spendings = spendingList;
-                spendingAdapter.setSpending(spendings);
-            }
-        });
-        filterViewModel.setFilterState(new FilterState());
         initializeViews();
 
+        filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
+        filterViewModel.getAllSpending().observe(this, spendingList -> {
+            spendings = spendingList;
+            spendingAdapter.setSpending(spendings);
+        });
+        
+        filterViewModel.setFilterState(new FilterState());
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -27,7 +27,7 @@
         android:fontFamily="@font/poppins_bold"
         android:text="MoneyTor"
         android:textColor="@color/independence"
-        android:textSize="48sp"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -49,7 +49,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
             android:fontFamily="@font/poppins_bold"
             android:text="Login"
             android:textColor="@color/white"
@@ -75,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <ImageView

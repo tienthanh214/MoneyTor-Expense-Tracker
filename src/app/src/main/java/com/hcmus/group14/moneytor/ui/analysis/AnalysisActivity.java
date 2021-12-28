@@ -19,6 +19,7 @@ import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> {
 
@@ -63,8 +64,8 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         // update category statistics
         categoryAdapter.setItems(analyzeViewModel.getDetailsForCategories(spendingList));
         // update total amount
-        binding.totalAmountAnalyze.setText(String.format("%,2d", analyzeViewModel.getTotal(spendingList)));
-        binding.averageByDateAnalyze.setText(String.format("%,2d", analyzeViewModel.getAverage(spendingList)));
+        binding.totalAmountAnalyze.setText(String.format(Locale.US ,"%,d", analyzeViewModel.getTotal(spendingList)));
+        binding.averageByDateAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getAverage(spendingList)));
         binding.highestSpendingAnalyze.setText(String.format("%,2d", analyzeViewModel.getMaxSpending(spendingList)));
 
         //ArrayList<Category> highestCategory = analyzeViewModel.getMaxSpendingCategory(spendingList);

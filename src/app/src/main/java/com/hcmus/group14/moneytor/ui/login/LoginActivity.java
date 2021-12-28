@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -35,10 +36,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         setContentView(R.layout.activity_login);
 
         btnGoogleAuth = findViewById(R.id.btn_google_auth);
-        btnGoogleAuth.setOnClickListener(v -> signIn());
+        btnGoogleAuth.setOnClickListener(v -> logIn());
         btnNoAuth = findViewById(R.id.btn_no_auth);
         btnNoAuth.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -54,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        onLoginComplete(currentUser);
     }
 
     private void createRequest() {
@@ -68,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-    private void signIn() {
+    private void logIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -104,17 +109,17 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            onLoginComplete(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            updateUI(null);
+                            onLoginComplete(null);
                         }
                     }
                 });
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void onLoginComplete(FirebaseUser user) {
         if (user == null) {
             Toast.makeText(LoginActivity.this, "No user",
                     Toast.LENGTH_SHORT).show();

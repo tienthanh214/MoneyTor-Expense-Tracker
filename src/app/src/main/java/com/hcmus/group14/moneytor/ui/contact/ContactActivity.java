@@ -25,6 +25,7 @@ import com.hcmus.group14.moneytor.databinding.ActivityContactBinding;
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.services.spending.SpendingViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
+import com.hcmus.group14.moneytor.utils.ContactUtils;
 
 
 import java.io.Serializable;
@@ -54,7 +55,8 @@ public class ContactActivity extends NoteBaseActivity<ActivityContactBinding> {
         this.context = this.getApplicationContext();
         // do what you want
         this.setTitle("Relate");
-        contacts = getData();
+        contacts = ContactUtils.getAllContacts(this, this.getApplicationContext());
+//        contacts = getData();
         initializeViews();
     }
 
