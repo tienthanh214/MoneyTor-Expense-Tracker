@@ -4,16 +4,21 @@ package com.hcmus.group14.moneytor.services.notification.receiver;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.graphics.drawable.IconCompat;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
+import com.hcmus.group14.moneytor.ui.spending.AddSpendingActivity;
+import com.hcmus.group14.moneytor.ui.widget.BubbleActivity;
 
 public class GoalBroadcastReceiver extends BroadcastReceiver {
     public static final String CHANNEL_ID = "spending_goal_channel";
@@ -34,13 +39,26 @@ public class GoalBroadcastReceiver extends BroadcastReceiver {
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationChannel notificationChannel = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationChannel = new NotificationChannel(CHANNEL_ID, channelName,
                     NotificationManager.IMPORTANCE_HIGH);
             notificationChannel.setLightColor(Color.RED);
             notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
             notificationManager.createNotificationChannel(notificationChannel);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                notificationChannel.setAllowBubbles(true);
+            }
         }
+
+        // TODO: bubble WIDGET
+        Intent target = new Intent(context, BubbleActivity.class);
+        PendingIntent bubbleIntent = PendingIntent.getActivity(context, 0, target, 0);
+        NotificationCompat.BubbleMetadata bubbleData = new NotificationCompat.BubbleMetadata.Builder(
+                bubbleIntent, IconCompat.createWithResource(context, R.drawable.ic_app_logo))
+                .setDesiredHeight(600)
+                .setAutoExpandBubble(false)
+                .setSuppressNotification(true)
+                .build();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle("Spending goal - " + goal.getCategory())
@@ -48,7 +66,8 @@ public class GoalBroadcastReceiver extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setPriority(NotificationCompat.PRIORITY_MAX);
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setBubbleMetadata(bubbleData);
 
         // TODO set what happen when press notification
 //        if (alarm.getTagUri() != null) {
