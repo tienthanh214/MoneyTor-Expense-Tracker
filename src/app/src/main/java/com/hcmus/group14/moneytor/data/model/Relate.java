@@ -3,6 +3,7 @@ package com.hcmus.group14.moneytor.data.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -19,6 +20,12 @@ public class Relate implements Serializable {
     @ColumnInfo(name = "tel")
     String tel;
 
+    @Ignore
+    public Relate() {
+        // Required by Firestore. Do not remove
+        this("", "");
+    }
+
     public Relate(String name, String tel) {
         this.name = name;
         this.tel = tel;
@@ -28,20 +35,20 @@ public class Relate implements Serializable {
         return relateId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
     public void setRelateId(int relateId) {
         this.relateId = relateId;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTel() {
+        return tel;
     }
 
     public void setTel(String tel) {

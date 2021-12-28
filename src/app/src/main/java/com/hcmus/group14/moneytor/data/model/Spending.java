@@ -26,6 +26,7 @@ public class Spending implements Note {
 
     @Ignore
     public Spending() {
+        // Required by Firestore. Do not remove
         this(-1, "", "", "", -1);
     }
 

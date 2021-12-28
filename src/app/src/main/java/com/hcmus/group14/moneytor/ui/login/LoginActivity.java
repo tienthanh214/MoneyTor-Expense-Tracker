@@ -26,6 +26,8 @@ import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.ui.main.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
+    public static final String LOGIN_TYPE = "login_type_code";
+    public static final String FIRST_TIME_LOGIN = "first_time_login";
     private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
@@ -46,7 +48,9 @@ public class LoginActivity extends AppCompatActivity {
         btnGoogleAuth.setOnClickListener(v -> logIn());
         btnNoAuth = findViewById(R.id.btn_no_auth);
         btnNoAuth.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra(LOGIN_TYPE, "no_auth");
+            startActivity(intent);
             finish();
         });
 
@@ -124,7 +128,9 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "No user",
                     Toast.LENGTH_SHORT).show();
         } else {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra(LOGIN_TYPE, FIRST_TIME_LOGIN);
+            startActivity(intent);
             finish();
         }
     }

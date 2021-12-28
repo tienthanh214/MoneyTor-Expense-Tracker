@@ -1,6 +1,8 @@
 package com.hcmus.group14.moneytor.ui.main;
 
 import static com.hcmus.group14.moneytor.firebase.FirebaseHelper.COLLECTION_USERS;
+import static com.hcmus.group14.moneytor.ui.login.LoginActivity.FIRST_TIME_LOGIN;
+import static com.hcmus.group14.moneytor.ui.login.LoginActivity.LOGIN_TYPE;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -42,7 +44,13 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // TODO: skip update data for users who have logged in this phone before
         // TODO: show a loading circle while synchronizing data
-        if (user != null) updateData(user);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString(LOGIN_TYPE);
+            if (user != null && value.equals(FIRST_TIME_LOGIN)) {
+                synchronizeData(user);
+            }
+        }
     }
 
     public void onOpenSpendingList(View view) {
@@ -96,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateData(FirebaseUser user) {
+    private void synchronizeData(FirebaseUser user) {
         // Check if user already exist and has data on the cloud
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection(COLLECTION_USERS).document(user.getUid());
