@@ -16,6 +16,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.model.UserPref;
 import com.hcmus.group14.moneytor.ui.login.LoginActivity;
 import com.hcmus.group14.moneytor.utils.PreferenceUtils;
 
@@ -55,15 +56,15 @@ public class SettingsActivity extends AppCompatActivity {
     private void displayUserInfo() {
         // Set user profile photo
         Uri photoUri = Uri.parse(PreferenceUtils.getString(this,
-                PreferenceUtils.USER_PROFILE,
-                PreferenceUtils.USER_PHOTO,
+                UserPref.USER_PROFILE,
+                UserPref.USER_PHOTO,
                 String.format("android.resource://com.hcmus.group14.moneytor/%d",
                         R.drawable.account_circle_fill)));
         ivPhoto.setImageURI(photoUri);
         // Set user name
         tvUsername.setText(PreferenceUtils.getString(
-                this, PreferenceUtils.USER_PROFILE,
-                PreferenceUtils.USER_NAME,
+                this, UserPref.USER_PROFILE,
+                UserPref.USER_NAME,
                 getString(R.string.default_username)));
     }
 

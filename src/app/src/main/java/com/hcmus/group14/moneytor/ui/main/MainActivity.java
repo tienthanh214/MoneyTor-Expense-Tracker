@@ -10,12 +10,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 if (document.exists()) {
                     Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("Cloud data detected");
+                    builder.setMessage("Cloud data detected!");
                     builder.setPositiveButton("Retrieve progress",
                             (dialog, id) -> {
                                 downloadUserPref(user);
@@ -120,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
                             });
                     builder.setNeutralButton("Do nothing",
                             (dialog, id) -> {
+                                Toast.makeText(MainActivity.this,
+                                        "Data is not uniform between cloud and local database",
+                                        Toast.LENGTH_SHORT).show();
                             });
                     builder.setCancelable(false);
                     AlertDialog alertDialog = builder.create();
@@ -135,31 +137,31 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     private void downloadUserPref(FirebaseUser user) {
         // TODO: implement this
-        FirebaseHelper.getUser(user, new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot.exists()) {
-                        UserPref userPref = documentSnapshot.toObject(UserPref.class);
-                        UserPref.saveToSharedPref(MainActivity.this, userPref);
-                    } else Log.d(TAG, "No such document");
-                } else Log.d(TAG, "get failed with ", task.getException());
-            }
+        FirebaseHelper.getUser(user, task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot documentSnapshot = task.getResult();
+                if (documentSnapshot.exists()) {
+                    UserPref userPref = documentSnapshot.toObject(UserPref.class);
+                    UserPref.saveToSharedPref(MainActivity.this, userPref);
+                } else Log.d(TAG, "No such document");
+            } else Log.d(TAG, "Get failed with ", task.getException());
         });
     }
 
-
     private void uploadUserPref(FirebaseUser user) {
         // Update user name
-        String name = PreferenceUtils.getString(this,
-                PreferenceUtils.USER_PROFILE,
-                PreferenceUtils.USER_NAME,
-                getString(R.string.default_username));
-        UserPref userPref = new UserPref(name, user.getUid(), user.getEmail());
+        String name = PreferenceUtils.getString(this, UserPref.USER_PROFILE,
+                UserPref.USER_NAME, getString(R.string.default_username));
+        String language = PreferenceUtils.getString(this, UserPref.USER_PROFILE,
+                UserPref.USER_LANGUAGE, getString(R.string.default_username));
+        boolean darkMode = PreferenceUtils.getBoolean(this, UserPref.USER_PROFILE,
+                UserPref.USER_DARK_MODE, false);
+        int reminderInterval = PreferenceUtils.getInt(this, UserPref.USER_PROFILE,
+                UserPref.USER_REMINDER_INTERVAL, 1);
+        UserPref userPref = new UserPref(name, user.getUid(), user.getEmail(), language, darkMode
+                , reminderInterval);
         FirebaseHelper.putUser(user, userPref);
     }
 }

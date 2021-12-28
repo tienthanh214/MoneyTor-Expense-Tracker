@@ -135,7 +135,7 @@ public class FirebaseHelper {
                                         OnCompleteListener<Void> onCompleteListener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collectionRef = db.collection(COLLECTION_USERS).document(user.getUid())
-                .collection(COLLECTION_WALLET);
+                .collection(collection);
         WriteBatch batch = db.batch();
         for (T object : objects) {
             DocumentReference documentRef = collectionRef.document();
@@ -146,36 +146,36 @@ public class FirebaseHelper {
 
     public static void uploadData(FirebaseUser user) {
         // TODO: do this in the background if app freezes
-        // TODO: Hoang - get list of DebtLend from db
         ArrayList<DebtLend> debtlends = new ArrayList<>();
+        // TODO: Hoang - get list of DebtLend from db
         FirebaseHelper.putDocuments(user, COLLECTION_DEBTLEND, debtlends, task -> {
             if (task.isSuccessful()) Log.d(TAG, "DebtLend successfully uploaded");
             else Log.w(TAG, "Error uploading DebtLend");
         });
 
-        // TODO: Hoang - get list of Relate from db
         ArrayList<Relate> relates = new ArrayList<>();
+        // TODO: Hoang - get list of Relate from db
         FirebaseHelper.putDocuments(user, COLLECTION_RELATE, relates, task -> {
             if (task.isSuccessful()) Log.d(TAG, "Relate successfully uploaded");
             else Log.w(TAG, "Error uploading Relate");
         });
 
-        // TODO: Hoang - get list of SpendGoal from db
         ArrayList<SpendGoal> spendGoals = new ArrayList<>();
+        // TODO: Hoang - get list of SpendGoal from db
         FirebaseHelper.putDocuments(user, COLLECTION_SPENDGOAL, spendGoals, task -> {
             if (task.isSuccessful()) Log.d(TAG, "SpendGoal successfully uploaded");
             else Log.w(TAG, "Error uploading SpendGoal");
         });
 
-        // TODO: Hoang - get list of Spending from db
         ArrayList<Spending> spendings = new ArrayList<>();
+        // TODO: Hoang - get list of Spending from db
         FirebaseHelper.putDocuments(user, COLLECTION_SPENDING, spendings, task -> {
             if (task.isSuccessful()) Log.d(TAG, "Spending successfully uploaded");
             else Log.w(TAG, "Error uploading Spending");
         });
 
-        // TODO: Hoang - get list of Wallet from db
         ArrayList<Wallet> wallets = new ArrayList<>();
+        // TODO: Hoang - get list of Wallet from db
         FirebaseHelper.putDocuments(user, COLLECTION_WALLET, wallets, task -> {
             if (task.isSuccessful()) Log.d(TAG, "Wallet successfully uploaded");
             else Log.w(TAG, "Error uploading Wallet");
