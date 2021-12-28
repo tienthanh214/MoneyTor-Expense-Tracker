@@ -160,13 +160,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void uploadUserPref(FirebaseUser user) {
         // Update user name
-        String name = PreferenceUtils.getString(this, UserPref.USER_PROFILE,
+        String name = PreferenceUtils.getString(this,
                 UserPref.USER_NAME, getString(R.string.default_username));
-        String language = PreferenceUtils.getString(this, UserPref.USER_PROFILE,
+        String language = PreferenceUtils.getString(this,
                 UserPref.USER_LANGUAGE, getString(R.string.default_username));
-        boolean darkMode = PreferenceUtils.getBoolean(this, UserPref.USER_PROFILE,
+        boolean darkMode = PreferenceUtils.getBoolean(this,
                 UserPref.USER_DARK_MODE, false);
-        int reminderInterval = PreferenceUtils.getInt(this, UserPref.USER_PROFILE,
+        int reminderInterval = PreferenceUtils.getInt(this,
                 UserPref.USER_REMINDER_INTERVAL, 1);
         UserPref userPref = new UserPref(name, user.getUid(), user.getEmail(), language, darkMode
                 , reminderInterval);

@@ -10,7 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreference;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -56,14 +59,13 @@ public class SettingsActivity extends AppCompatActivity {
     private void displayUserInfo() {
         // Set user profile photo
         Uri photoUri = Uri.parse(PreferenceUtils.getString(this,
-                UserPref.USER_PROFILE,
                 UserPref.USER_PHOTO,
                 String.format("android.resource://com.hcmus.group14.moneytor/%d",
                         R.drawable.account_circle_fill)));
         ivPhoto.setImageURI(photoUri);
         // Set user name
         tvUsername.setText(PreferenceUtils.getString(
-                this, UserPref.USER_PROFILE,
+                this,
                 UserPref.USER_NAME,
                 getString(R.string.default_username)));
     }
@@ -86,6 +88,9 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            EditTextPreference namePref = findPreference("name");
+            ListPreference languagePref = findPreference("language");
+            SwitchPreference darkModePref = findPreference("dark_mode");
         }
     }
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import com.hcmus.group14.moneytor.utils.PreferenceUtils;
 
 public class UserPref {
-    public static final String USER_PROFILE = "user_profile";
     public static final String USER_NAME = "user_name";
     public static final String USER_ID = "user_id";
     public static final String USER_EMAIL = "user_email";
@@ -35,13 +34,12 @@ public class UserPref {
     }
 
     public static void saveToSharedPref(Context context, UserPref userPref) {
-        PreferenceUtils.putString(context, USER_PROFILE, USER_NAME, userPref.name);
-        PreferenceUtils.putString(context, USER_PROFILE, USER_ID, userPref.id);
-        PreferenceUtils.putString(context, USER_PROFILE, USER_EMAIL, userPref.email);
-        PreferenceUtils.putString(context, USER_PROFILE, USER_LANGUAGE, userPref.language);
-        PreferenceUtils.putBoolean(context, USER_PROFILE, USER_DARK_MODE, userPref.darkMode);
-        PreferenceUtils.putInt(context, USER_PROFILE, USER_REMINDER_INTERVAL,
-                userPref.reminderInterval);
+        PreferenceUtils.putString(context, USER_NAME, userPref.name);
+        PreferenceUtils.putString(context, USER_ID, userPref.id);
+        PreferenceUtils.putString(context, USER_EMAIL, userPref.email);
+        PreferenceUtils.putString(context, USER_LANGUAGE, userPref.language);
+        PreferenceUtils.putBoolean(context, USER_DARK_MODE, userPref.darkMode);
+        PreferenceUtils.putInt(context, USER_REMINDER_INTERVAL, userPref.reminderInterval);
     }
 
     public String getName() {
