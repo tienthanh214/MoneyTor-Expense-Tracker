@@ -138,7 +138,7 @@ public class VisualizeViewModel extends AndroidViewModel {
     {
         HashMap<String, Long> returnResult = new HashMap<>();
 
-        long now = DateTimeUtils.getCurrentTimeMillis();
+        long now = DateTimeUtils.getDateInMillis(DateTimeUtils.getDate(DateTimeUtils.getCurrentTimeMillis()));
         long upperLimit = now, lowerLimit;
 
         int intervals = 0;
@@ -146,10 +146,12 @@ public class VisualizeViewModel extends AndroidViewModel {
         switch (filterType)
         {
             case FILTER_WEEKLY:
-                return getDailySpendingAmount(spendings);
+                intervals = 7;
+                intervalDuration = 24 * 60 * 60 * 1000;
+                break;
             case FILTER_MONTHLY:
-                intervals = 4;
-                intervalDuration = 7 * (24 * 60 * 60 * 1000);
+                intervals = 5;
+                intervalDuration = 6 * (24 * 60 * 60 * 1000);
                 break;
             case FILTER_ANNUALLY:
                 intervals = 12;
@@ -162,13 +164,15 @@ public class VisualizeViewModel extends AndroidViewModel {
         {
             long cost = 0l;
             lowerLimit = upperLimit - intervalDuration;
+            String lowerDate = DateTimeUtils.getDate(lowerLimit);
+            String upperDate = DateTimeUtils.getDate(upperLimit);
             for (Spending spending: spendings)
             {
                 long spendingDateMillis = spending.getDate();
                 if (spendingDateMillis >= lowerLimit && spendingDateMillis <= upperLimit)
                     cost += spending.getCost();
             }
-            returnResult.put(Integer.toString(interval), cost);
+            returnResult.put(lowerDate + " - " + upperDate, cost);
             upperLimit = lowerLimit;
         }
         return returnResult;
