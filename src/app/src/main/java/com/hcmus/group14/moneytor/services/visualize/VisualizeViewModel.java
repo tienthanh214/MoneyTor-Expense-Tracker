@@ -20,7 +20,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-//TODO
+
 public class VisualizeViewModel extends AndroidViewModel {
     Comparator<String> stringComparator;
     Comparator<Category> categoryComparator;
@@ -35,7 +35,6 @@ public class VisualizeViewModel extends AndroidViewModel {
             this.percentage = percentage;
         }
 
-        @Override
         public String toString() {
             return "SpendingAmountInfo{" +
                     "amount=" + amount +
@@ -121,5 +120,13 @@ public class VisualizeViewModel extends AndroidViewModel {
         }
         Log.i("@@@ result", returnResult.toString());
         return returnResult;
+    }
+
+    public long getTotalSpending(List<Spending> spendings)
+    {
+        long sum = 0L;
+        for (Spending spending: spendings)
+            sum += spending.getCost();
+        return sum;
     }
 }

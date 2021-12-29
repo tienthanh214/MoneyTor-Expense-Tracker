@@ -1,6 +1,7 @@
 package com.hcmus.group14.moneytor.data.local.dao;
 
 import androidx.room.Dao;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Insert;
 import androidx.lifecycle.LiveData;
@@ -12,7 +13,7 @@ import androidx.room.Delete;
 @Dao
 public interface ReminderDao {
     //Data manipulation queries
-    @Insert
+    @Insert(onConflict=OnConflictStrategy.IGNORE)
     public void insert(Reminder reminder);
     @Update
     public void update(Reminder... reminders);
