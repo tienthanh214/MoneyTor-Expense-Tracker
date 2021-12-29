@@ -60,6 +60,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private BarChart barChart;
     private HashMap<String, Long> barHashMapEntries;
+    private HashMap<String, Long> barGroupedEntries;
     private BarData barData;
     private ArrayList<String> label;
 
@@ -83,6 +84,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         binding.setViewModel(viewModel);
         pieHashMapEntries = new HashMap<>();
         barHashMapEntries = new HashMap<>();
+        barGroupedEntries = new HashMap<>();
         // binding observe
         filterViewModel.getAllSpending().observe(this, this::updateNewData);
         // TODO: receive intent and show filter by FilterState()
@@ -96,6 +98,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private void updateNewData(List<Spending> spendingList) {
         // TODO: get daily/weekly/monthly/annually spending from view model
+        //barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_WEEKLY);
         pieHashMapEntries = viewModel.getSpendingProportionByCategory(spendingList);
         barHashMapEntries = viewModel.getDailySpendingAmount(spendingList);
         setPieChartData();
@@ -179,6 +182,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         xAxis.setGranularity(1f);
         xAxis.setLabelCount(12);
         xAxis.setLabelRotationAngle(-45f);
+        xAxis.setTextSize(6f);
 
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setLabelCount(8, false);
@@ -186,7 +190,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setSpaceTop(15f);
         leftAxis.setAxisMinimum(0f);
-        leftAxis.setTextSize(5f);
+        leftAxis.setTextSize(6f);
 
         barChart.getAxisRight().setEnabled(false);
 
@@ -212,7 +216,6 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
         XAxis xAxis = barChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(label));
-        xAxis.setTextSize(5f);
 
         BarDataSet set1;
 
