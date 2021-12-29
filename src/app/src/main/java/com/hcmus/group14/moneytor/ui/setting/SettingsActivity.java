@@ -1,6 +1,7 @@
 package com.hcmus.group14.moneytor.ui.setting;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.firebase.ui.auth.AuthUI;
@@ -24,9 +26,9 @@ import com.hcmus.group14.moneytor.ui.login.LoginActivity;
 import com.hcmus.group14.moneytor.utils.PreferenceUtils;
 
 public class SettingsActivity extends AppCompatActivity {
+    private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener;
     private ImageView ivPhoto;
     private TextView tvUsername;
-    private Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +46,43 @@ public class SettingsActivity extends AppCompatActivity {
         }
         // Show profile picture and name
         prepareView();
+        setPreferenceListener();
         displayUserInfo();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this)
+                .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this)
+                .unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    }
+
+
+    private void setPreferenceListener() {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+        sharedPreferenceChangeListener = (sharedPreferences1, key) -> {
+            if (key.equals("user_name")) {
+                tvUsername.setText(PreferenceUtils.getString(this,
+                        UserPref.USER_NAME,
+                        getString(R.string.default_username)));
+            }
+        };
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     private void prepareView() {
         ivPhoto = findViewById(R.id.iv_photo);
         tvUsername = findViewById(R.id.tv_username);
-        btnLogout = findViewById(R.id.btn_logout);
+        Button btnLogout = findViewById(R.id.btn_logout);
         btnLogout.setOnClickListener(v -> {
             logout();
         });
@@ -64,8 +96,7 @@ public class SettingsActivity extends AppCompatActivity {
                         R.drawable.account_circle_fill)));
         ivPhoto.setImageURI(photoUri);
         // Set user name
-        tvUsername.setText(PreferenceUtils.getString(
-                this,
+        tvUsername.setText(PreferenceUtils.getString(this,
                 UserPref.USER_NAME,
                 getString(R.string.default_username)));
     }
