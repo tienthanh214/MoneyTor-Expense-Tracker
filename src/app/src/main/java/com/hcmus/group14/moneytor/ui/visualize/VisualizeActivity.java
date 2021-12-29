@@ -55,7 +55,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
     private int mod = 0;
 
     private PieChart pieChart;
-    private HashMap<Category, VisualizeViewModel.SpendingAmountInfo> pieHashMapEntries;
+    private ArrayList<VisualizeViewModel.SpendingAmountInfo> pieAllEntries;
     private PieData pieData;
 
     private BarChart barChart;
@@ -82,7 +82,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         viewModel = new ViewModelProvider(this).get(VisualizeViewModel.class);
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
         binding.setViewModel(viewModel);
-        pieHashMapEntries = new HashMap<>();
+        pieAllEntries = new ArrayList<>();
         barHashMapEntries = new HashMap<>();
         barGroupedEntries = new ArrayList<>();
         // binding observe
@@ -99,7 +99,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
     private void updateNewData(List<Spending> spendingList) {
         // TODO: get daily/weekly/monthly/annually spending from view model
         barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_WEEKLY);
-        pieHashMapEntries = viewModel.getSpendingProportionByCategory(spendingList);
+        pieAllEntries = viewModel.getSpendingProportionByCategory(spendingList);
         barHashMapEntries = viewModel.getDailySpendingAmount(spendingList);
         setPieChartData();
         pieChart.invalidate();
@@ -129,25 +129,25 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         ArrayList<Integer> pieColors = new ArrayList<>();
         PieDataSet pieDataSet;
 
-        Log.d("@@@ category", String.valueOf(pieHashMapEntries.size()));
+        Log.d("@@@ category", String.valueOf(pieAllEntries.size()));
 
-        for (Map.Entry<Category, VisualizeViewModel.SpendingAmountInfo> category : pieHashMapEntries.entrySet()) {
-            double percentage = category.getValue().percentage;
+        for (VisualizeViewModel.SpendingAmountInfo entry : pieAllEntries) {
+            double percentage = entry.percentage;
             double minPercentageToShowLabelOnChart = 0.08d;
 
             if (percentage > minPercentageToShowLabelOnChart) {
                 Drawable drawable = ContextCompat.getDrawable(VisualizeActivity.this,
-                        category.getKey().getResourceId());
+                        entry.category.getResourceId());
                 drawable.setTint(Color.parseColor("#FFFFFF"));
-                pieEntries.add(new PieEntry(category.getValue().amount, drawable));
-                Log.d("@@@" + category.getKey(), String.valueOf(category.getValue().percentage));
+                pieEntries.add(new PieEntry(entry.amount, drawable));
+                Log.d("@@@" + entry.category, String.valueOf(entry.percentage));
                 //pieEntries.add(new PieEntry(20l, drawable));
             } else {
-                pieEntries.add(new PieEntry(category.getValue().amount));
-                Log.d("@@@" + category.getKey(), String.valueOf(category.getValue().percentage));
+                pieEntries.add(new PieEntry(entry.amount));
+                Log.d("@@@" + entry.category, String.valueOf(entry.percentage));
                 //pieEntries.add(new PieEntry(5l));
             }
-            pieColors.add(category.getKey().getColor());
+            pieColors.add(entry.category.getColor());
         }
 
         if (pieChart.getData() != null && pieChart.getData().getDataSetCount() > 0) {
