@@ -66,23 +66,24 @@ public class VisualizeViewModel extends AndroidViewModel {
 
     public VisualizeViewModel(@NonNull Application application) {
         super(application);
+        //Descending order
         spendingAmountInfoComparator = new Comparator<SpendingAmountInfo>() {
             @Override
             public int compare(SpendingAmountInfo spendingAmountInfo, SpendingAmountInfo t1) {
-                if (spendingAmountInfo.amount > t1.amount) return 1;
-                if (spendingAmountInfo.amount < t1.amount) return -1;
+                if (spendingAmountInfo.amount < t1.amount) return 1;
+                if (spendingAmountInfo.amount > t1.amount) return -1;
                 return 0;
             }
         };
 
-        //Descending order
+
         spendingPeriodInfoComparator = new Comparator<SpendingPeriodInfo>() {
             @Override
             public int compare(SpendingPeriodInfo spendingPeriodInfo, SpendingPeriodInfo t1) {
                 long timeR0 = DateTimeUtils.getDateInMillis(spendingPeriodInfo.period),
                         timeR1 = DateTimeUtils.getDateInMillis(t1.period);
-                if (timeR0 > timeR0) return -1;
-                if (timeR1 > timeR0) return 1;
+                if (timeR0 > timeR1) return 1;
+                if (timeR1 > timeR0) return -1;
                 return 0;
             }
         };
@@ -170,15 +171,15 @@ public class VisualizeViewModel extends AndroidViewModel {
         {
             case FILTER_WEEKLY:
                 intervals = 7;
-                intervalDuration = 24 * 60 * 60 * 1000;
+                intervalDuration = 24l * 60l * 60l * 1000l;
                 break;
             case FILTER_MONTHLY:
                 intervals = 5;
-                intervalDuration = 6 * (24 * 60 * 60 * 1000);
+                intervalDuration = 6l * (24l * 60l * 60l * 1000l);
                 break;
             case FILTER_ANNUALLY:
                 intervals = 12;
-                intervalDuration = 30 * (24 * 60 * 60 * 1000);
+                intervalDuration = 30l * (24l * 60l * 60l * 1000l);
                 break;
             default:
                 return null;
@@ -203,7 +204,7 @@ public class VisualizeViewModel extends AndroidViewModel {
         returnResult.sort(spendingPeriodInfoComparator);
         if (filterType == FILTER_WEEKLY)
             for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
-                spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,1);
+                spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,2);
 
         return returnResult;
     }
