@@ -66,6 +66,7 @@ public class VisualizeViewModel extends AndroidViewModel {
 
     public VisualizeViewModel(@NonNull Application application) {
         super(application);
+        //Descending order
         spendingAmountInfoComparator = new Comparator<SpendingAmountInfo>() {
             @Override
             public int compare(SpendingAmountInfo spendingAmountInfo, SpendingAmountInfo t1) {
@@ -75,7 +76,7 @@ public class VisualizeViewModel extends AndroidViewModel {
             }
         };
 
-        //Descending order
+
         spendingPeriodInfoComparator = new Comparator<SpendingPeriodInfo>() {
             @Override
             public int compare(SpendingPeriodInfo spendingPeriodInfo, SpendingPeriodInfo t1) {
@@ -170,15 +171,15 @@ public class VisualizeViewModel extends AndroidViewModel {
         {
             case FILTER_WEEKLY:
                 intervals = 7;
-                intervalDuration = 24 * 60 * 60 * 1000;
+                intervalDuration = 24l * 60l * 60l * 1000l;
                 break;
             case FILTER_MONTHLY:
                 intervals = 5;
-                intervalDuration = 6 * (24 * 60 * 60 * 1000);
+                intervalDuration = 6l * (24l * 60l * 60l * 1000l);
                 break;
             case FILTER_ANNUALLY:
                 intervals = 12;
-                intervalDuration = 30 * (24 * 60 * 60 * 1000);
+                intervalDuration = 30l * (24l * 60l * 60l * 1000l);
                 break;
             default:
                 return null;
