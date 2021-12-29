@@ -12,8 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_green">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,7 +67,6 @@
                         android:layout_marginTop="@dimen/margin_top_text"
                         android:layout_marginBottom="@dimen/margin_bottom_text"
                         android:text="Category"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/text_size" />
 
                     <Spinner
@@ -87,7 +85,6 @@
                         android:layout_marginTop="@dimen/margin_top_text"
                         android:layout_marginBottom="@dimen/margin_bottom_text"
                         android:text="Date"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/text_size" />
 
                     <EditText
@@ -109,7 +106,6 @@
                         android:layout_marginTop="@dimen/margin_top_text"
                         android:layout_marginBottom="@dimen/margin_bottom_text"
                         android:text="Description"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/text_size" />
 
                     <EditText

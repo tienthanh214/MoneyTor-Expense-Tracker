@@ -1,18 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/light_green">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/list_item_background"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingHorizontal="10dp"
-        android:paddingVertical="5dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/list_item_background">
+        android:paddingVertical="5dp">
 
         <ImageView
             android:id="@+id/iv_photo"
@@ -33,7 +32,6 @@
             android:maxLines="1"
             android:text="@string/default_username"
             android:textAlignment="center"
-            android:textColor="@color/orange_soda"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -45,8 +43,7 @@
             android:layout_centerVertical="true"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="Log out"
-            />
+            android:text="Log out" />
 
     </RelativeLayout>
 
@@ -58,17 +55,16 @@
         android:orientation="horizontal">
 
         <TextView
-            android:background="@drawable/list_item_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Reminder setting"
-            android:textSize="20dp"
-            android:maxLines="2"
+            android:background="@drawable/list_item_background"
             android:fontFamily="@font/poppins_medium"
+            android:maxLines="2"
             android:padding="8dp"
-            android:textStyle="bold"
+            android:text="Reminder setting"
             android:textAlignment="center"
-            />
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -78,24 +74,23 @@
         android:orientation="horizontal">
 
         <TextView
-            android:background="@drawable/list_item_background"
+            android:id="@+id/reminder_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Display homescreen widget"
-            android:textSize="20dp"
-            android:textAlignment="center"
-            android:maxLines="2"
+            android:background="@drawable/list_item_background"
             android:fontFamily="@font/poppins_medium"
+            android:maxLines="2"
             android:padding="8dp"
-            android:textStyle="bold"
-            android:id="@+id/reminder_text"
-            />
+            android:text="Display homescreen widget"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/widget_switch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:id="@+id/widget_switch"/>
+            android:gravity="center" />
     </LinearLayout>
 
     <View

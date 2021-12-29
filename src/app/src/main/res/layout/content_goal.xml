@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="10dp"
     android:background="@drawable/list_item_background"
     android:baselineAligned="false"
     android:orientation="horizontal"
     android:paddingHorizontal="15dp"
-    android:paddingVertical="15dp"
-    >
+    android:paddingVertical="15dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_marginEnd="15dp"
+        android:layout_weight="1"
 
         >
+
         <ImageView
+            android:id="@+id/categorySpendingGoalItem"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:1"
             android:background="@drawable/category_icon_background"
             android:src="@drawable/ic_category_fitness"
-            android:id="@+id/categorySpendingGoalItem"
-            app:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -47,21 +45,18 @@
             android:id="@+id/valueSpendingGoalItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/dateSpendingGoalItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:textStyle="italic" />
 
         <TextView
             android:id="@+id/descSpendingGoalItem"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
