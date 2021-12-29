@@ -45,7 +45,7 @@ public class VisualizeViewModel extends AndroidViewModel {
                     '}';
         }
     }
-    public VisualizeViewModel(@NonNull Application application, List<Spending> spendings) {
+    public VisualizeViewModel(@NonNull Application application) {
         super(application);
         stringComparator = new Comparator<String>() {
             // t0 > t1 <=> t0[0] > t1[0]
@@ -133,7 +133,7 @@ public class VisualizeViewModel extends AndroidViewModel {
         return sum;
     }
 
-    @SuppressLint("NewApi")
+   
     public HashMap<String, Long> getGroupedSpendingAmount(List<Spending> spendings, int filterType)
     {
         HashMap<String, Long> returnResult = new HashMap<>();
