@@ -60,7 +60,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private BarChart barChart;
     private HashMap<String, Long> barHashMapEntries;
-    private HashMap<String, Long> barGroupedEntries;
+    private ArrayList<VisualizeViewModel.SpendingPeriodInfo> barGroupedEntries;
     private BarData barData;
     private ArrayList<String> label;
 
@@ -84,7 +84,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         binding.setViewModel(viewModel);
         pieHashMapEntries = new HashMap<>();
         barHashMapEntries = new HashMap<>();
-        barGroupedEntries = new HashMap<>();
+        barGroupedEntries = new ArrayList<>();
         // binding observe
         filterViewModel.getAllSpending().observe(this, this::updateNewData);
         // TODO: receive intent and show filter by FilterState()
@@ -119,6 +119,9 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         pieChart.setDrawCenterText(true);
         pieChart.setRotationEnabled(false);
         pieChart.setHighlightPerTapEnabled(true);
+
+        pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setEntryLabelTextSize(8f);
     }
 
     private void setPieChartData() {
@@ -160,6 +163,13 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
             pieDataSet.setDrawValues(false);
             pieDataSet.setColors(pieColors);
             pieDataSet.setSliceSpace(2f);
+
+            /*pieData.setValueTextColor(Color.BLACK);
+            pieDataSet.setValueLinePart1OffsetPercentage(90.f);
+            pieDataSet.setValueLinePart1Length(1f);
+            pieDataSet.setValueLinePart2Length(.2f);
+            pieDataSet.setValueTextColor(Color.BLACK);
+            pieDataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);*/
 
             pieData = new PieData(pieDataSet);
         }
@@ -206,10 +216,10 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         Log.d("@@@ date", String.valueOf(barGroupedEntries));
 
         int i = 0;
-        for (Map.Entry<String, Long> date : barGroupedEntries.entrySet()){
-            barEntries.add(new BarEntry(i, date.getValue(), ContextCompat.getDrawable(
+        for (VisualizeViewModel.SpendingPeriodInfo entry : barGroupedEntries){
+            barEntries.add(new BarEntry(i, entry.periodAmount, ContextCompat.getDrawable(
                     VisualizeActivity.this, R.color.candy_pink)));
-            label.add(date.getKey());
+            label.add(entry.period);
             i+=1;
         }
         Log.d("@@@ in set data", String.valueOf(label));

@@ -45,6 +45,18 @@ public class VisualizeViewModel extends AndroidViewModel {
                     '}';
         }
     }
+    public class SpendingPeriodInfo
+    {
+        public String period;
+        public long periodAmount;
+
+        public SpendingPeriodInfo(String period, long periodAmount)
+        {
+            this.period = period;
+            this.periodAmount = periodAmount;
+        }
+    }
+
     public VisualizeViewModel(@NonNull Application application) {
         super(application);
         stringComparator = new Comparator<String>() {
@@ -134,11 +146,14 @@ public class VisualizeViewModel extends AndroidViewModel {
     }
 
    
-    public HashMap<String, Long> getGroupedSpendingAmount(List<Spending> spendings, int filterType)
+    public ArrayList<SpendingPeriodInfo>
+    getGroupedSpendingAmount(List<Spending> spendings, int filterType)
     {
-        HashMap<String, Long> returnResult = new HashMap<>();
+        ArrayList<SpendingPeriodInfo> returnResult = new ArrayList<>();
 
-        long now = DateTimeUtils.getDateInMillis(DateTimeUtils.getDate(DateTimeUtils.getCurrentTimeMillis()));
+        long now =
+                DateTimeUtils.getDateInMillis(
+                        DateTimeUtils.getDate(DateTimeUtils.getCurrentTimeMillis()));
         long upperLimit = now, lowerLimit;
 
         int intervals = 0;
@@ -158,7 +173,7 @@ public class VisualizeViewModel extends AndroidViewModel {
                 intervalDuration = 30 * (24 * 60 * 60 * 1000);
                 break;
             default:
-                return getDailySpendingAmount(spendings);
+                return null;
         }
         for (int interval = 0; interval < intervals; interval++)
         {
@@ -172,7 +187,9 @@ public class VisualizeViewModel extends AndroidViewModel {
                 if (spendingDateMillis >= lowerLimit && spendingDateMillis <= upperLimit)
                     cost += spending.getCost();
             }
-            returnResult.put(lowerDate + " - " + upperDate, cost);
+            returnResult.add(
+                    new SpendingPeriodInfo(
+                            lowerDate + " - " + upperDate, cost));
             upperLimit = lowerLimit;
         }
         return returnResult;
