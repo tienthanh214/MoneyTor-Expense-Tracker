@@ -203,7 +203,7 @@ public class VisualizeViewModel extends AndroidViewModel {
         returnResult.sort(spendingPeriodInfoComparator);
         if (filterType == FILTER_WEEKLY)
             for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
-                spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,1);
+                spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,2);
 
         return returnResult;
     }
