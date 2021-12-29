@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -22,14 +23,18 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.model.SpendGoal;
 import com.hcmus.group14.moneytor.data.model.UserPref;
+import com.hcmus.group14.moneytor.services.notification.receiver.GoalBroadcastReceiver;
 import com.hcmus.group14.moneytor.ui.login.LoginActivity;
+import com.hcmus.group14.moneytor.utils.NotificationUtils;
 import com.hcmus.group14.moneytor.utils.PreferenceUtils;
 
 public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener;
     private ImageView ivPhoto;
     private TextView tvUsername;
+    private SwitchCompat widgetSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,11 @@ public class SettingsActivity extends AppCompatActivity {
                         PreferenceUtils.getString(this,
                                 UserPref.USER_DARK_MODE,
                                 "-1")));
+            } else if (key.equals("homescreen_widget")) {
+                widgetSwitch.setChecked(
+                        PreferenceUtils.getBoolean(this,
+                                "homescreen_widget", false));
+
             }
         };
 
@@ -91,9 +101,21 @@ public class SettingsActivity extends AppCompatActivity {
         ivPhoto = findViewById(R.id.iv_photo);
         tvUsername = findViewById(R.id.tv_username);
         Button btnLogout = findViewById(R.id.btn_logout);
-        btnLogout.setOnClickListener(v -> {
-            logout();
+        btnLogout.setOnClickListener(v -> logout());
+        // setup widget
+        widgetSwitch = findViewById(R.id.widget_switch);
+        widgetSwitch.setOnCheckedChangeListener((c, value) -> {
+            boolean preValue = PreferenceUtils.getBoolean(SettingsActivity.this, "homescreen_widget", false);
+            if (value && !preValue) {
+//                NotificationUtils.scheduleGoalNotif(SettingsActivity.this, new SpendGoal());
+                GoalBroadcastReceiver notification = new GoalBroadcastReceiver();
+                notification.setupWidget(SettingsActivity.this, new SpendGoal());
+            } else {
+                // dump
+            }
+            PreferenceUtils.putBoolean(SettingsActivity.this, "homescreen_widget", value);
         });
+
     }
 
     private void displayUserInfo() {
@@ -107,6 +129,7 @@ public class SettingsActivity extends AppCompatActivity {
         tvUsername.setText(PreferenceUtils.getString(this,
                 UserPref.USER_NAME,
                 getString(R.string.default_username)));
+        widgetSwitch.setChecked(PreferenceUtils.getBoolean(this, "homescreen_widget", false));
     }
 
     void logout() {

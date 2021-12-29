@@ -77,7 +77,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private void updateNewData(List<Spending> spendingList) {
         Log.i("@@@ vis", spendingList.toString());
-        pieHashMapEntries = viewModel.getSpendingProportionByCategory(spendingList);
+//        pieHashMapEntries = viewModel.getSpendingProportionByCategory(spendingList);
         barHashMapEntries = viewModel.getDailySpendingAmount(spendingList);
         initPieChart();
         initBarChart();

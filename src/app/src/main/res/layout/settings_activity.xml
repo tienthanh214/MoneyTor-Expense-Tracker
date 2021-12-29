@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/light_green">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -9,7 +10,9 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingHorizontal="10dp"
-        android:paddingVertical="5dp">
+        android:paddingVertical="5dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/list_item_background">
 
         <ImageView
             android:id="@+id/iv_photo"
@@ -21,15 +24,18 @@
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginHorizontal="15dp"
-            android:layout_toStartOf="@id/btn_logout"
             android:layout_toEndOf="@id/iv_photo"
             android:ellipsize="end"
             android:fontFamily="@font/poppins_medium"
+            android:foregroundGravity="center"
             android:maxLines="1"
             android:text="@string/default_username"
+            android:textAlignment="center"
             android:textColor="@color/orange_soda"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btn_logout"
@@ -39,9 +45,58 @@
             android:layout_centerVertical="true"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="Log out" />
+            android:text="Log out"
+            />
 
     </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:background="@drawable/list_item_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Reminder setting"
+            android:textSize="20dp"
+            android:maxLines="2"
+            android:fontFamily="@font/poppins_medium"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:background="@drawable/list_item_background"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Display homescreen widget"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:maxLines="2"
+            android:fontFamily="@font/poppins_medium"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:id="@+id/reminder_text"
+            />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/widget_switch"/>
+    </LinearLayout>
 
     <View
         android:id="@+id/divider"
