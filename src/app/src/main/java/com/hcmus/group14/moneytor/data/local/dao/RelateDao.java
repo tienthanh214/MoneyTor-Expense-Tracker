@@ -38,4 +38,7 @@ public interface RelateDao {
 
     @Query("select * from relate_table where rel_id = :id")
     Relate[] getRelateById(int id);
+
+    @Query("select * from relate_table")
+    List<Relate> getAllRelatesNoLiveData();
 }

@@ -32,6 +32,8 @@ public interface SpendGoalDao {
     LiveData<List<SpendGoal>> getAllSpendGoals();
     @Query("select * from spend_goal_table where goalID = :id LIMIT 1")
     LiveData<List<SpendGoal>> getSpendGoalByID(int id);
+    @Query("select * from spend_goal_table")
+    List<SpendGoal> getAllSpendGoalsNoLiveData();
 
     //filter
     @Query("SELECT * FROM spend_goal_table WHERE (date BETWEEN :startDate AND :endDate) AND (category IN (:cats))")

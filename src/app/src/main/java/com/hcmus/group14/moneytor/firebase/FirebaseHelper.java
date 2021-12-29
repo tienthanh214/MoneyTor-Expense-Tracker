@@ -1,6 +1,9 @@
 package com.hcmus.group14.moneytor.firebase;
 
+import android.app.Application;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,6 +21,7 @@ import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.data.model.UserPref;
 import com.hcmus.group14.moneytor.data.model.Wallet;
 
+
 import java.util.ArrayList;
 
 public class FirebaseHelper {
@@ -27,7 +31,8 @@ public class FirebaseHelper {
     public static final String COLLECTION_SPENDGOAL = "spend_goal";
     public static final String COLLECTION_WALLET = "wallet";
     public static final String COLLECTION_RELATE = "relate";
-    private static final String TAG = FirebaseHelper.class.getName();
+    public static final String TAG = FirebaseHelper.class.getName();
+
 
     public static void putUser(FirebaseUser user, UserPref userPref) {
         if (user == null) return;
@@ -148,6 +153,7 @@ public class FirebaseHelper {
         // TODO: do this in the background if app freezes
         ArrayList<DebtLend> debtlends = new ArrayList<>();
         // TODO: Hoang - get list of DebtLend from db
+
         FirebaseHelper.putDocuments(user, COLLECTION_DEBTLEND, debtlends, task -> {
             if (task.isSuccessful()) Log.d(TAG, "DebtLend successfully uploaded");
             else Log.w(TAG, "Error uploading DebtLend");

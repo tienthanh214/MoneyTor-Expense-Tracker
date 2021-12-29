@@ -28,4 +28,7 @@ public interface WalletDao {
 
     @Query("SELECT * FROM wallet_table WHERE provider LIKE :prov")
     LiveData<List<Wallet>> getWalletByProvider(String prov);
+
+    @Query("select * from wallet_table")
+    List<Wallet> getAllWalletsNoLiveData();
 }

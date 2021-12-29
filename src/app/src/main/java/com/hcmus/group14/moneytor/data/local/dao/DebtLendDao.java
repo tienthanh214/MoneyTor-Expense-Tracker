@@ -87,4 +87,6 @@ public abstract class DebtLendDao {
     @Query("SELECT * FROM debt_lend_table WHERE date BETWEEN :startDate AND :endDate")
     public abstract LiveData<List<DebtLendAndRelate>> filterByTime(long startDate, long endDate);
 
+    @Query("select * from debt_lend_table")
+    public abstract List<DebtLend> getAllDebtLendsNoLiveData();
 }
