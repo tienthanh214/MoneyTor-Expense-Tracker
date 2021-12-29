@@ -1,10 +1,11 @@
 package com.hcmus.group14.moneytor.data.model;
 
-import androidx.room.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import java.io.Serializable;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 /*
 This is the class entity for the Spending goal table (SPEND_GOAL). The schema is defined as follows:
               |-----------goal_id: INT NOT NULL PRIMARY KEY
@@ -25,24 +26,25 @@ public class SpendGoal implements Note {
     @PrimaryKey
     private int goalID = 0;
 
-    @ColumnInfo(name = "category") @NonNull
+    @ColumnInfo(name = "category")
+    @NonNull
     private String category;
     @ColumnInfo(name = "spending_cap")
     private long spendingCap;
     @ColumnInfo(name = "date")
     private long date;
-    @ColumnInfo(name = "desc") @Nullable
+    @ColumnInfo(name = "desc")
+    @Nullable
     private String desc;
 
     @Ignore
-    public SpendGoal()
-    {
+    public SpendGoal() {
+        // Required by Firestore. Do not remove
         this("", 0, 0L, "");
     }
 
     public SpendGoal(@NonNull String category, long spendingCap,
-                     long date, @Nullable String desc)
-    {
+                     long date, @Nullable String desc) {
         this.category = category;
         this.spendingCap = spendingCap;
         this.date = date;
@@ -58,36 +60,36 @@ public class SpendGoal implements Note {
     }
 
     @NonNull
-    public String getCategory()
-    {
+    public String getCategory() {
         return category;
     }
-    public void setCategory(@NonNull String category)
-    {
+
+    public void setCategory(@NonNull String category) {
         this.category = category;
     }
-    public long getSpendingCap()
-    {
+
+    public long getSpendingCap() {
         return spendingCap;
     }
-    public void setSpendingCap(long spendingCap)
-    {
+
+    public void setSpendingCap(long spendingCap) {
         this.spendingCap = spendingCap;
     }
-    public long getDate()
-    {
+
+    public long getDate() {
         return date;
     }
-    public void setDate(long date)
-    {
+
+    public void setDate(long date) {
         this.date = date;
     }
-    public @Nullable String getDesc()
-    {
+
+    public @Nullable
+    String getDesc() {
         return desc;
     }
-    public void setDesc(@Nullable String desc)
-    {
+
+    public void setDesc(@Nullable String desc) {
         this.desc = desc;
     }
 

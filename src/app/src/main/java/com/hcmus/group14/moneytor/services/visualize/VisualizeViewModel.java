@@ -20,10 +20,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-//TODO
+
 public class VisualizeViewModel extends AndroidViewModel {
     Comparator<String> stringComparator;
     Comparator<Category> categoryComparator;
+
+    public static final int FILTER_WEEKLY = 0, FILTER_MONTHLY = 1, FILTER_ANNUALLY = 2;
+
     public class SpendingAmountInfo
     {
         public long amount;
@@ -35,7 +38,6 @@ public class VisualizeViewModel extends AndroidViewModel {
             this.percentage = percentage;
         }
 
-        @Override
         public String toString() {
             return "SpendingAmountInfo{" +
                     "amount=" + amount +
@@ -43,7 +45,7 @@ public class VisualizeViewModel extends AndroidViewModel {
                     '}';
         }
     }
-    public VisualizeViewModel(@NonNull Application application) {
+    public VisualizeViewModel(@NonNull Application application, List<Spending> spendings) {
         super(application);
         stringComparator = new Comparator<String>() {
             // t0 > t1 <=> t0[0] > t1[0]
@@ -120,6 +122,55 @@ public class VisualizeViewModel extends AndroidViewModel {
             returnResult.put(category, new SpendingAmountInfo((long)val, val / sum));
         }
         Log.i("@@@ result", returnResult.toString());
+        return returnResult;
+    }
+
+    public long getTotalSpending(List<Spending> spendings)
+    {
+        long sum = 0L;
+        for (Spending spending: spendings)
+            sum += spending.getCost();
+        return sum;
+    }
+
+    @SuppressLint("NewApi")
+    public HashMap<String, Long> getGroupedSpendingAmount(List<Spending> spendings, int filterType)
+    {
+        HashMap<String, Long> returnResult = new HashMap<>();
+
+        long now = DateTimeUtils.getCurrentTimeMillis();
+        long upperLimit = now, lowerLimit;
+
+        int intervals = 0;
+        long intervalDuration = 0l;
+        switch (filterType)
+        {
+            case FILTER_WEEKLY:
+                return getDailySpendingAmount(spendings);
+            case FILTER_MONTHLY:
+                intervals = 4;
+                intervalDuration = 7 * (24 * 60 * 60 * 1000);
+                break;
+            case FILTER_ANNUALLY:
+                intervals = 12;
+                intervalDuration = 30 * (24 * 60 * 60 * 1000);
+                break;
+            default:
+                return getDailySpendingAmount(spendings);
+        }
+        for (int interval = 0; interval < intervals; interval++)
+        {
+            long cost = 0l;
+            lowerLimit = upperLimit - intervalDuration;
+            for (Spending spending: spendings)
+            {
+                long spendingDateMillis = spending.getDate();
+                if (spendingDateMillis >= lowerLimit && spendingDateMillis <= upperLimit)
+                    cost += spending.getCost();
+            }
+            returnResult.put(Integer.toString(interval), cost);
+            upperLimit = lowerLimit;
+        }
         return returnResult;
     }
 }
