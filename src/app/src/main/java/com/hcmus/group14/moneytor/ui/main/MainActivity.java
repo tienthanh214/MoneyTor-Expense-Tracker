@@ -26,7 +26,7 @@ import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.UserPref;
 import com.hcmus.group14.moneytor.firebase.FirebaseHelper;
 import com.hcmus.group14.moneytor.ui.analysis.AnalysisActivity;
-import com.hcmus.group14.moneytor.ui.analysis.VisualizeActivity;
+import com.hcmus.group14.moneytor.ui.visualize.VisualizeActivity;
 import com.hcmus.group14.moneytor.ui.debtlend.DebtLendActivity;
 import com.hcmus.group14.moneytor.ui.goal.GoalActivity;
 import com.hcmus.group14.moneytor.ui.setting.SettingsActivity;

@@ -31,7 +31,7 @@ public class FilterViewModel extends AppViewModel {
         this.filterState.postValue(filterState);
     }
 
-    public LiveData<List<Spending>> getAllSending() {
+    public LiveData<List<Spending>> getAllSpending() {
         if (allSpending == null) {
             allSpending = Transformations.switchMap(filterState, input -> {
                 return appRepository.filterSpendingByCategoryAndTime(input.categories, input.startDate, input.endDate);
