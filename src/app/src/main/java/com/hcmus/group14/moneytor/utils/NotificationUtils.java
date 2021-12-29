@@ -1,6 +1,6 @@
 package com.hcmus.group14.moneytor.utils;
 
-import static com.hcmus.group14.moneytor.services.notification.receiver.NoteBroadcastReceiver.notifId;
+import static com.hcmus.group14.moneytor.services.notification.receiver.NoteBroadcastReceiver.NOTE_REQUEST_CODE;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -80,7 +80,7 @@ public class NotificationUtils {
         // Create a pending intent that will be called later
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(
                 context,
-                notifId,
+                NOTE_REQUEST_CODE,
                 intent,
                 0);
         // Get time
@@ -109,5 +109,16 @@ public class NotificationUtils {
                 hour,
                 minute);
         Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void cancelNoteReminder(Context context, SpendGoal goal) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, GoalBroadcastReceiver.class);
+        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(
+                context,
+                NOTE_REQUEST_CODE,
+                intent,
+                0);
+        alarmManager.cancel(alarmPendingIntent);
     }
 }

@@ -17,13 +17,13 @@ public class UserPref {
     private String id;
     private String email;
     private String language;
-    private boolean darkMode;
+    private String darkMode;
     private int reminderInterval;
 
     public UserPref() {
     }
 
-    public UserPref(String name, String id, String email, String language, boolean darkMode,
+    public UserPref(String name, String id, String email, String language, String darkMode,
                     int reminderInterval) {
         this.name = name;
         this.id = id;
@@ -38,7 +38,7 @@ public class UserPref {
         PreferenceUtils.putString(context, USER_ID, userPref.id);
         PreferenceUtils.putString(context, USER_EMAIL, userPref.email);
         PreferenceUtils.putString(context, USER_LANGUAGE, userPref.language);
-        PreferenceUtils.putBoolean(context, USER_DARK_MODE, userPref.darkMode);
+        PreferenceUtils.putString(context, USER_DARK_MODE, userPref.darkMode);
         PreferenceUtils.putInt(context, USER_REMINDER_INTERVAL, userPref.reminderInterval);
     }
 
@@ -74,11 +74,11 @@ public class UserPref {
         this.language = language;
     }
 
-    public boolean isDarkMode() {
+    public String isDarkMode() {
         return darkMode;
     }
 
-    public void setDarkMode(boolean darkMode) {
+    public void setDarkMode(String darkMode) {
         this.darkMode = darkMode;
     }
 
