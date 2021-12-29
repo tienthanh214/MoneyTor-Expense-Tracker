@@ -98,7 +98,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private void updateNewData(List<Spending> spendingList) {
         // TODO: get daily/weekly/monthly/annually spending from view model
-        //barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_WEEKLY);
+        barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_WEEKLY);
         pieHashMapEntries = viewModel.getSpendingProportionByCategory(spendingList);
         barHashMapEntries = viewModel.getDailySpendingAmount(spendingList);
         setPieChartData();
@@ -182,7 +182,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         xAxis.setGranularity(1f);
         xAxis.setLabelCount(12);
         xAxis.setLabelRotationAngle(-45f);
-        xAxis.setTextSize(6f);
+        xAxis.setTextSize(5f);
 
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setLabelCount(8, false);
@@ -190,7 +190,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setSpaceTop(15f);
         leftAxis.setAxisMinimum(0f);
-        leftAxis.setTextSize(6f);
+        leftAxis.setTextSize(5f);
 
         barChart.getAxisRight().setEnabled(false);
 
@@ -203,10 +203,10 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         label = new ArrayList<>();
 
-        Log.d("@@@ date", String.valueOf(barHashMapEntries.size()));
+        Log.d("@@@ date", String.valueOf(barGroupedEntries));
 
         int i = 0;
-        for (Map.Entry<String, Long> date : barHashMapEntries.entrySet()){
+        for (Map.Entry<String, Long> date : barGroupedEntries.entrySet()){
             barEntries.add(new BarEntry(i, date.getValue(), ContextCompat.getDrawable(
                     VisualizeActivity.this, R.color.candy_pink)));
             label.add(date.getKey());
@@ -237,7 +237,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
             barData = new BarData(dataSets);
             barData.setDrawValues(false);
-            //barData.setBarWidth(0.9f);
+            barData.setBarWidth(0.9f);
         }
         barChart.setData(barData);
     }
