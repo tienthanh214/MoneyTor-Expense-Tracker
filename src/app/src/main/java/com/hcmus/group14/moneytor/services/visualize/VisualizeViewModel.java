@@ -169,6 +169,7 @@ public class VisualizeViewModel extends AndroidViewModel {
                     cost += spending.getCost();
             }
             returnResult.put(Integer.toString(interval), cost);
+            upperLimit = lowerLimit;
         }
         return returnResult;
     }
