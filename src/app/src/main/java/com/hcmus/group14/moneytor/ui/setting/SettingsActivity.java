@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -70,9 +71,16 @@ public class SettingsActivity extends AppCompatActivity {
                 PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
         sharedPreferenceChangeListener = (sharedPreferences1, key) -> {
             if (key.equals("user_name")) {
-                tvUsername.setText(PreferenceUtils.getString(this,
-                        UserPref.USER_NAME,
-                        getString(R.string.default_username)));
+                // TODO: sync change to firestore
+                tvUsername.setText(
+                        PreferenceUtils.getString(this,
+                                UserPref.USER_NAME,
+                                getString(R.string.default_username)));
+            } else if (key.equals("user_dark_mode")) {
+                AppCompatDelegate.setDefaultNightMode(Integer.parseInt(
+                        PreferenceUtils.getString(this,
+                                UserPref.USER_DARK_MODE,
+                                "-1")));
             }
         };
 

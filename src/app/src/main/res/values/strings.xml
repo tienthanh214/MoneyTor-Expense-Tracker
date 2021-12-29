@@ -54,4 +54,5 @@
     <string name="dark_mode">Dark mode</string>
     <string name="user_name">Nick name</string>
     <string name="language_title">Language</string>
+    <string name="dark_mode_title">UI mode</string>
 </resources>
