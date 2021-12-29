@@ -1,11 +1,24 @@
 <resources>
-    <!-- Reply Preference -->
+    <!-- Language Preference -->
     <string-array name="language_entries">
         <item>Vietnamese</item>
         <item>English</item>
     </string-array>
 
     <string-array name="language_values">
+        <item>vn</item>
+        <item>en</item>
+    </string-array>
+
+    <!-- UI mode Preference -->
+    <string-array name="dark_mode_entries">
+        <item>System default</item>
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+
+    <string-array name="dark_mode_values">
+        <item>-1</item>
         <item>1</item>
         <item>2</item>
     </string-array>

@@ -3,12 +3,13 @@
     <PreferenceCategory app:title="User profile">
 
         <EditTextPreference
+            app:defaultValue="@string/default_username"
             app:key="user_name"
             app:title="@string/user_name"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
-            app:defaultValue="2"
+            app:defaultValue="en"
             app:entries="@array/language_entries"
             app:entryValues="@array/language_values"
             app:key="user_language"
@@ -19,9 +20,17 @@
 
     <PreferenceCategory app:title="Appearance">
 
-        <SwitchPreferenceCompat
+        <ListPreference
+            app:defaultValue="-1"
+            app:entries="@array/dark_mode_entries"
+            app:entryValues="@array/dark_mode_values"
             app:key="user_dark_mode"
-            app:title="@string/dark_mode" />
+            app:title="@string/dark_mode_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Notification">
 
     </PreferenceCategory>
 

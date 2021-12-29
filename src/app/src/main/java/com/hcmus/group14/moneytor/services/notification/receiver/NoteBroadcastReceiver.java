@@ -8,19 +8,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Icon;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.graphics.drawable.IconCompat;
 
 import com.hcmus.group14.moneytor.R;
-import com.hcmus.group14.moneytor.ui.spending.AddSpendingActivity;
 import com.hcmus.group14.moneytor.ui.widget.BubbleActivity;
 
 public class NoteBroadcastReceiver extends BroadcastReceiver {
     public static final String CHANNEL_ID = "note_reminder_channel";
-    public static final int notifId = -1;
+    public static final int NOTE_REQUEST_CODE = -1;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -42,12 +40,14 @@ public class NoteBroadcastReceiver extends BroadcastReceiver {
         // TODO: bubble WIDGET
         Intent target = new Intent(context, BubbleActivity.class);
         PendingIntent bubbleIntent = PendingIntent.getActivity(context, 0, target, 0);
-        NotificationCompat.BubbleMetadata bubbleData = new NotificationCompat.BubbleMetadata.Builder(
-                bubbleIntent, IconCompat.createWithResource(context, R.drawable.ic_app_logo))
-                .setDesiredHeight(600)
-                .setAutoExpandBubble(false)
-                .setSuppressNotification(true)
-                .build();
+        NotificationCompat.BubbleMetadata bubbleData =
+                new NotificationCompat.BubbleMetadata.Builder(
+                        bubbleIntent, IconCompat.createWithResource(context,
+                        R.drawable.ic_app_logo))
+                        .setDesiredHeight(600)
+                        .setAutoExpandBubble(false)
+                        .setSuppressNotification(true)
+                        .build();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(context.getString(R.string.reminder_title))
@@ -69,7 +69,6 @@ public class NoteBroadcastReceiver extends BroadcastReceiver {
 //                builder.setContentIntent(contentIntent);
 
 
-
-        notificationManager.notify(notifId, builder.build());
+        notificationManager.notify(NOTE_REQUEST_CODE, builder.build());
     }
 }
