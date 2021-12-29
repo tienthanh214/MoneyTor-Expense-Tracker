@@ -69,8 +69,8 @@ public class VisualizeViewModel extends AndroidViewModel {
         spendingAmountInfoComparator = new Comparator<SpendingAmountInfo>() {
             @Override
             public int compare(SpendingAmountInfo spendingAmountInfo, SpendingAmountInfo t1) {
-                if (spendingAmountInfo.amount > t1.amount) return 1;
-                if (spendingAmountInfo.amount < t1.amount) return -1;
+                if (spendingAmountInfo.amount < t1.amount) return 1;
+                if (spendingAmountInfo.amount > t1.amount) return -1;
                 return 0;
             }
         };
@@ -81,8 +81,8 @@ public class VisualizeViewModel extends AndroidViewModel {
             public int compare(SpendingPeriodInfo spendingPeriodInfo, SpendingPeriodInfo t1) {
                 long timeR0 = DateTimeUtils.getDateInMillis(spendingPeriodInfo.period),
                         timeR1 = DateTimeUtils.getDateInMillis(t1.period);
-                if (timeR0 > timeR0) return -1;
-                if (timeR1 > timeR0) return 1;
+                if (timeR0 > timeR1) return 1;
+                if (timeR1 > timeR0) return -1;
                 return 0;
             }
         };
