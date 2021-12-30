@@ -38,7 +38,6 @@ public class NotificationUtils {
         calendar.set(Calendar.HOUR_OF_DAY, 9);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        Log.i("@@@", calendar.toString());
         // if alarm time has already passed, increment day by 1
         if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
             calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
@@ -108,12 +107,13 @@ public class NotificationUtils {
                 interval,
                 hour,
                 minute);
+
         Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
     }
 
-    public static void cancelNoteReminder(Context context, SpendGoal goal) {
+    public static void cancelNoteReminder(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, GoalBroadcastReceiver.class);
+        Intent intent = new Intent(context, NoteBroadcastReceiver.class);
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(
                 context,
                 NOTE_REQUEST_CODE,

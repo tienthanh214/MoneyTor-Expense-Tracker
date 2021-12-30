@@ -33,6 +33,11 @@ public class GoalBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
+    public void setupWidget(Context context, SpendGoal goal) {
+        this.goal = goal;
+        notifyUser(context);
+    }
+
     private void notifyUser(Context context) {
         String channelName = "Spending Goal";
         NotificationManager notificationManager =
@@ -45,20 +50,10 @@ public class GoalBroadcastReceiver extends BroadcastReceiver {
             notificationChannel.setLightColor(Color.RED);
             notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
             notificationManager.createNotificationChannel(notificationChannel);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (goal.getGoalID() == 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 notificationChannel.setAllowBubbles(true);
             }
         }
-
-        // TODO: bubble WIDGET
-        Intent target = new Intent(context, BubbleActivity.class);
-        PendingIntent bubbleIntent = PendingIntent.getActivity(context, 0, target, 0);
-        NotificationCompat.BubbleMetadata bubbleData = new NotificationCompat.BubbleMetadata.Builder(
-                bubbleIntent, IconCompat.createWithResource(context, R.drawable.ic_app_logo))
-                .setDesiredHeight(600)
-                .setAutoExpandBubble(false)
-                .setSuppressNotification(true)
-                .build();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle("Spending goal - " + goal.getCategory())
@@ -66,8 +61,23 @@ public class GoalBroadcastReceiver extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setBubbleMetadata(bubbleData);
+                .setPriority(NotificationCompat.PRIORITY_MAX);
+
+        // TODO: bubble WIDGET
+        if (goal.getGoalID() == 0) {
+            Intent target = new Intent(context, BubbleActivity.class);
+            PendingIntent bubbleIntent = PendingIntent.getActivity(context, 0, target, PendingIntent.FLAG_ONE_SHOT);
+            NotificationCompat.BubbleMetadata bubbleData = new NotificationCompat.BubbleMetadata.Builder(
+                    bubbleIntent, IconCompat.createWithResource(context, R.drawable.ic_app_logo))
+                    .setDesiredHeight(600)
+                    .setAutoExpandBubble(false)
+                    .setSuppressNotification(true)
+                    .setDeleteIntent(createOnDismissedIntent(context))
+                    .build();
+            builder.setBubbleMetadata(bubbleData);
+            builder.setContentTitle("Widget");
+            builder.setContentText("Click me to fast note a spending");
+        }
 
         // TODO set what happen when press notification
 //        if (alarm.getTagUri() != null) {
@@ -81,7 +91,14 @@ public class GoalBroadcastReceiver extends BroadcastReceiver {
 //                builder.setContentIntent(contentIntent);
 //            }
 //        }
-
+        // when delete notification
         notificationManager.notify(goal.getGoalID(), builder.build());
+    }
+
+    private PendingIntent createOnDismissedIntent(Context context) {
+        Intent target = new Intent(context, BubbleDismissedReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, target, PendingIntent.FLAG_ONE_SHOT);
+
+        return pendingIntent;
     }
 }
