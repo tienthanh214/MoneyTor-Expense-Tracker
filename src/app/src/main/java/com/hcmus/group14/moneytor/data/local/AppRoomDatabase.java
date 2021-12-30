@@ -36,7 +36,7 @@ import java.util.concurrent.Executors;
 public abstract class AppRoomDatabase extends RoomDatabase {
     static public AppRoomDatabase INSTANCE = null;
     // database write executor async
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(2);
+    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(2);
     // all DAO
     public abstract SpendingDao spendingDao();
     public abstract RelateDao relateDao();

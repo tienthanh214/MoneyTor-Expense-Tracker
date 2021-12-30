@@ -1,6 +1,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.hcmus.group14.moneytor.services.setting.SettingViewModel" />
@@ -41,8 +42,7 @@
                 android:text="@={viewModel.username}"
                 android:textAlignment="center"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_logout"
@@ -67,22 +67,22 @@
                 android:id="@+id/reminderSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:background="@drawable/list_item_background"
                 android:fontFamily="@font/poppins_medium"
                 android:maxLines="2"
                 android:padding="10dp"
                 android:text="Reminder setting"
                 android:textSize="20dp"
-                android:layout_alignParentLeft="true"
                 android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@drawable/ic_arrow"
-                android:layout_margin="10dp"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true" />
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_arrow" />
         </RelativeLayout>
 
         <LinearLayout
@@ -108,9 +108,20 @@
                 android:id="@+id/widget_switch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:checked="@={viewModel.widgetStatus}"/>
+                android:checked="@={viewModel.widgetStatus}"
+                android:gravity="center" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_sync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Sync data" />
 
         <View
             android:id="@+id/divider"
