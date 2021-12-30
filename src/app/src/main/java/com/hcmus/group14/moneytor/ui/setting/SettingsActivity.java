@@ -74,8 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setOnClickReminderSetting() {
-        reminderSetting = findViewById(R.id.reminderSetting);
-        reminderSetting.setOnClickListener(new View.OnClickListener() {
+        binding.reminderSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SettingsActivity.this, ReminderActivity.class);
@@ -104,25 +103,25 @@ public class SettingsActivity extends AppCompatActivity {
                 PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
         sharedPreferenceChangeListener = (sharedPreferences1, key) -> {
             switch (key) {
-                case "user_name":
+                case UserPref.USER_NAME:
                     // TODO: sync change to firestore
                     viewModel.setUsername(
                             PreferenceUtils.getString(this,
                                     UserPref.USER_NAME, getString(R.string.default_username)));
                     break;
-                case "user_dark_mode":
+                case UserPref.USER_DARK_MODE:
                     AppCompatDelegate.setDefaultNightMode(Integer.parseInt(
                             PreferenceUtils.getString(this,
                                     UserPref.USER_DARK_MODE, "-1")));
                     break;
-                case "homescreen_widget":
+                case UserPref.USER_WIDGET:
                     viewModel.setWidgetStatus(
                             PreferenceUtils.getBoolean(this,
-                                    "homescreen_widget", false));
+                                    UserPref.USER_WIDGET, false));
                     break;
-                case "user_language":
+                case UserPref.USER_LANGUAGE:
                     LanguageUtils.setLocale(this, PreferenceUtils.getString(this,
-                            "user_language", "en"));
+                            UserPref.USER_LANGUAGE, "en"));
             }
         };
 
@@ -155,12 +154,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (viewModel.isLoggedIn()) {
             AuthUI.getInstance()
                     .signOut(SettingsActivity.this)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            backToLoginScreen();
-                        }
-                    });
+                    .addOnCompleteListener(task -> backToLoginScreen());
         } else {
             backToLoginScreen();
         }

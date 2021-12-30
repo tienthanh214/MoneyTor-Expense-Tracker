@@ -37,7 +37,8 @@
                 android:layout_height="match_parent"
                 android:paddingHorizontal="@dimen/margin_left_card"
                 android:gravity="center"
-                android:id="@+id/reminder_switch" />
+                android:id="@+id/reminder_switch"
+                />
 
         </LinearLayout>
 

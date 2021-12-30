@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        applyUserPref();
+
         setContentView(R.layout.activity_main);
         // Sync user data for first login
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -160,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                         UserPref.USER_DARK_MODE, "-1")));
         // Apply language setting
         LanguageUtils.setLocale(this, PreferenceUtils.getString(this,
-                "user_language", "en"));
+                UserPref.USER_LANGUAGE, "en"));
     }
 
     private void uploadUserPref(FirebaseUser user) {
