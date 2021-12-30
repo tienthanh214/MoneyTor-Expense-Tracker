@@ -51,7 +51,6 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppRoomDatabase.class, "moneytor_database")
-                            .addCallback(sOnOpenCallback)
                             .fallbackToDestructiveMigration()
                             .build();
                 }
@@ -59,56 +58,4 @@ public abstract class AppRoomDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
-
-
-    // below code for testing database, could be delete
-    final static private Callback sOnOpenCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-
-            super.onOpen(db);
-            SpendingDao spendingDao = INSTANCE.spendingDao();
-//            RelateDao relateDao = INSTANCE.relateDao();
-            Log.i("@@@ create", "complete");
-            // test spending && relate
-
-            databaseWriteExecutor.execute(() -> {
-                if (spendingDao.getAllSpendingRelate().length < 1) {
-                    Spending s1 = (
-                            new Spending(100000, "Hello 1", Category.BILLS.getId(), "hihi", 123));
-                    Spending s2 = (
-                            new Spending(1000000, "Hello 2", Category.FOOD_AND_DRINK.getId(), "nothing to show", 1010101));
-                    Spending s3 = (
-                            new Spending(100000, "Hello 3", Category.EDUCATION.getId(), "say to show", 141));
-                    Spending s4 = (
-                            new Spending(1000000, "Hello 4", Category.EDUCATION.getId(), "say to show", 141));
-                    Spending s5 = (
-                            new Spending(1000000, "Hello 5", Category.FOOD_AND_DRINK.getId(), "say to show", 141));
-                    Spending s6 = (
-                            new Spending(1000000, "Hello 6", Category.MAINTENANCE.getId(), "say to show", 141));
-                    Spending s7 = (
-                            new Spending(10000000, "Hello 7", Category.BILLS.getId(), "say to show", 141));
-
-                    Relate r1 = new Relate("NDTT", "123123123");
-                    Relate r2 = new Relate("uyen", "000012111");
-                    Relate r3 = new Relate("binh", "123321123");
-
-
-                    spendingDao.insertSpendingWithRelates(s1, new ArrayList<>(Arrays.asList(r1, r2)));
-                    spendingDao.insertSpendingWithRelates(s2, new ArrayList<>(Arrays.asList(r1, r3)));
-                    spendingDao.insertSpendingWithRelates(s3, new ArrayList<>(Arrays.asList(r1, r3, r2)));
-                    spendingDao.insertSpendingWithRelates(s4, new ArrayList<>(Arrays.asList(r1, r3)));
-                    spendingDao.insertSpendingWithRelates(s5, new ArrayList<>(Arrays.asList(r1, r3)));
-                    spendingDao.insertSpendingWithRelates(s6, new ArrayList<>(Arrays.asList(r1, r3)));
-                    spendingDao.insertSpendingWithRelates(s7, new ArrayList<>(Arrays.asList(r1, r3)));
-                }
-                SpendingRelateCrossRef[] res = spendingDao.getAllSpendingRelate();
-                for (SpendingRelateCrossRef x : res) {
-                    Log.i("@@@ cross ref", x.spendingId + " " + x.relateId);
-                }
-                // can't use LiveData in thread pool
-            });
-
-        }
-    };
 }
