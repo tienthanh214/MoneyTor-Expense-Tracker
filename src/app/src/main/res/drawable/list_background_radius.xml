@@ -4,8 +4,8 @@
     <corners
         android:topLeftRadius="15dp"
         android:topRightRadius="15dp" />
-    <solid android:color="@color/dark_green" />
+    <solid android:color="?attr/cardBackgroundColor" />
     <stroke
         android:width="1dip"
-        android:color="@color/light_green" />
+        android:color="?android:windowBackground" />
 </shape>

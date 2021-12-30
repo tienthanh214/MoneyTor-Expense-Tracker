@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.hcmus.group14.moneytor.services.debtlend.DebtLendDetailsViewModel" />
@@ -9,8 +10,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_green">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,9 +38,9 @@
                     android:layout_weight="4"
                     android:background="@drawable/text_view_background"
                     android:gravity="center_horizontal"
+                    android:hint="Amount"
                     android:inputType="number"
                     android:paddingVertical="@dimen/text_padding_vertical"
-                    android:hint="Amount"
                     android:text="@={viewModel.value}"
                     android:textSize="@dimen/amount_size" />
             </LinearLayout>
@@ -69,7 +69,6 @@
                             android:layout_marginTop="@dimen/margin_top_text"
                             android:layout_marginBottom="@dimen/margin_bottom_text"
                             android:text="Category"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/text_size" />
 
                         <Spinner
@@ -79,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/text_view_background"
                             android:drawableStart="@drawable/ic_question_mark"
-                            android:selectedItemPosition="@={viewModel.category}"/>
+                            android:selectedItemPosition="@={viewModel.category}" />
 
                         <TextView
                             android:id="@+id/textViewDateTitle"
@@ -88,7 +87,6 @@
                             android:layout_marginTop="@dimen/margin_top_text"
                             android:layout_marginBottom="@dimen/margin_bottom_text"
                             android:text="Date"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/text_size" />
 
                         <EditText
@@ -110,7 +108,6 @@
                             android:layout_marginTop="@dimen/margin_top_text"
                             android:layout_marginBottom="@dimen/margin_bottom_text"
                             android:text="Target"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/text_size" />
 
                         <EditText
@@ -118,11 +115,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/text_view_background"
-                            android:hint="Target"
-                            android:text="@={viewModel.target}"
                             android:focusable="false"
+                            android:hint="Target"
                             android:paddingVertical="@dimen/text_padding_vertical"
                             android:paddingLeft="@dimen/text_padding_horizontal"
+                            android:text="@={viewModel.target}"
                             android:textSize="@dimen/text_size" />
 
                         <TextView
@@ -132,7 +129,6 @@
                             android:layout_marginTop="@dimen/margin_top_text"
                             android:layout_marginBottom="@dimen/margin_bottom_text"
                             android:text="Description"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/text_size" />
 
                         <EditText
@@ -141,9 +137,9 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/text_view_background"
                             android:hint="Description"
-                            android:text="@={viewModel.desc}"
                             android:paddingVertical="@dimen/text_padding_vertical"
                             android:paddingLeft="@dimen/text_padding_horizontal"
+                            android:text="@={viewModel.desc}"
                             android:textSize="@dimen/text_size" />
 
                         <TextView
@@ -152,28 +148,29 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_top_text"
                             android:text="Debt or lend"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/text_size" />
 
                         <RadioGroup
                             android:id="@+id/radioType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_centerInParent="true">
+                            android:layout_centerInParent="true"
+                            android:orientation="horizontal">
+
                             <RadioButton
                                 android:id="@+id/radioLend"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Lend"
+                                android:layout_marginRight="20dp"
                                 android:checked="true"
-                                android:layout_marginRight="20dp"/>
+                                android:text="Lend" />
+
                             <RadioButton
                                 android:id="@+id/radioDebt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Debt"
-                                android:checked="@={viewModel.debt}"/>
+                                android:checked="@={viewModel.debt}"
+                                android:text="Debt" />
 
                         </RadioGroup>
 
