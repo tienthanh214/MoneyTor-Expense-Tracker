@@ -29,6 +29,6 @@
     <color name="smoke_white">#eaefec</color>
     <color name="bright_green">#ff4CAF50</color>
     <!-- Dark theme -->
-    <color name="forest_green">#153409</color>
+    <color name="forest_green">#98c379</color>
     <color name="dark_slate_grey">#2F4F4F</color>
 </resources>
