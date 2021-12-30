@@ -193,7 +193,7 @@ public class VisualizeViewModel extends AndroidViewModel {
             for (Spending spending: spendings)
             {
                 long spendingDateMillis = spending.getDate();
-                if (spendingDateMillis >= lowerLimit && spendingDateMillis <= upperLimit)
+                if (spendingDateMillis >= lowerLimit && spendingDateMillis < upperLimit)
                     cost += spending.getCost();
             }
             returnResult.add(

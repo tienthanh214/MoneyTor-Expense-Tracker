@@ -4,14 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -23,18 +23,26 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.UserPref;
+import com.hcmus.group14.moneytor.databinding.ActivitySettingsBinding;
+import com.hcmus.group14.moneytor.services.setting.SettingViewModel;
 import com.hcmus.group14.moneytor.ui.login.LoginActivity;
 import com.hcmus.group14.moneytor.utils.PreferenceUtils;
 
 public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener;
     private ImageView ivPhoto;
-    private TextView tvUsername;
+    private SettingViewModel viewModel;
+    private ActivitySettingsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+        // setup view model
+        viewModel = new ViewModelProvider(this).get(SettingViewModel.class);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
+        binding.setLifecycleOwner(this);
+        binding.setViewModel(viewModel);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -45,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        // Show profile picture and name
+         // Show profile picture and name
         prepareView();
         setPreferenceListener();
         displayUserInfo();
@@ -70,17 +78,25 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
         sharedPreferenceChangeListener = (sharedPreferences1, key) -> {
-            if (key.equals("user_name")) {
-                // TODO: sync change to firestore
-                tvUsername.setText(
-                        PreferenceUtils.getString(this,
-                                UserPref.USER_NAME,
-                                getString(R.string.default_username)));
-            } else if (key.equals("user_dark_mode")) {
-                AppCompatDelegate.setDefaultNightMode(Integer.parseInt(
-                        PreferenceUtils.getString(this,
-                                UserPref.USER_DARK_MODE,
-                                "-1")));
+            switch (key) {
+                case "user_name":
+                    // TODO: sync change to firestore
+                    viewModel.setUsername(
+                            PreferenceUtils.getString(this,
+                                    UserPref.USER_NAME,
+                                    getString(R.string.default_username)));
+                    break;
+                case "user_dark_mode":
+                    AppCompatDelegate.setDefaultNightMode(Integer.parseInt(
+                            PreferenceUtils.getString(this,
+                                    UserPref.USER_DARK_MODE,
+                                    "-1")));
+                    break;
+                case "homescreen_widget":
+                    viewModel.setWidgetStatus(
+                            PreferenceUtils.getBoolean(this,
+                                    "homescreen_widget", false));
+                    break;
             }
         };
 
@@ -88,11 +104,11 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void prepareView() {
-        ivPhoto = findViewById(R.id.iv_photo);
-        tvUsername = findViewById(R.id.tv_username);
-        Button btnLogout = findViewById(R.id.btn_logout);
-        btnLogout.setOnClickListener(v -> {
-            logout();
+        ivPhoto = binding.ivPhoto;
+        binding.btnLogout.setOnClickListener(v -> logout());
+        // setup widget
+        viewModel.getWidgetStatus().observe(this, aBoolean -> {
+            viewModel.onWidgetCheckedChange(SettingsActivity.this, aBoolean);
         });
     }
 
@@ -103,24 +119,32 @@ public class SettingsActivity extends AppCompatActivity {
                 String.format("android.resource://com.hcmus.group14.moneytor/%d",
                         R.drawable.account_circle_fill)));
         ivPhoto.setImageURI(photoUri);
-        // Set user name
-        tvUsername.setText(PreferenceUtils.getString(this,
-                UserPref.USER_NAME,
-                getString(R.string.default_username)));
-    }
+        // login or logout
+        if (!viewModel.isLoggedIn()) {
+            binding.btnLogout.setText("Log in");
+        }
+     }
 
     void logout() {
-        AuthUI.getInstance()
-                .signOut(SettingsActivity.this)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
+        if (viewModel.isLoggedIn()) {
+            AuthUI.getInstance()
+                    .signOut(SettingsActivity.this)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            backToLoginScreen();
+                        }
+                    });
+        } else {
+            backToLoginScreen();
+        }
+    }
+
+    private void backToLoginScreen() {
+        Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {

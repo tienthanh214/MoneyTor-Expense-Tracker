@@ -11,7 +11,6 @@
             android:id="@+id/spendingGoalList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/dark_green"
             android:paddingHorizontal="10dp"
             android:paddingTop="20dp"/>
 
@@ -23,11 +22,9 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/dark_grey"
             android:contentDescription="@string/content_desc_spending_goal"
             app:borderWidth="0dp"
-            app:srcCompat="@android:drawable/ic_input_add"
-            app:tint="@color/light_grey" />
+            app:srcCompat="@android:drawable/ic_input_add" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

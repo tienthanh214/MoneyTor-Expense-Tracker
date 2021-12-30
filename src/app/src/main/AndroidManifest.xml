@@ -84,6 +84,10 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".services.notification.receiver.BubbleDismissedReceiver"
+            android:exported="true">
+        </receiver>
     </application>
 
 </manifest>

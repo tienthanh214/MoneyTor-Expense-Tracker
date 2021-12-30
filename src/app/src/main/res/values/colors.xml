@@ -25,4 +25,10 @@
     <color name="orange_soda">#F55D3E</color>
     <color name="jonquill">#F7CB15</color>
     <color name="candy_pink">#DD7373</color>
+
+    <color name="smoke_white">#eaefec</color>
+    <color name="bright_green">#ff4CAF50</color>
+    <!-- Dark theme -->
+    <color name="forest_green">#98c379</color>
+    <color name="dark_slate_grey">#2F4F4F</color>
 </resources>

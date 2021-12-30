@@ -100,7 +100,10 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         // TODO: get daily/weekly/monthly/annually spending from view model
         barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_WEEKLY);
         pieAllEntries = viewModel.getSpendingProportionByCategory(spendingList);
-        barHashMapEntries = viewModel.getDailySpendingAmount(spendingList);
+
+        Log.i("@@@ vis", spendingList.toString());
+//        pieHashMapEntries = viewModel.getSpendingProportionByCategory(spendingList);
+
         setPieChartData();
         pieChart.invalidate();
         setBarChartData();

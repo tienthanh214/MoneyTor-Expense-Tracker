@@ -26,7 +26,6 @@
             android:background="@drawable/category_icon_background"
             android:src="@drawable/ic_category_fitness"
             android:id="@+id/categorySpendingItem"
-            app:tint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,21 +45,18 @@
             android:id="@+id/titleSpendingItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/dateSpendingItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:textStyle="italic" />
 
         <TextView
             android:id="@+id/descSpendingItem"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -76,7 +72,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="textEnd"
-            android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="bold" />
 

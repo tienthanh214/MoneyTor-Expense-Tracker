@@ -2,17 +2,20 @@
     <!-- Base application theme. -->
     <style name="Theme.Moneytor" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/steel_teal</item>
+        <item name="colorPrimaryVariant">@color/dark_sea_green</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondary">@color/orange_soda</item>
+        <item name="colorSecondaryVariant">@color/jonquill</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="colorAccent">@color/candy_pink</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/dark_slate_grey</item>
+        <item name="cardBackgroundColor">@color/forest_green</item>
+        <item name="colorSurface">@color/dark_grey</item>
     </style>
 
     <style name="Theme.Moneytor.NoActionBar">
