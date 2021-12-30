@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -23,8 +22,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -135,6 +133,8 @@ public class SettingsActivity extends AppCompatActivity {
         viewModel.getWidgetStatus().observe(this, aBoolean -> {
             viewModel.onWidgetCheckedChange(SettingsActivity.this, aBoolean);
         });
+        binding.btnSync.setOnClickListener(
+                v -> synchronizeData(FirebaseAuth.getInstance().getCurrentUser()));
     }
 
     private void displayUserInfo() {
