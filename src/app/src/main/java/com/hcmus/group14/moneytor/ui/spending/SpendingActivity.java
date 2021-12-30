@@ -51,7 +51,7 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         binding = getViewDataBinding();
         this.context = this.getApplicationContext();
         // do what you want
-        this.setTitle("List spending");
+        this.setTitle(getString(R.string.toolbar_goal_spending));
         initializeViews();
 
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);

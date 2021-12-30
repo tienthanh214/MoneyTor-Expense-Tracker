@@ -26,6 +26,7 @@ import com.hcmus.group14.moneytor.data.model.UserPref;
 import com.hcmus.group14.moneytor.databinding.ActivitySettingsBinding;
 import com.hcmus.group14.moneytor.services.setting.SettingViewModel;
 import com.hcmus.group14.moneytor.ui.login.LoginActivity;
+import com.hcmus.group14.moneytor.utils.LanguageUtils;
 import com.hcmus.group14.moneytor.utils.PreferenceUtils;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -53,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-         // Show profile picture and name
+        // Show profile picture and name
         prepareView();
         setPreferenceListener();
         displayUserInfo();
@@ -83,20 +84,21 @@ public class SettingsActivity extends AppCompatActivity {
                     // TODO: sync change to firestore
                     viewModel.setUsername(
                             PreferenceUtils.getString(this,
-                                    UserPref.USER_NAME,
-                                    getString(R.string.default_username)));
+                                    UserPref.USER_NAME, getString(R.string.default_username)));
                     break;
                 case "user_dark_mode":
                     AppCompatDelegate.setDefaultNightMode(Integer.parseInt(
                             PreferenceUtils.getString(this,
-                                    UserPref.USER_DARK_MODE,
-                                    "-1")));
+                                    UserPref.USER_DARK_MODE, "-1")));
                     break;
                 case "homescreen_widget":
                     viewModel.setWidgetStatus(
                             PreferenceUtils.getBoolean(this,
                                     "homescreen_widget", false));
                     break;
+                case "user_language":
+                    LanguageUtils.setLocale(this, PreferenceUtils.getString(this,
+                            "user_language", "en"));
             }
         };
 
@@ -123,7 +125,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (!viewModel.isLoggedIn()) {
             binding.btnLogout.setText("Log in");
         }
-     }
+    }
 
     void logout() {
         if (viewModel.isLoggedIn()) {

@@ -48,9 +48,8 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
         binding = getViewDataBinding();
         context = this.getApplicationContext();
 
-        this.setTitle("Spending goal");
+        this.setTitle(getString(R.string.toolbar_title_goal));
 
-//        spendGoals = getData();
         initializeViews();
 
         viewModel = new ViewModelProvider(this).get(FilterViewModel.class);

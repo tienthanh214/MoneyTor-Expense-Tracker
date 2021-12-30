@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MoneyTor</string>
+    <string name="title_activity_spending">SpendingActivity</string>
+    <string name="title_spending_goal">GoalActivity</string>
+
+    <string name="content_desc_spending">Thêm chi tiêu</string>
+    <string name="content_desc_spending_goal">Thêm mục tiêu</string>
+    <string name="content_desc_debt_lend">Thêm vay/nợ</string>
+    <!-- Screen name -->
+    <string name="goal_title_activity">MỤC TIÊU TÀI CHÍNH</string>
+    <string name="spending_title_activity">DANH SÁCH CHI TIÊU</string>
+    <string name="debt_lend_title_activity">QUẢN LÍ NỢ</string>
+    <string name="analysis_activity">PHÂN TÍCH</string>
+    <string name="setting_activity">CÀI ĐẶT</string>
+    <string name="visualize_activity">MINH HỌA</string>
+
+    <!-- Menu title -->
+    <string name="menu_filter">Lọc</string>
+    <string name="menu_search">Tìm</string>
+    <string name="menu_confirm">Xác nhận</string>
+    <string name="menu_delete">Xóa</string>
+    <string name="menu_save">Lưu</string>
+
+    <!-- Button text -->
+    <string name="analyze_btn">Nhấn để phân tích</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Tiếp</string>
+    <string name="previous">Trước</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="bundle_goal_obj">bundleAlarmObj</string>
+    <string name="arg_goal_obj">ArgAlarmObj</string>
+    <string name="reminder_message">Chúng tôi muốn nhắc nhỡ bạn là hay ghi chú đi bro. Bao giờ mới khá lên được.</string>
+    <string name="reminder_title">MoneyTor Reminder</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="user_profile_preference">user_profile_preference</string>
+    <string name="default_username">New user</string>
+    <string name="user_name">Tên tài khoản</string>
+    <string name="language_title">Ngôn ngữ</string>
+    <string name="dark_mode_title">Chế độ hiển thị</string>
+
+    <!-- Toolbar title -->
+    <string name="toolbar_title_analysis">Phân tích</string>
+    <string name="toolbar_title_relate">Liên lạc</string>
+    <string name="toolbar_title_debtlend">Quản lí nợ</string>
+    <string name="toolbar_title_goal">Mục tiêu tài chính</string>
+    <string name="toolbar_goal_spending">Danh sách chi tiêu</string>
+    <string name="toolbar_title_visualize">Minh họa</string>
+</resources>

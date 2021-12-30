@@ -77,7 +77,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Visualize");
+        setTitle(getString(R.string.toolbar_title_visualize));
         binding = getViewDataBinding();
         viewModel = new ViewModelProvider(this).get(VisualizeViewModel.class);
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
