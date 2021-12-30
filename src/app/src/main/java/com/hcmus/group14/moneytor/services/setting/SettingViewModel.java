@@ -4,12 +4,12 @@ import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.local.AppRoomDatabase;
 import com.hcmus.group14.moneytor.data.local.AppViewModel;
 import com.hcmus.group14.moneytor.data.model.SpendGoal;
 import com.hcmus.group14.moneytor.data.model.UserPref;
@@ -37,8 +37,17 @@ public class SettingViewModel extends AppViewModel {
         return widgetStatus;
     }
 
+    public void setWidgetStatus(boolean value) {
+        widgetStatus.setValue(value);
+    }
+
     public MutableLiveData<String> getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        if (!username.isEmpty())
+            this.username.setValue(username);
     }
 
     public void onWidgetCheckedChange(Context context, boolean value) {
@@ -49,25 +58,20 @@ public class SettingViewModel extends AppViewModel {
         PreferenceUtils.putBoolean(context, UserPref.USER_WIDGET, value);
     }
 
-    public void setWidgetStatus(boolean value) {
-        widgetStatus.setValue(value);
-    }
-
-    public void setUsername(String username) {
-        if (!username.isEmpty())
-            this.username.setValue(username);
-    }
-
     public boolean isLoggedIn() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         return mAuth.getCurrentUser() != null;
     }
 
     public void uploadData(FirebaseUser user) {
-        appRepository.uploadData(user);
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            appRepository.uploadData(user);
+        });
     }
 
     public void downloadData(FirebaseUser user) {
-        appRepository.downloadData(user);
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            appRepository.downloadData(user);
+        });
     }
 }
