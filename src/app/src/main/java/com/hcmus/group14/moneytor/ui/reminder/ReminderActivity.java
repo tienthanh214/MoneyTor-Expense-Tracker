@@ -1,32 +1,26 @@
 package com.hcmus.group14.moneytor.ui.reminder;
 
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TimePicker;
+
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.databinding.ActivityReminderBinding;
 import com.hcmus.group14.moneytor.services.reminder.ReminderViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
-import com.hcmus.group14.moneytor.utils.PreferenceUtils;
 
 public class ReminderActivity extends NoteBaseActivity<ActivityReminderBinding> {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityReminderBinding binding;
     private ReminderViewModel viewModel;
-    private TimePicker timePicker;
-    private Button saveButton;
-    private SwitchCompat reminderSwitch;
-    private int reminderHour;
-    private int reminderMin;
 
     @Override
     public int getLayoutId() {
@@ -48,33 +42,28 @@ public class ReminderActivity extends NoteBaseActivity<ActivityReminderBinding> 
     }
 
     private void getReminderTime() {
-        timePicker = binding.timePicker;
-        reminderHour = timePicker.getCurrentHour();
-        reminderMin = timePicker.getCurrentMinute();
+        TimePicker timePicker = binding.timePicker;
+        int reminderHour = timePicker.getCurrentHour();
+        int reminderMin = timePicker.getCurrentMinute();
         Log.i("@@@ reminder hour", String.valueOf(reminderHour));
         Log.i("@@@ reminder min", String.valueOf(reminderMin));
     }
 
     private void setOnClickSaveButton() {
-        saveButton = binding.buttonSaveReminderTime;
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: call save reminder time from VM
-
-                ReminderActivity.this.finish();
-            }
+        Button saveButton = binding.buttonSaveReminderTime;
+        saveButton.setOnClickListener(view -> {
+            viewModel.saveReminder(ReminderActivity.this);
+//                ReminderActivity.this.finish();
         });
     }
 
     private void setReminderSwitchChecked() {
-        reminderSwitch = binding.reminderSwitch;
-        reminderSwitch.setOnCheckedChangeListener((c, value) -> {
-            LinearLayout setReminderTime = binding.setReminderTime;
-            if (value == false) {
-                setReminderTime.setVisibility(View.INVISIBLE);
+        SwitchCompat reminderSwitch = binding.reminderSwitch;
+        viewModel.getReminderStatus().observe(this, aBoolean -> {
+            if (!aBoolean) {
+                binding.setReminderTime.setVisibility(View.INVISIBLE);
             } else {
-                setReminderTime.setVisibility(View.VISIBLE);
+                binding.setReminderTime.setVisibility(View.VISIBLE);
             }
         });
     }
