@@ -80,8 +80,8 @@ public class VisualizeViewModel extends AndroidViewModel {
         spendingPeriodInfoComparator = new Comparator<SpendingPeriodInfo>() {
             @Override
             public int compare(SpendingPeriodInfo spendingPeriodInfo, SpendingPeriodInfo t1) {
-                long timeR0 = DateTimeUtils.getDateInMillis(spendingPeriodInfo.period),
-                        timeR1 = DateTimeUtils.getDateInMillis(t1.period);
+                long timeR0 = DateTimeUtils.getDateInMillis(spendingPeriodInfo.period.substring(0,10)),
+                        timeR1 = DateTimeUtils.getDateInMillis(t1.period.substring(0,10));
                 if (timeR0 > timeR1) return 1;
                 if (timeR1 > timeR0) return -1;
                 return 0;
@@ -206,7 +206,7 @@ public class VisualizeViewModel extends AndroidViewModel {
             }
             returnResult.add(
                     new SpendingPeriodInfo(
-                            lowerDate.substring(0,5) + " - " + upperDate.substring(0,5), cost));
+                            lowerDate + " - " + upperDate, cost));
             upperLimit = lowerLimit;
             if (upperLimit <= lowerCap) break;
         }
@@ -214,7 +214,10 @@ public class VisualizeViewModel extends AndroidViewModel {
         if (filterType == FILTER_WEEKLY)
             for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
                 spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,5);
-
+        else    //xx/yy/zzzz - xx/yy/zzzz
+            for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
+                spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,5) +
+                                            spendingPeriodInfo.period.substring(13, 18);
         return returnResult;
     }
 }
