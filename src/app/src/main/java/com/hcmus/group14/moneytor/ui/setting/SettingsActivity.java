@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.EditTextPreference;
@@ -27,6 +31,8 @@ import com.hcmus.group14.moneytor.databinding.ActivitySettingsBinding;
 import com.hcmus.group14.moneytor.services.setting.SettingViewModel;
 import com.hcmus.group14.moneytor.ui.login.LoginActivity;
 import com.hcmus.group14.moneytor.utils.LanguageUtils;
+import com.hcmus.group14.moneytor.ui.reminder.ReminderActivity;
+import com.hcmus.group14.moneytor.utils.NotificationUtils;
 import com.hcmus.group14.moneytor.utils.PreferenceUtils;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -34,6 +40,9 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageView ivPhoto;
     private SettingViewModel viewModel;
     private ActivitySettingsBinding binding;
+    private TextView tvUsername;
+    private SwitchCompat widgetSwitch;
+    private TextView reminderSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +67,18 @@ public class SettingsActivity extends AppCompatActivity {
         prepareView();
         setPreferenceListener();
         displayUserInfo();
+        setOnClickReminderSetting();
+    }
+
+    private void setOnClickReminderSetting() {
+        reminderSetting = findViewById(R.id.reminderSetting);
+        reminderSetting.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(SettingsActivity.this, ReminderActivity.class);
+               startActivity(intent);
+           }
+        });
     }
 
     @Override

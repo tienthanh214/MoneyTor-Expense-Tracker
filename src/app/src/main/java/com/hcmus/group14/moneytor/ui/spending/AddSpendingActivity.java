@@ -77,6 +77,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this, ContactActivity.class);
+        intent.putExtra("type","spendingList");
         startActivityForResult(intent, REQUEST_CODE_RELATE_CONTACT);
     }
 

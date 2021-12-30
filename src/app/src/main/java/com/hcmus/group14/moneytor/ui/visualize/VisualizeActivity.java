@@ -15,11 +15,13 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -27,7 +29,9 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.hcmus.group14.moneytor.R;
@@ -56,13 +60,14 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private PieChart pieChart;
     private ArrayList<VisualizeViewModel.SpendingAmountInfo> pieAllEntries;
+    private ArrayList<Category> pieLabels;
     private PieData pieData;
 
     private BarChart barChart;
     private HashMap<String, Long> barHashMapEntries;
     private ArrayList<VisualizeViewModel.SpendingPeriodInfo> barGroupedEntries;
+    private ArrayList<String> barLabels;
     private BarData barData;
-    private ArrayList<String> label;
 
     final private int DAILY_MOD = 1;
     final private int WEEKLY_MOD = 2;
@@ -98,12 +103,9 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private void updateNewData(List<Spending> spendingList) {
         // TODO: get daily/weekly/monthly/annually spending from view model
-        barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_WEEKLY);
+        barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_MONTHLY);
         pieAllEntries = viewModel.getSpendingProportionByCategory(spendingList);
-
-        Log.i("@@@ vis", spendingList.toString());
-//        pieHashMapEntries = viewModel.getSpendingProportionByCategory(spendingList);
-
+        barHashMapEntries = viewModel.getDailySpendingAmount(spendingList);
         setPieChartData();
         pieChart.invalidate();
         setBarChartData();
@@ -112,10 +114,12 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private void initPieChart() {
         pieChart.setTouchEnabled(false);
-        pieChart.getLegend().setEnabled(false);
+        pieChart.getLegend().setEnabled(true);
         pieChart.getDescription().setEnabled(false);
+        pieChart.setExtraRightOffset(40f);
 
         pieChart.setDrawHoleEnabled(true);
+        pieChart.setDrawEntryLabels(true);
         pieChart.setHoleColor(ContextCompat.getColor(this, R.color.dark_sea_green));
         pieChart.setHoleRadius(45f);
         pieChart.setTransparentCircleRadius(45f);
@@ -123,35 +127,51 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         pieChart.setRotationEnabled(false);
         pieChart.setHighlightPerTapEnabled(true);
 
-        pieChart.setEntryLabelColor(Color.BLACK);
-        pieChart.setEntryLabelTextSize(8f);
+        Legend legend = pieChart.getLegend();
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+        legend.setTextSize(8f);
+        legend.setDrawInside(false);
+
+        pieChart.setEntryLabelColor(Color.WHITE);
+    }
+
+    private void customLegend(Legend legend) {
+        LegendEntry[] legendEntries = new LegendEntry[pieLabels.size()];
+        for (int i = 0; i < pieLabels.size(); i++) {
+            legendEntries[i] = new LegendEntry(pieLabels.get(i).getName(), Legend.LegendForm.CIRCLE,
+                    8f, 2f, null, pieLabels.get(i).getColor());
+        }
+        legend.setCustom(legendEntries);
     }
 
     private void setPieChartData() {
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
         ArrayList<Integer> pieColors = new ArrayList<>();
+        pieLabels = new ArrayList<>();
         PieDataSet pieDataSet;
 
         Log.d("@@@ category", String.valueOf(pieAllEntries.size()));
 
         for (VisualizeViewModel.SpendingAmountInfo entry : pieAllEntries) {
             double percentage = entry.percentage;
-            double minPercentageToShowLabelOnChart = 0.08d;
-
+            double minPercentageToShowLabelOnChart = 0.05d;
             if (percentage > minPercentageToShowLabelOnChart) {
                 Drawable drawable = ContextCompat.getDrawable(VisualizeActivity.this,
                         entry.category.getResourceId());
                 drawable.setTint(Color.parseColor("#FFFFFF"));
-                pieEntries.add(new PieEntry(entry.amount, drawable));
+                pieEntries.add(new PieEntry(entry.amount, String.valueOf((int)(entry.percentage * 100)) + "%"));
                 Log.d("@@@" + entry.category, String.valueOf(entry.percentage));
-                //pieEntries.add(new PieEntry(20l, drawable));
             } else {
                 pieEntries.add(new PieEntry(entry.amount));
                 Log.d("@@@" + entry.category, String.valueOf(entry.percentage));
-                //pieEntries.add(new PieEntry(5l));
             }
             pieColors.add(entry.category.getColor());
+            pieLabels.add(entry.category);
         }
+
+        customLegend(pieChart.getLegend());
 
         if (pieChart.getData() != null && pieChart.getData().getDataSetCount() > 0) {
             pieDataSet = (PieDataSet) pieChart.getData().getDataSetByIndex(0);
@@ -165,24 +185,15 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
             pieDataSet = new PieDataSet(pieEntries, "");
             pieDataSet.setDrawValues(false);
             pieDataSet.setColors(pieColors);
-            pieDataSet.setSliceSpace(2f);
-
-            /*pieData.setValueTextColor(Color.BLACK);
-            pieDataSet.setValueLinePart1OffsetPercentage(90.f);
-            pieDataSet.setValueLinePart1Length(1f);
-            pieDataSet.setValueLinePart2Length(.2f);
-            pieDataSet.setValueTextColor(Color.BLACK);
-            pieDataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);*/
+            pieDataSet.setSliceSpace(0.5f);
 
             pieData = new PieData(pieDataSet);
+            pieData.setValueTextColor(Color.BLACK);
         }
         pieChart.setData(pieData);
     }
 
     private void initBarChart() {
-
-        //barChart.setOnChartValueSelectedListener(this);
-
         barChart.setDrawBarShadow(false);
         barChart.setDrawValueAboveBar(true);
         barChart.getDescription().setEnabled(false);
@@ -214,7 +225,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private void setBarChartData() {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        label = new ArrayList<>();
+        barLabels = new ArrayList<>();
 
         Log.d("@@@ date", String.valueOf(barGroupedEntries));
 
@@ -222,31 +233,31 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         for (VisualizeViewModel.SpendingPeriodInfo entry : barGroupedEntries){
             barEntries.add(new BarEntry(i, entry.periodAmount, ContextCompat.getDrawable(
                     VisualizeActivity.this, R.color.candy_pink)));
-            label.add(entry.period);
+            barLabels.add(entry.period);
             i+=1;
         }
-        Log.d("@@@ in set data", String.valueOf(label));
+        Log.d("@@@ in set data", String.valueOf(barLabels));
 
         XAxis xAxis = barChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(label));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(barLabels));
 
-        BarDataSet set1;
+        BarDataSet barDataSet;
 
         if (barChart.getData() != null && barChart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) barChart.getData().getDataSetByIndex(0);
-            set1.setValues(barEntries);
+            barDataSet = (BarDataSet) barChart.getData().getDataSetByIndex(0);
+            barDataSet.setValues(barEntries);
             barChart.getData().notifyDataChanged();
             barChart.notifyDataSetChanged();
 
         } else {
-            set1 = new BarDataSet(barEntries, "");
+            barDataSet = new BarDataSet(barEntries, "");
 
             int color = ContextCompat.getColor(this, R.color.candy_pink);
-            set1.setDrawIcons(false);
-            set1.setColor(color);
+            barDataSet.setDrawIcons(false);
+            barDataSet.setColor(color);
 
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-            dataSets.add(set1);
+            dataSets.add(barDataSet);
 
             barData = new BarData(dataSets);
             barData.setDrawValues(false);

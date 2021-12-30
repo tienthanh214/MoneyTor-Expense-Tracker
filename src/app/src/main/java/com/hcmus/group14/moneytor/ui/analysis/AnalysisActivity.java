@@ -1,5 +1,6 @@
 package com.hcmus.group14.moneytor.ui.analysis;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.GridView;
@@ -18,6 +19,7 @@ import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -68,9 +70,9 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         binding.averageByDateAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getAverage(spendingList)));
         binding.highestSpendingAnalyze.setText(String.format("%,2d", analyzeViewModel.getMaxSpending(spendingList)));
 
-        //ArrayList<Category> highestCategory = analyzeViewModel.getMaxSpendingCategory(spendingList);
-        //binding.highestCategoryIcon.setImageResource(highestCategory.get(0).getResourceId());
-        //binding.highestCategoryIcon.setBackgroundTintList(ColorStateList.valueOf(highestCategory.get(0).getColor()));
+        ArrayList<Category> highestCategory = analyzeViewModel.getMaxSpendingCategory(spendingList);
+        binding.highestCategoryIcon.setImageResource(highestCategory.get(0).getResourceId());
+        binding.highestCategoryIcon.setBackgroundTintList(ColorStateList.valueOf(highestCategory.get(0).getColor()));
     }
 
 }

@@ -113,34 +113,33 @@
                 android:layout_height="1dp"
                 android:background="@color/black" />
 
-            <TextView
-                android:id="@+id/highestSpendingAnalyze"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="left"
-                android:paddingHorizontal="@dimen/text_padding_horizontal"
-                android:paddingVertical="@dimen/text_padding_vertical"
-                android:text="Highest spending"
-                android:textSize="25sp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/margin_top_text"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="X.XXX.XXX"
-                android:textSize="25sp" />
+                <ImageView
+                    android:id="@+id/highestCategoryIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="10dp"
+                    android:background="@drawable/category_icon_background"
+                    android:src="@drawable/ic_category_entertainment"
+                    android:backgroundTint="@color/light_green"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/margin_top_text"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="for cat"
-                android:textSize="25sp" />
+                <TextView
+                    android:id="@+id/highestSpendingAnalyze"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/margin_top_text"
+                    android:text="X.XXX.XXX"
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

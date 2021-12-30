@@ -14,11 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moneytor">
         <activity
+            android:name=".ui.reminder.ReminderActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.widget.BubbleActivity"
-            android:exported="true"
             android:allowEmbedded="true"
             android:documentLaunchMode="always"
-            android:resizeableActivity="true"/>
+            android:exported="true"
+            android:resizeableActivity="true" />
         <activity
             android:name=".ui.visualize.VisualizeActivity"
             android:exported="false" />
@@ -86,8 +89,7 @@
         </receiver>
         <receiver
             android:name=".services.notification.receiver.BubbleDismissedReceiver"
-            android:exported="true">
-        </receiver>
+            android:exported="true"></receiver>
     </application>
 
 </manifest>
