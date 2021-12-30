@@ -44,7 +44,7 @@ public class NoteBroadcastReceiver extends BroadcastReceiver {
                 new NotificationCompat.BubbleMetadata.Builder(
                         bubbleIntent, IconCompat.createWithResource(context,
                         R.drawable.ic_app_logo))
-                        .setDesiredHeight(600)
+                        .setDesiredHeight(700)
                         .setAutoExpandBubble(false)
                         .setSuppressNotification(true)
                         .build();

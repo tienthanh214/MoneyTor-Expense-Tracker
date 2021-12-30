@@ -44,7 +44,7 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
         binding.setViewModel(analyzeViewModel);
         // binding observe
-        filterViewModel.getAllSending().observe(this, this::updateNewData);
+        filterViewModel.getAllSpending().observe(this, this::updateNewData);
         // TODO: receive intent and show filter by FilterState()
         filterViewModel.setFilterState(new FilterState());
         setCategoriesStatistics();
@@ -66,7 +66,11 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         // update total amount
         binding.totalAmountAnalyze.setText(String.format(Locale.US ,"%,d", analyzeViewModel.getTotal(spendingList)));
         binding.averageByDateAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getAverage(spendingList)));
+        binding.highestSpendingAnalyze.setText(String.format("%,2d", analyzeViewModel.getMaxSpending(spendingList)));
 
+        //ArrayList<Category> highestCategory = analyzeViewModel.getMaxSpendingCategory(spendingList);
+        //binding.highestCategoryIcon.setImageResource(highestCategory.get(0).getResourceId());
+        //binding.highestCategoryIcon.setBackgroundTintList(ColorStateList.valueOf(highestCategory.get(0).getColor()));
     }
 
 }

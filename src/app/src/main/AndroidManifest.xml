@@ -20,7 +20,7 @@
             android:documentLaunchMode="always"
             android:resizeableActivity="true"/>
         <activity
-            android:name=".ui.analysis.VisualizeActivity"
+            android:name=".ui.visualize.VisualizeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.setting.SettingsActivity"

@@ -55,7 +55,7 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         initializeViews();
 
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
-        filterViewModel.getAllSending().observe(this, spendingList -> {
+        filterViewModel.getAllSpending().observe(this, spendingList -> {
             spendings = spendingList;
             spendingAdapter.setSpending(spendings);
         });
