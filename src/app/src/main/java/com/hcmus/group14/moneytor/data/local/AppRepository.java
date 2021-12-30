@@ -13,7 +13,7 @@ import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingRelateCrossRef;
 import com.hcmus.group14.moneytor.data.model.relation.SpendingWithRelates;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.hcmus.group14.moneytor.firebase.FirebaseHelper;
+import com.hcmus.group14.moneytor.data.firebase.FirebaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -256,9 +256,6 @@ public class AppRepository {
     //----------------FireBase interaction services--------------------
 
     public void uploadData(FirebaseUser user) {
-        // TODO: do this in the background if app freezes
-
-        // TODO: Hoang - get list of DebtLend from db
         ArrayList<DebtLend> debtLends =
                 (ArrayList<DebtLend>) debtLendDao.getAllDebtLendsNoLiveData();
 
@@ -267,28 +264,28 @@ public class AppRepository {
             if (task.isSuccessful()) Log.d(FirebaseHelper.TAG, "DebtLend successfully uploaded");
             else Log.w(FirebaseHelper.TAG, "Error uploading DebtLend");
         });
-        // TODO: Hoang - get list of Relate from db
+
         ArrayList<Relate> relates = (ArrayList<Relate>) relateDao.getAllRelatesNoLiveData();
 
         FirebaseHelper.putDocuments(user, FirebaseHelper.COLLECTION_RELATE, relates, task -> {
             if (task.isSuccessful()) Log.d(FirebaseHelper.TAG, "Relate successfully uploaded");
             else Log.w(FirebaseHelper.TAG, "Error uploading Relate");
         });
-        // TODO: Hoang - get list of SpendGoal from db
+
         ArrayList<SpendGoal> spendGoals = (ArrayList<SpendGoal>) spendGoalDao.getAllSpendGoalsNoLiveData();
 
         FirebaseHelper.putDocuments(user, FirebaseHelper.COLLECTION_SPENDGOAL, spendGoals, task -> {
             if (task.isSuccessful()) Log.d(FirebaseHelper.TAG, "SpendGoal successfully uploaded");
             else Log.w(FirebaseHelper.TAG, "Error uploading SpendGoal");
         });
-        // TODO: Hoang - get list of Spending from db
+
         ArrayList<Spending> spendings = (ArrayList<Spending>) spendingDao.getAllSpendingsNoLiveData();
 
         FirebaseHelper.putDocuments(user, FirebaseHelper.COLLECTION_SPENDING, spendings, task -> {
             if (task.isSuccessful()) Log.d(FirebaseHelper.TAG, "Spending successfully uploaded");
             else Log.w(FirebaseHelper.TAG, "Error uploading Spending");
         });
-        // TODO: Hoang - get list of Wallet from db
+
         ArrayList<Wallet> wallets = (ArrayList<Wallet>) walletDao.getAllWalletsNoLiveData();
 
         FirebaseHelper.putDocuments(user, FirebaseHelper.COLLECTION_WALLET, wallets, task -> {
@@ -298,12 +295,11 @@ public class AppRepository {
     }
 
     public void downloadData(FirebaseUser user) {
-        // TODO: do this in the background if app freezes
+
         FirebaseHelper.getDocuments(user, FirebaseHelper.COLLECTION_DEBTLEND, DebtLend.class, task -> {
             if (task.isSuccessful())
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     DebtLend debtLend = document.toObject(DebtLend.class);
-                    // TODO: Hoang - Insert to db
                     insertDebtLend(debtLend);
                 }
             else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
@@ -313,7 +309,6 @@ public class AppRepository {
             if (task.isSuccessful())
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Relate relate = document.toObject(Relate.class);
-                    // TODO: Hoang - Insert to db
                     insertRelate(relate);
                 }
             else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
@@ -323,7 +318,6 @@ public class AppRepository {
             if (task.isSuccessful())
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     SpendGoal spendGoal = document.toObject(SpendGoal.class);
-                    // TODO: Hoang - Insert to db
                     insertSpendGoal(spendGoal);
                 }
             else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
@@ -333,7 +327,6 @@ public class AppRepository {
             if (task.isSuccessful())
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Spending spending = document.toObject(Spending.class);
-                    // TODO: Hoang - Insert to db
                     insertSpending(spending);
                 }
             else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
@@ -343,7 +336,6 @@ public class AppRepository {
             if (task.isSuccessful())
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Wallet wallet = document.toObject(Wallet.class);
-                    // TODO: Hoang - Insert to db
                     insertWallet(wallet);
                 }
             else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());

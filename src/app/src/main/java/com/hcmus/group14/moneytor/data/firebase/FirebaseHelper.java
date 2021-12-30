@@ -1,9 +1,6 @@
-package com.hcmus.group14.moneytor.firebase;
+package com.hcmus.group14.moneytor.data.firebase;
 
-import android.app.Application;
 import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseUser;
@@ -11,16 +8,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
-import com.hcmus.group14.moneytor.data.model.DebtLend;
-import com.hcmus.group14.moneytor.data.model.Relate;
-import com.hcmus.group14.moneytor.data.model.SpendGoal;
-import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.data.model.UserPref;
-import com.hcmus.group14.moneytor.data.model.Wallet;
-
 
 import java.util.ArrayList;
 
@@ -149,90 +139,90 @@ public class FirebaseHelper {
         batch.commit().addOnCompleteListener(onCompleteListener);
     }
 
-    public static void uploadData(FirebaseUser user) {
-        // TODO: do this in the background if app freezes
-        ArrayList<DebtLend> debtlends = new ArrayList<>();
-        // TODO: Hoang - get list of DebtLend from db
-
-        FirebaseHelper.putDocuments(user, COLLECTION_DEBTLEND, debtlends, task -> {
-            if (task.isSuccessful()) Log.d(TAG, "DebtLend successfully uploaded");
-            else Log.w(TAG, "Error uploading DebtLend");
-        });
-
-        ArrayList<Relate> relates = new ArrayList<>();
-        // TODO: Hoang - get list of Relate from db
-        FirebaseHelper.putDocuments(user, COLLECTION_RELATE, relates, task -> {
-            if (task.isSuccessful()) Log.d(TAG, "Relate successfully uploaded");
-            else Log.w(TAG, "Error uploading Relate");
-        });
-
-        ArrayList<SpendGoal> spendGoals = new ArrayList<>();
-        // TODO: Hoang - get list of SpendGoal from db
-        FirebaseHelper.putDocuments(user, COLLECTION_SPENDGOAL, spendGoals, task -> {
-            if (task.isSuccessful()) Log.d(TAG, "SpendGoal successfully uploaded");
-            else Log.w(TAG, "Error uploading SpendGoal");
-        });
-
-        ArrayList<Spending> spendings = new ArrayList<>();
-        // TODO: Hoang - get list of Spending from db
-        FirebaseHelper.putDocuments(user, COLLECTION_SPENDING, spendings, task -> {
-            if (task.isSuccessful()) Log.d(TAG, "Spending successfully uploaded");
-            else Log.w(TAG, "Error uploading Spending");
-        });
-
-        ArrayList<Wallet> wallets = new ArrayList<>();
-        // TODO: Hoang - get list of Wallet from db
-        FirebaseHelper.putDocuments(user, COLLECTION_WALLET, wallets, task -> {
-            if (task.isSuccessful()) Log.d(TAG, "Wallet successfully uploaded");
-            else Log.w(TAG, "Error uploading Wallet");
-        });
-    }
-
-    public static void downloadData(FirebaseUser user) {
-        // TODO: do this in the background if app freezes
-        FirebaseHelper.getDocuments(user, COLLECTION_DEBTLEND, DebtLend.class, task -> {
-            if (task.isSuccessful())
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    DebtLend debtLend = document.toObject(DebtLend.class);
-                    // TODO: Hoang - Insert to db
-                }
-            else Log.d(TAG, "Error getting documents: ", task.getException());
-        });
-
-        FirebaseHelper.getDocuments(user, COLLECTION_RELATE, Relate.class, task -> {
-            if (task.isSuccessful())
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    Relate relate = document.toObject(Relate.class);
-                    // TODO: Hoang - Insert to db
-                }
-            else Log.d(TAG, "Error getting documents: ", task.getException());
-        });
-
-        FirebaseHelper.getDocuments(user, COLLECTION_SPENDGOAL, SpendGoal.class, task -> {
-            if (task.isSuccessful())
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    SpendGoal spendGoal = document.toObject(SpendGoal.class);
-                    // TODO: Hoang - Insert to db
-                }
-            else Log.d(TAG, "Error getting documents: ", task.getException());
-        });
-
-        FirebaseHelper.getDocuments(user, COLLECTION_SPENDING, Spending.class, task -> {
-            if (task.isSuccessful())
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    Spending spending = document.toObject(Spending.class);
-                    // TODO: Hoang - Insert to db
-                }
-            else Log.d(TAG, "Error getting documents: ", task.getException());
-        });
-
-        FirebaseHelper.getDocuments(user, COLLECTION_WALLET, Wallet.class, task -> {
-            if (task.isSuccessful())
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    Wallet wallet = document.toObject(Wallet.class);
-                    // TODO: Hoang - Insert to db
-                }
-            else Log.d(TAG, "Error getting documents: ", task.getException());
-        });
-    }
+//    public static void uploadData(FirebaseUser user) {
+//        // TODO: do this in the background if app freezes
+//        ArrayList<DebtLend> debtlends = new ArrayList<>();
+//        // TODO: Hoang - get list of DebtLend from db
+//
+//        FirebaseHelper.putDocuments(user, COLLECTION_DEBTLEND, debtlends, task -> {
+//            if (task.isSuccessful()) Log.d(TAG, "DebtLend successfully uploaded");
+//            else Log.w(TAG, "Error uploading DebtLend");
+//        });
+//
+//        ArrayList<Relate> relates = new ArrayList<>();
+//        // TODO: Hoang - get list of Relate from db
+//        FirebaseHelper.putDocuments(user, COLLECTION_RELATE, relates, task -> {
+//            if (task.isSuccessful()) Log.d(TAG, "Relate successfully uploaded");
+//            else Log.w(TAG, "Error uploading Relate");
+//        });
+//
+//        ArrayList<SpendGoal> spendGoals = new ArrayList<>();
+//        // TODO: Hoang - get list of SpendGoal from db
+//        FirebaseHelper.putDocuments(user, COLLECTION_SPENDGOAL, spendGoals, task -> {
+//            if (task.isSuccessful()) Log.d(TAG, "SpendGoal successfully uploaded");
+//            else Log.w(TAG, "Error uploading SpendGoal");
+//        });
+//
+//        ArrayList<Spending> spendings = new ArrayList<>();
+//        // TODO: Hoang - get list of Spending from db
+//        FirebaseHelper.putDocuments(user, COLLECTION_SPENDING, spendings, task -> {
+//            if (task.isSuccessful()) Log.d(TAG, "Spending successfully uploaded");
+//            else Log.w(TAG, "Error uploading Spending");
+//        });
+//
+//        ArrayList<Wallet> wallets = new ArrayList<>();
+//        // TODO: Hoang - get list of Wallet from db
+//        FirebaseHelper.putDocuments(user, COLLECTION_WALLET, wallets, task -> {
+//            if (task.isSuccessful()) Log.d(TAG, "Wallet successfully uploaded");
+//            else Log.w(TAG, "Error uploading Wallet");
+//        });
+//    }
+//
+//    public static void downloadData(FirebaseUser user) {
+//        // TODO: do this in the background if app freezes
+//        FirebaseHelper.getDocuments(user, COLLECTION_DEBTLEND, DebtLend.class, task -> {
+//            if (task.isSuccessful())
+//                for (QueryDocumentSnapshot document : task.getResult()) {
+//                    DebtLend debtLend = document.toObject(DebtLend.class);
+//                    // TODO: Hoang - Insert to db
+//                }
+//            else Log.d(TAG, "Error getting documents: ", task.getException());
+//        });
+//
+//        FirebaseHelper.getDocuments(user, COLLECTION_RELATE, Relate.class, task -> {
+//            if (task.isSuccessful())
+//                for (QueryDocumentSnapshot document : task.getResult()) {
+//                    Relate relate = document.toObject(Relate.class);
+//                    // TODO: Hoang - Insert to db
+//                }
+//            else Log.d(TAG, "Error getting documents: ", task.getException());
+//        });
+//
+//        FirebaseHelper.getDocuments(user, COLLECTION_SPENDGOAL, SpendGoal.class, task -> {
+//            if (task.isSuccessful())
+//                for (QueryDocumentSnapshot document : task.getResult()) {
+//                    SpendGoal spendGoal = document.toObject(SpendGoal.class);
+//                    // TODO: Hoang - Insert to db
+//                }
+//            else Log.d(TAG, "Error getting documents: ", task.getException());
+//        });
+//
+//        FirebaseHelper.getDocuments(user, COLLECTION_SPENDING, Spending.class, task -> {
+//            if (task.isSuccessful())
+//                for (QueryDocumentSnapshot document : task.getResult()) {
+//                    Spending spending = document.toObject(Spending.class);
+//                    // TODO: Hoang - Insert to db
+//                }
+//            else Log.d(TAG, "Error getting documents: ", task.getException());
+//        });
+//
+//        FirebaseHelper.getDocuments(user, COLLECTION_WALLET, Wallet.class, task -> {
+//            if (task.isSuccessful())
+//                for (QueryDocumentSnapshot document : task.getResult()) {
+//                    Wallet wallet = document.toObject(Wallet.class);
+//                    // TODO: Hoang - Insert to db
+//                }
+//            else Log.d(TAG, "Error getting documents: ", task.getException());
+//        });
+//    }
 }

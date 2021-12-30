@@ -12,6 +12,7 @@ public class UserPref {
     public static final String USER_LANGUAGE = "user_language";
     public static final String USER_DARK_MODE = "user_dark_mode";
     public static final String USER_REMINDER_INTERVAL = "user_reminder_interval";
+    public static final String USER_WIDGET = "user_widget";
 
     private String name;
     private String id;
