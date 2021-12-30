@@ -38,7 +38,7 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setTitle("Analysis");
+        this.setTitle(getString(R.string.toolbar_title_analysis));
         binding = getViewDataBinding();
         analyzeViewModel = new ViewModelProvider(this).get(AnalyzeViewModel.class);
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);

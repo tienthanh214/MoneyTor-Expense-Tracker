@@ -36,10 +36,10 @@ import java.util.List;
 
 public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetailsBinding> implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
+    private final int REQUEST_CODE_RELATE_CONTACT = 1234;
     private AppBarConfiguration appBarConfiguration;
     private ActivityDebtLendDetailsBinding binding;
     private DebtLendDetailsViewModel viewModel;
-    private final int REQUEST_CODE_RELATE_CONTACT = 1234;
     private int debtLendId;
 
     @Override
@@ -51,12 +51,12 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
-        this.setTitle("Manage debt");
+        this.setTitle(getString(R.string.toolbar_title_debtlend));
 
         viewModel = new ViewModelProvider(this).get(DebtLendDetailsViewModel.class);
         binding.setViewModel(viewModel);
 
-        int debtLendId = (int)getIntent().getIntExtra("debt_id", -1);
+        int debtLendId = (int) getIntent().getIntExtra("debt_id", -1);
         if (debtLendId != -1) {
             // if click on item list view, load full info of a spending
             viewModel.getDebtLendAndRelateById(debtLendId).observe(this, debtLend -> {
@@ -83,8 +83,8 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_CODE_RELATE_CONTACT){
-            if (resultCode == RESULT_OK){
+        if (requestCode == REQUEST_CODE_RELATE_CONTACT) {
+            if (resultCode == RESULT_OK) {
                 Bundle bundle = data.getExtras();
                 List<Relate> selectedContacts = (List<Relate>) bundle.getSerializable("contacts");
                 // bug here
@@ -118,11 +118,10 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
 
     private void save() {
         boolean check = checkValid();
-        if (check){
+        if (check) {
             Toast.makeText(getApplicationContext(), "Spending saved", Toast.LENGTH_SHORT).show();
             finish();
-        }
-        else{
+        } else {
             Toast.makeText(getApplicationContext(), "Not a valid spending", Toast.LENGTH_SHORT).show();
         }
     }
@@ -130,7 +129,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     private boolean checkValid() {
         EditText cost = binding.inputAmount;
         InputUtils errors = viewModel.saveDebtLend();
-        if (errors.hasError()){
+        if (errors.hasError()) {
             if (!errors.isValid(InputUtils.Type.COST))
                 cost.setError("Amount is required!");
             return false;
@@ -214,6 +213,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         viewModel.setCategory(CategoriesUtils.getCategoryIdByPosition(position));
     }
+
     public void onNothingSelected(AdapterView<?> arg0) {
 
     }

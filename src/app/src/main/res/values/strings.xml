@@ -51,8 +51,15 @@
     <!-- Sync Preferences -->
     <string name="user_profile_preference">user_profile_preference</string>
     <string name="default_username">New user</string>
-    <string name="dark_mode">Dark mode</string>
     <string name="user_name">Nick name</string>
     <string name="language_title">Language</string>
     <string name="dark_mode_title">UI mode</string>
+
+    <!-- Toolbar title -->
+    <string name="toolbar_title_analysis">Analysis</string>
+    <string name="toolbar_title_relate">Relate</string>
+    <string name="toolbar_title_debtlend">Manage debt</string>
+    <string name="toolbar_title_goal">Spending goal</string>
+    <string name="toolbar_goal_spending">List spending</string>
+    <string name="toolbar_title_visualize">Visualize</string>
 </resources>

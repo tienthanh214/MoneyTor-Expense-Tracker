@@ -53,10 +53,8 @@ public class ContactActivity extends NoteBaseActivity<ActivityContactBinding> {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
         this.context = this.getApplicationContext();
-        // do what you want
-        this.setTitle("Relate");
+        this.setTitle(getString(R.string.toolbar_title_relate));
         contacts = ContactUtils.getAllContacts(this, this.getApplicationContext());
-//        contacts = getData();
         initializeViews();
     }
 

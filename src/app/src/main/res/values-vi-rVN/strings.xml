@@ -28,8 +28,8 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="next">Tiếp</string>
+    <string name="previous">Trước</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -52,8 +52,15 @@
     <!-- Sync Preferences -->
     <string name="user_profile_preference">user_profile_preference</string>
     <string name="default_username">New user</string>
-    <string name="dark_mode">Dark mode</string>
-    <string name="user_name">Nick name</string>
+    <string name="user_name">Tên tài khoản</string>
     <string name="language_title">Ngôn ngữ</string>
     <string name="dark_mode_title">Chế độ hiển thị</string>
+
+    <!-- Toolbar title -->
+    <string name="toolbar_title_analysis">Phân tích</string>
+    <string name="toolbar_title_relate">Liên lạc</string>
+    <string name="toolbar_title_debtlend">Quản lí nợ</string>
+    <string name="toolbar_title_goal">Mục tiêu tài chính</string>
+    <string name="toolbar_goal_spending">Danh sách chi tiêu</string>
+    <string name="toolbar_title_visualize">Minh họa</string>
 </resources>
