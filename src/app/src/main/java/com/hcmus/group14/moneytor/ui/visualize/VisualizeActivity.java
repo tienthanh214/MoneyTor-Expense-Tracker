@@ -9,6 +9,8 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.GridView;
+import android.widget.ListView;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.compose.ui.graphics.drawscope.Fill;
@@ -49,7 +51,11 @@ import com.hcmus.group14.moneytor.services.analyze.AnalyzeViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.services.visualize.VisualizeViewModel;
+import com.hcmus.group14.moneytor.ui.analysis.CategoryItemStatisticsAdapter;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
+import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
+import com.hcmus.group14.moneytor.ui.custom.CategoryLabelAdapter;
+import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,6 +74,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
     private ArrayList<VisualizeViewModel.SpendingAmountInfo> pieAllEntries;
     private ArrayList<Category> pieLabels;
     private PieData pieData;
+    private CategoryLabelAdapter categoryAdapter;
 
     private BarChart barChart;
     private HashMap<String, Long> barHashMapEntries;
@@ -126,16 +133,10 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         barChart.invalidate();
     }
 
-    public static int spToPx(float sp, Context context) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,
-                context.getResources().getDisplayMetrics());
-    }
-
     private void initPieChart() {
         pieChart.setTouchEnabled(false);
-        pieChart.getLegend().setEnabled(true);
+        pieChart.getLegend().setEnabled(false);
         pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraRightOffset(40f);
 
         pieChart.setDrawEntryLabels(true);
         pieChart.setHoleRadius(45f);
@@ -143,27 +144,14 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         pieChart.setRotationEnabled(false);
         pieChart.setHighlightPerTapEnabled(true);
 
-        Legend legend = pieChart.getLegend();
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
-        legend.setDrawInside(false);
-
         pieChart.setEntryLabelColor(Color.WHITE);
     }
 
-    private void customLegend(Legend legend) {
-        float height = pieChart.getHeight();
-        float size = height / (5 * 13);
-        Log.i("@@@ height", String.valueOf(height));
-        Log.i("@@@ size", String.valueOf(size));
-        LegendEntry[] legendEntries = new LegendEntry[pieLabels.size()];
-        for (int i = 0; i < pieLabels.size(); i++) {
-            legendEntries[i] = new LegendEntry(pieLabels.get(i).getName(), Legend.LegendForm.CIRCLE,
-                    size, 2f, null, pieLabels.get(i).getColor());
-        }
-        legend.setCustom(legendEntries);
-        legend.setTextSize(size);
+    private void setPieChartLabels() {
+        GridView labels = binding.pieChartLabels;
+        CategoryLabelAdapter adapter = new CategoryLabelAdapter(this, R.layout.category_item_pie_chart_label, pieLabels);
+        this.categoryAdapter = adapter;
+        labels.setAdapter(adapter);
     }
 
     private void setPieChartData() {
@@ -191,7 +179,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
             pieLabels.add(entry.category);
         }
 
-        customLegend(pieChart.getLegend());
+        setPieChartLabels();
 
         if (pieChart.getData() != null && pieChart.getData().getDataSetCount() > 0) {
             pieDataSet = (PieDataSet) pieChart.getData().getDataSetByIndex(0);
