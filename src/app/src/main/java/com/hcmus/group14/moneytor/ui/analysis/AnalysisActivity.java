@@ -3,8 +3,12 @@ package com.hcmus.group14.moneytor.ui.analysis;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.GridView;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -52,6 +56,14 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         setCategoriesStatistics();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.analyze_visualize_menu, menu);
+        MenuItem filterItem = menu.findItem(R.id.actionFilter);
+        return true;
+    }
+
     private void setCategoriesStatistics() {
         GridView gridView = binding.categoriesStatistics;
         final List<Category> categories = CategoriesUtils.getDefaultCategories();
@@ -66,9 +78,9 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         // update category statistics
         categoryAdapter.setItems(analyzeViewModel.getDetailsForCategories(spendingList));
         // update total amount
-        binding.totalAmountAnalyze.setText(String.format(Locale.US ,"%,d", analyzeViewModel.getTotal(spendingList)));
-        binding.averageByDateAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getAverage(spendingList)));
-        binding.highestSpendingAnalyze.setText(String.format("%,2d", analyzeViewModel.getMaxSpending(spendingList)));
+        binding.totalAmountAnalyze.setText(String.format(Locale.US ,"%,d", analyzeViewModel.getTotal(spendingList)) + " VNĐ");
+        binding.averageByDateAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getAverage(spendingList)) + " VNĐ");
+        binding.highestSpendingAnalyze.setText(String.format("%,2d", analyzeViewModel.getMaxSpending(spendingList)) + " VNĐ");
 
         ArrayList<Category> highestCategory = analyzeViewModel.getMaxSpendingCategory(spendingList);
         binding.highestCategoryIcon.setImageResource(highestCategory.get(0).getResourceId());

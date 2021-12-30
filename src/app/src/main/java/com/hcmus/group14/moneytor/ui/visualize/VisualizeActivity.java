@@ -4,7 +4,11 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.compose.ui.graphics.drawscope.Fill;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -99,6 +103,14 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         barChart = binding.barChart;
         initPieChart();
         initBarChart();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.analyze_visualize_menu, menu);
+        MenuItem filterItem = menu.findItem(R.id.actionFilter);
+        return true;
     }
 
     private void updateNewData(List<Spending> spendingList) {
