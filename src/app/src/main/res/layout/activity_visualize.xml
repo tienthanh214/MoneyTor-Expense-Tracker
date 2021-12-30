@@ -12,8 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/light_green">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/frame1"
@@ -31,15 +30,13 @@
                 android:paddingHorizontal="@dimen/text_padding_horizontal"
                 android:paddingVertical="@dimen/text_padding_vertical"
                 android:text="Category summary"
-                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_pie_chart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/dark_sea_green">
+                android:layout_height="match_parent">
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/pie_chart"
@@ -68,14 +65,12 @@
                 android:paddingVertical="@dimen/text_padding_vertical"
                 android:text="Daily summary"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+                android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_bar_chart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/dark_sea_green">
+                android:layout_height="match_parent">
 
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/bar_chart"
