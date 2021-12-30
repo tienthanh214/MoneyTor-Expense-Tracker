@@ -163,7 +163,7 @@ public class VisualizeViewModel extends AndroidViewModel {
         String today = DateTimeUtils.getDate(DateTimeUtils.getCurrentTimeMillis());
 
         //limit = for intervals, cap = for the whole time period
-        long upperLimit = DateTimeUtils.getDateInMillis(today),
+        long upperLimit = DateTimeUtils.getDateInMillis(today) + 24l * 3600000l,
                 lowerLimit, upperCap = upperLimit, lowerCap;
         String beginning;
 
@@ -171,6 +171,11 @@ public class VisualizeViewModel extends AndroidViewModel {
         long intervalDuration = 0l;
         switch (filterType)
         {
+            case FILTER_DAILY:
+                intervals = 1;
+                intervalDuration = 24l * 60l * 60l * 1000l;
+                lowerCap = upperCap - intervalDuration;
+                break;
             case FILTER_WEEKLY:
                 intervals = 7;
                 intervalDuration = 24l * 60l * 60l * 1000l;
@@ -211,7 +216,7 @@ public class VisualizeViewModel extends AndroidViewModel {
             if (upperLimit <= lowerCap) break;
         }
         returnResult.sort(spendingPeriodInfoComparator);
-        if (filterType == FILTER_WEEKLY)
+        if (filterType == FILTER_WEEKLY || filterType == FILTER_DAILY)
             for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
                 spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,5);
         else    //xx/yy/zzzz - xx/yy/zzzz
