@@ -51,7 +51,7 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
         binding = getViewDataBinding();
         context = this.getApplicationContext();
 
-        this.setTitle("Manage debt");
+        this.setTitle(getString(R.string.toolbar_title_debtlend));
         initializeViews();
 
         viewModel = new ViewModelProvider(this).get(FilterViewModel.class);

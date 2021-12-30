@@ -31,4 +31,11 @@
     <!-- Dark theme -->
     <color name="forest_green">#98c379</color>
     <color name="dark_slate_grey">#2F4F4F</color>
+    <color name="dark_yellow">#E5C07B</color>
+    <color name="dark_red">#E06C75</color>
+    <color name="dark_blue">#61AFEF</color>
+    <color name="dark_neon">#56B6C2</color>
+    <color name="dark_white">#ABB2BF</color>
+    <color name="dark_black">#282C34</color>
+
 </resources>

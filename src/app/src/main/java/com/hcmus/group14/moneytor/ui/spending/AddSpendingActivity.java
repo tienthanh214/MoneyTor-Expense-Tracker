@@ -50,7 +50,7 @@ public class AddSpendingActivity extends NoteBaseActivity<ActivityNoteSpendingBi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setTitle("Spending note");
+        this.setTitle(getString(R.string.toolbar_goal_spending));
         binding = getViewDataBinding();
 
         viewModel = new ViewModelProvider(this).get(SpendingDetailsViewModel.class);

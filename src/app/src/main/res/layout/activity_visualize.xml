@@ -42,7 +42,8 @@
                     android:id="@+id/pie_chart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginVertical="@dimen/margin_top_card"
+                    android:layout_marginTop="@dimen/margin_top_card"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginHorizontal="@dimen/margin_left_card"/>
 
             </androidx.cardview.widget.CardView>

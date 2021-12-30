@@ -46,7 +46,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setTitle("Spending goal");
+        this.setTitle(getString(R.string.toolbar_title_goal));
         binding = getViewDataBinding();
 
         viewModel = new ViewModelProvider(this).get(SpendGoalDetailsViewModel.class);

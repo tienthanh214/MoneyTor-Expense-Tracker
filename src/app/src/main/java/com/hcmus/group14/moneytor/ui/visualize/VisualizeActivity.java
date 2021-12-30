@@ -1,9 +1,11 @@
 package com.hcmus.group14.moneytor.ui.visualize;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -86,7 +88,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Visualize");
+        setTitle(getString(R.string.toolbar_title_visualize));
         binding = getViewDataBinding();
         viewModel = new ViewModelProvider(this).get(VisualizeViewModel.class);
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
@@ -115,13 +117,18 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private void updateNewData(List<Spending> spendingList) {
         // TODO: get daily/weekly/monthly/annually spending from view model
-        barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_MONTHLY);
+        barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_ANNUALLY);
         pieAllEntries = viewModel.getSpendingProportionByCategory(spendingList);
         barHashMapEntries = viewModel.getDailySpendingAmount(spendingList);
         setPieChartData();
         pieChart.invalidate();
         setBarChartData();
         barChart.invalidate();
+    }
+
+    public static int spToPx(float sp, Context context) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,
+                context.getResources().getDisplayMetrics());
     }
 
     private void initPieChart() {
@@ -140,6 +147,8 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+        float textSize = (int) spToPx(3, VisualizeActivity.this);
+        legend.setTextSize(textSize);
         legend.setDrawInside(false);
 
         pieChart.setEntryLabelColor(Color.WHITE);
@@ -149,7 +158,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         LegendEntry[] legendEntries = new LegendEntry[pieLabels.size()];
         for (int i = 0; i < pieLabels.size(); i++) {
             legendEntries[i] = new LegendEntry(pieLabels.get(i).getName(), Legend.LegendForm.CIRCLE,
-                    8f, 2f, null, pieLabels.get(i).getColor());
+                    10f, 2f, null, pieLabels.get(i).getColor());
         }
         legend.setCustom(legendEntries);
     }
@@ -214,15 +223,15 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         xAxis.setGranularity(1f);
         xAxis.setLabelCount(12);
         xAxis.setLabelRotationAngle(-45f);
-        xAxis.setTextSize(5f);
+        xAxis.setTextSize(8f);
 
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setLabelCount(8, false);
         leftAxis.setDrawGridLines(false);
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        leftAxis.setSpaceTop(15f);
+        leftAxis.setSpaceTop(8f);
         leftAxis.setAxisMinimum(0f);
-        leftAxis.setTextSize(5f);
+        leftAxis.setTextSize(8f);
 
         barChart.getAxisRight().setEnabled(false);
 

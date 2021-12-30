@@ -2,6 +2,7 @@ package com.hcmus.group14.moneytor.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "wallet_table")
@@ -16,6 +17,7 @@ public class Wallet {
     @ColumnInfo(name = "balance")
     long balance;
 
+    @Ignore
     public Wallet() {
         // Required by Firestore. Do not remove
         this(true, "", 0);

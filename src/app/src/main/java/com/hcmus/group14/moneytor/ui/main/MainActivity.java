@@ -1,10 +1,5 @@
 package com.hcmus.group14.moneytor.ui.main;
 
-import static com.hcmus.group14.moneytor.firebase.FirebaseHelper.COLLECTION_USERS;
-import static com.hcmus.group14.moneytor.ui.login.LoginActivity.FIRST_TIME_LOGIN;
-import static com.hcmus.group14.moneytor.ui.login.LoginActivity.LOGIN_TYPE;
-
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,26 +7,24 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.firebase.FirebaseHelper;
 import com.hcmus.group14.moneytor.data.model.UserPref;
-import com.hcmus.group14.moneytor.firebase.FirebaseHelper;
 import com.hcmus.group14.moneytor.ui.analysis.AnalysisActivity;
-import com.hcmus.group14.moneytor.ui.visualize.VisualizeActivity;
 import com.hcmus.group14.moneytor.ui.debtlend.DebtLendActivity;
 import com.hcmus.group14.moneytor.ui.goal.GoalActivity;
 import com.hcmus.group14.moneytor.ui.setting.SettingsActivity;
 import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
+import com.hcmus.group14.moneytor.ui.visualize.VisualizeActivity;
+import com.hcmus.group14.moneytor.utils.LanguageUtils;
 import com.hcmus.group14.moneytor.utils.PreferenceUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,18 +33,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        applyUserPref();
+
         setContentView(R.layout.activity_main);
         // Sync user data for first login
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // TODO: skip update data for users who have logged in this phone before
         // TODO: show a loading circle while synchronizing data
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            String value = extras.getString(LOGIN_TYPE);
-            if (user != null && value.equals(FIRST_TIME_LOGIN)) {
-                synchronizeData(user);
-            }
-        }
+//        if (extras != null) {
+//            String value = extras.getString(LOGIN_TYPE);
+//            if (user != null && value.equals(FIRST_TIME_LOGIN)) {
+//                synchronizeData(user);
+//            }
+//        }
+        //applyUserPref();
     }
 
     public void onOpenSpendingList(View view) {
@@ -105,46 +101,46 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void synchronizeData(FirebaseUser user) {
-        // Check if user already exist and has data on the cloud
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection(COLLECTION_USERS).document(user.getUid());
-        docRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("Cloud data detected!");
-                    builder.setPositiveButton("Retrieve progress",
-                            (dialog, id) -> {
-                                downloadUserPref(user);
-                                FirebaseHelper.downloadData(user);
-                            });
-                    builder.setNegativeButton("Upload progress",
-                            (dialog, id) -> {
-                                uploadUserPref(user);
-                                FirebaseHelper.uploadData(user);
-                            });
-                    builder.setNeutralButton("Do nothing",
-                            (dialog, id) -> {
-                                Toast.makeText(MainActivity.this,
-                                        "Data is not uniform between cloud and local database",
-                                        Toast.LENGTH_SHORT).show();
-                            });
-                    builder.setCancelable(false);
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-                } else {
-                    Log.d(TAG, "No such user");
-                    uploadUserPref(user);
-                    FirebaseHelper.uploadData(user);
-                }
-            } else {
-                Log.d(TAG, "Check user failed with ", task.getException());
-            }
-        });
-    }
+//    private void synchronizeData(FirebaseUser user) {
+//        // Check if user already exist and has data on the cloud
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        DocumentReference docRef = db.collection(COLLECTION_USERS).document(user.getUid());
+//        docRef.get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                DocumentSnapshot document = task.getResult();
+//                if (document.exists()) {
+//                    Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//                    builder.setMessage("Cloud data detected!");
+//                    builder.setPositiveButton("Retrieve progress",
+//                            (dialog, id) -> {
+//                                downloadUserPref(user);
+//                                FirebaseHelper.downloadData(user);
+//                            });
+//                    builder.setNegativeButton("Upload progress",
+//                            (dialog, id) -> {
+//                                uploadUserPref(user);
+//                                FirebaseHelper.uploadData(user);
+//                            });
+//                    builder.setNeutralButton("Do nothing",
+//                            (dialog, id) -> {
+//                                Toast.makeText(MainActivity.this,
+//                                        "Data is not uniform between cloud and local database",
+//                                        Toast.LENGTH_SHORT).show();
+//                            });
+//                    builder.setCancelable(false);
+//                    AlertDialog alertDialog = builder.create();
+//                    alertDialog.show();
+//                } else {
+//                    Log.d(TAG, "No such user");
+//                    uploadUserPref(user);
+//                    FirebaseHelper.uploadData(user);
+//                }
+//            } else {
+//                Log.d(TAG, "Check user failed with ", task.getException());
+//            }
+//        });
+//    }
 
     private void downloadUserPref(FirebaseUser user) {
         // TODO: implement this
@@ -157,6 +153,16 @@ public class MainActivity extends AppCompatActivity {
                 } else Log.d(TAG, "No such document");
             } else Log.d(TAG, "Get failed with ", task.getException());
         });
+    }
+
+    private void applyUserPref() {
+        // Apply dark mode setting
+        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(
+                PreferenceUtils.getString(this,
+                        UserPref.USER_DARK_MODE, "-1")));
+        // Apply language setting
+        LanguageUtils.setLocale(this, PreferenceUtils.getString(this,
+                UserPref.USER_LANGUAGE, "en"));
     }
 
     private void uploadUserPref(FirebaseUser user) {
