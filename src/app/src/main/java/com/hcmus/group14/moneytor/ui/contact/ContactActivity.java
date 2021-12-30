@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -56,8 +57,9 @@ public class ContactActivity extends NoteBaseActivity<ActivityContactBinding> {
         // do what you want
         this.setTitle("Relate");
         contacts = ContactUtils.getAllContacts(this, this.getApplicationContext());
-//        contacts = getData();
-        initializeViews();
+        Intent intent = getIntent();
+        String type = intent.getStringExtra("type");
+        initializeViews(type);
     }
 
     List<Relate> getData() {
@@ -77,8 +79,9 @@ public class ContactActivity extends NoteBaseActivity<ActivityContactBinding> {
         return data;
     }
 
-    private void initializeViews() {
-        contactAdapter = new ContactAdapter(this, contacts, findViewById(R.id.selectedContact));
+    private void initializeViews(String type) {
+        int limit = type.equals("spendingList") ? 99999 : 1;
+        contactAdapter = new ContactAdapter(this, contacts, findViewById(R.id.selectedContact), limit);
         binding.contactList.setAdapter(contactAdapter);
         binding.contactList.setLayoutManager(new LinearLayoutManager(this));
     }

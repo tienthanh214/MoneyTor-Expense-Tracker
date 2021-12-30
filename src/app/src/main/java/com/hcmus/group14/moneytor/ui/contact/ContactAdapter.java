@@ -3,6 +3,7 @@ package com.hcmus.group14.moneytor.ui.contact;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,18 +31,20 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     private List<String> selectedString;
     private Context context;
     private TextView selectedTextView;
+    private int limitSelect;
 
     public List<Relate> getSelectedContacts(){
         return this.selectedContacts;
     }
 
-    public ContactAdapter(Context context, List<Relate> contactsList, TextView selectedData) {
+    public ContactAdapter(Context context, List<Relate> contactsList, TextView selectedData,int limit) {
         selectedTextView = selectedData;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.contacts = contactsList;
         this.selectedContacts = new ArrayList<Relate>();
         this.selectedString = new ArrayList<String>();
+        this.limitSelect = limit;
     }
 
     @NonNull
@@ -112,9 +115,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
                 selectedString.remove(currentName);
                 toggleDoneIcon(false);
             } else {
-                selectedContacts.add(currentContact);
-                selectedString.add(currentName);
-                toggleDoneIcon(true);
+                if(selectedString.size()<limitSelect) {
+                    selectedContacts.add(currentContact);
+                    selectedString.add(currentName);
+                    toggleDoneIcon(true);
+                }
             }
             selectedTextView.setText(String.join(", ", selectedString));
         }
