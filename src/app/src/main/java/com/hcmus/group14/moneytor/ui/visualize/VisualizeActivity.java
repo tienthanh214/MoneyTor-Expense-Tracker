@@ -147,20 +147,23 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         legend.setOrientation(Legend.LegendOrientation.VERTICAL);
-        float textSize = (int) spToPx(3, VisualizeActivity.this);
-        legend.setTextSize(textSize);
         legend.setDrawInside(false);
 
         pieChart.setEntryLabelColor(Color.WHITE);
     }
 
     private void customLegend(Legend legend) {
+        float height = pieChart.getHeight();
+        float size = height / (5 * 13);
+        Log.i("@@@ height", String.valueOf(height));
+        Log.i("@@@ size", String.valueOf(size));
         LegendEntry[] legendEntries = new LegendEntry[pieLabels.size()];
         for (int i = 0; i < pieLabels.size(); i++) {
             legendEntries[i] = new LegendEntry(pieLabels.get(i).getName(), Legend.LegendForm.CIRCLE,
-                    10f, 2f, null, pieLabels.get(i).getColor());
+                    size, 2f, null, pieLabels.get(i).getColor());
         }
         legend.setCustom(legendEntries);
+        legend.setTextSize(size);
     }
 
     private void setPieChartData() {
