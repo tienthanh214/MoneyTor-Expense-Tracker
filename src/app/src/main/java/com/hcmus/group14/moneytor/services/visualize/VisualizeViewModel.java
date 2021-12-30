@@ -216,7 +216,7 @@ public class VisualizeViewModel extends AndroidViewModel {
                 spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,5);
         else    //xx/yy/zzzz - xx/yy/zzzz
             for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
-                spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,5) +
+                spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,5) + " - " +
                                             spendingPeriodInfo.period.substring(13, 18);
         return returnResult;
     }
