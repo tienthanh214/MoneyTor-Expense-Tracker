@@ -179,13 +179,13 @@ public class VisualizeViewModel extends AndroidViewModel {
             case FILTER_MONTHLY:
                 intervals = 5;
                 intervalDuration = 6l * (24l * 60l * 60l * 1000l);
-                beginning = "01" + today.substring(3);
+                beginning = "01" + today.substring(2);
                 lowerCap = DateTimeUtils.getDateInMillis(beginning);
                 break;
             case FILTER_ANNUALLY:
                 intervals = 12;
                 intervalDuration = 30l * (24l * 60l * 60l * 1000l);
-                beginning = "01/01" + today.substring(6);
+                beginning = "01/01" + today.substring(5);
                 lowerCap = DateTimeUtils.getDateInMillis(beginning);
                 break;
             default:
