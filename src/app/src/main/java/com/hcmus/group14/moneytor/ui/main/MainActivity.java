@@ -77,13 +77,18 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void onOpenSetting(View view) {
+    private void onOpenSetting() {
         Intent settingIntent = new Intent(this, SettingsActivity.class);
         startActivity(settingIntent);
     }
 
     public void onOpenVisualize(View view) {
         Intent intent = new Intent(this, VisualizeActivity.class);
+        startActivity(intent);
+    }
+
+    public void onOpenSetting(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
@@ -97,8 +102,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.actionSetting) {
-            Button buttonSetting = (Button) findViewById(R.id.buttonSetting);
-            onOpenSetting(buttonSetting);
+            onOpenSetting();
             return true;
         }
         return super.onOptionsItemSelected(item);

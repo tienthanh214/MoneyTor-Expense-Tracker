@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="40dp"
+            android:paddingVertical="40dp"
             android:layout_centerHorizontal="true">
 
             <TextView
@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/list_item_background"
             android:layout_centerInParent="true"
+            android:visibility="invisible"
             android:orientation="vertical">
 
             <TextView
@@ -79,7 +80,6 @@
                 android:paddingVertical="@dimen/text_padding_vertical" />
 
         </LinearLayout>
-
 
     </RelativeLayout>
 </layout>

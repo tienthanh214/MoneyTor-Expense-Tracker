@@ -70,15 +70,12 @@ public class ReminderActivity extends NoteBaseActivity<ActivityReminderBinding> 
     private void setReminderSwitchChecked() {
         reminderSwitch = binding.reminderSwitch;
         reminderSwitch.setOnCheckedChangeListener((c, value) -> {
-            boolean preValue = PreferenceUtils.getBoolean(ReminderActivity.this,
-                    "reminder", false);
-            if (value && !preValue) {
-                LinearLayout setReminderTime = binding.setReminderTime;
+            LinearLayout setReminderTime = binding.setReminderTime;
+            if (value == false) {
                 setReminderTime.setVisibility(View.INVISIBLE);
             } else {
-                // dump
+                setReminderTime.setVisibility(View.VISIBLE);
             }
-            PreferenceUtils.putBoolean(ReminderActivity.this, "reminder", value);
         });
     }
 }
