@@ -160,10 +160,12 @@ public class VisualizeViewModel extends AndroidViewModel {
     {
         ArrayList<SpendingPeriodInfo> returnResult = new ArrayList<>();
 
-        long now =
-                DateTimeUtils.getDateInMillis(
-                        DateTimeUtils.getDate(DateTimeUtils.getCurrentTimeMillis()));
-        long upperLimit = now, lowerLimit;
+        String today = DateTimeUtils.getDate(DateTimeUtils.getCurrentTimeMillis());
+
+        //limit = for intervals, cap = for the whole time period
+        long upperLimit = DateTimeUtils.getDateInMillis(today),
+                lowerLimit, upperCap = upperLimit, lowerCap;
+        String beginning;
 
         int intervals = 0;
         long intervalDuration = 0l;
@@ -172,14 +174,19 @@ public class VisualizeViewModel extends AndroidViewModel {
             case FILTER_WEEKLY:
                 intervals = 7;
                 intervalDuration = 24l * 60l * 60l * 1000l;
+                lowerCap = upperCap - (long)intervals * intervalDuration;
                 break;
             case FILTER_MONTHLY:
                 intervals = 5;
                 intervalDuration = 6l * (24l * 60l * 60l * 1000l);
+                beginning = "01" + today.substring(3);
+                lowerCap = DateTimeUtils.getDateInMillis(beginning);
                 break;
             case FILTER_ANNUALLY:
                 intervals = 12;
                 intervalDuration = 30l * (24l * 60l * 60l * 1000l);
+                beginning = "01/01" + today.substring(6);
+                lowerCap = DateTimeUtils.getDateInMillis(beginning);
                 break;
             default:
                 return null;
@@ -188,6 +195,7 @@ public class VisualizeViewModel extends AndroidViewModel {
         {
             long cost = 0l;
             lowerLimit = upperLimit - intervalDuration;
+            if (lowerLimit < lowerCap) lowerLimit = lowerCap;
             String lowerDate = DateTimeUtils.getDate(lowerLimit);
             String upperDate = DateTimeUtils.getDate(upperLimit);
             for (Spending spending: spendings)
@@ -198,13 +206,14 @@ public class VisualizeViewModel extends AndroidViewModel {
             }
             returnResult.add(
                     new SpendingPeriodInfo(
-                            lowerDate + " - " + upperDate, cost));
+                            lowerDate.substring(0,5) + " - " + upperDate.substring(0,5), cost));
             upperLimit = lowerLimit;
+            if (upperLimit <= lowerCap) break;
         }
         returnResult.sort(spendingPeriodInfoComparator);
         if (filterType == FILTER_WEEKLY)
             for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
-                spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,2);
+                spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,5);
 
         return returnResult;
     }
