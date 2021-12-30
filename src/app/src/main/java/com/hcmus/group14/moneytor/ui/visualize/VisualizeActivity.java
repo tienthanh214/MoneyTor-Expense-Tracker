@@ -130,12 +130,9 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         pieChart.getDescription().setEnabled(false);
         pieChart.setExtraRightOffset(40f);
 
-        pieChart.setDrawHoleEnabled(true);
         pieChart.setDrawEntryLabels(true);
-        pieChart.setHoleColor(ContextCompat.getColor(this, R.color.dark_sea_green));
         pieChart.setHoleRadius(45f);
         pieChart.setTransparentCircleRadius(45f);
-        pieChart.setDrawCenterText(true);
         pieChart.setRotationEnabled(false);
         pieChart.setHighlightPerTapEnabled(true);
 
@@ -143,7 +140,6 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         legend.setOrientation(Legend.LegendOrientation.VERTICAL);
-        legend.setTextSize(8f);
         legend.setDrawInside(false);
 
         pieChart.setEntryLabelColor(Color.WHITE);
