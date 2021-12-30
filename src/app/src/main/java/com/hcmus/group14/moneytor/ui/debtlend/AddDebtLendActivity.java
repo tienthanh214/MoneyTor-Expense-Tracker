@@ -78,6 +78,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
     public void onClick(View view) {
         Intent intent = new Intent(this, ContactActivity.class);
         // TODO: add option to choose only one contact
+        intent.putExtra("type","debtLend");
         startActivityForResult(intent, REQUEST_CODE_RELATE_CONTACT);
     }
 
