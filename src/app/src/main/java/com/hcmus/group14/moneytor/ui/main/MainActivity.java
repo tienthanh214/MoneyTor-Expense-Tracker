@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,11 +28,12 @@ import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.UserPref;
 import com.hcmus.group14.moneytor.firebase.FirebaseHelper;
 import com.hcmus.group14.moneytor.ui.analysis.AnalysisActivity;
-import com.hcmus.group14.moneytor.ui.visualize.VisualizeActivity;
 import com.hcmus.group14.moneytor.ui.debtlend.DebtLendActivity;
 import com.hcmus.group14.moneytor.ui.goal.GoalActivity;
 import com.hcmus.group14.moneytor.ui.setting.SettingsActivity;
 import com.hcmus.group14.moneytor.ui.spending.SpendingActivity;
+import com.hcmus.group14.moneytor.ui.visualize.VisualizeActivity;
+import com.hcmus.group14.moneytor.utils.LanguageUtils;
 import com.hcmus.group14.moneytor.utils.PreferenceUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 synchronizeData(user);
             }
         }
+        applyUserPref();
     }
 
     public void onOpenSpendingList(View view) {
@@ -153,6 +156,16 @@ public class MainActivity extends AppCompatActivity {
                 } else Log.d(TAG, "No such document");
             } else Log.d(TAG, "Get failed with ", task.getException());
         });
+    }
+
+    private void applyUserPref() {
+        // Apply dark mode setting
+        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(
+                PreferenceUtils.getString(this,
+                        UserPref.USER_DARK_MODE, "-1")));
+        // Apply language setting
+        LanguageUtils.setLocale(this, PreferenceUtils.getString(this,
+                "user_language", "en"));
     }
 
     private void uploadUserPref(FirebaseUser user) {
