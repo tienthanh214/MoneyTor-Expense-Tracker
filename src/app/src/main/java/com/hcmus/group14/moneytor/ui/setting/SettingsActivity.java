@@ -241,8 +241,12 @@ public class SettingsActivity extends AppCompatActivity {
                 UserPref.USER_DARK_MODE, "-1");
         int reminderInterval = PreferenceUtils.getInt(this,
                 UserPref.USER_REMINDER_INTERVAL, 1);
+        boolean widget = PreferenceUtils.getBoolean(this,
+                UserPref.USER_WIDGET, false);
+        int reminder = PreferenceUtils.getInt(this,
+                UserPref.USER_REMINDER, 1);
         UserPref userPref = new UserPref(name, user.getUid(), user.getEmail(), language, darkMode
-                , reminderInterval);
+                , reminderInterval, widget, reminder);
         FirebaseHelper.putUser(user, userPref);
     }
 

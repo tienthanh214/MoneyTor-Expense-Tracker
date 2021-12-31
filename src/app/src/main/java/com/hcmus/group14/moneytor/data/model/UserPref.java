@@ -21,18 +21,22 @@ public class UserPref {
     private String language;
     private String darkMode;
     private int reminderInterval;
+    private boolean widget;
+    private int reminder;
 
     public UserPref() {
     }
 
     public UserPref(String name, String id, String email, String language, String darkMode,
-                    int reminderInterval) {
+                    int reminderInterval, boolean widget, int reminder) {
         this.name = name;
         this.id = id;
         this.email = email;
         this.language = language;
         this.darkMode = darkMode;
         this.reminderInterval = reminderInterval;
+        this.widget = widget;
+        this.reminder = reminder;
     }
 
     public static void saveToSharedPref(Context context, UserPref userPref) {
@@ -41,7 +45,10 @@ public class UserPref {
         PreferenceUtils.putString(context, USER_EMAIL, userPref.email);
         PreferenceUtils.putString(context, USER_LANGUAGE, userPref.language);
         PreferenceUtils.putString(context, USER_DARK_MODE, userPref.darkMode);
+        // TODO: check if reminder interval is needed
         PreferenceUtils.putInt(context, USER_REMINDER_INTERVAL, userPref.reminderInterval);
+        PreferenceUtils.putBoolean(context, USER_WIDGET, userPref.widget);
+        PreferenceUtils.putInt(context, USER_REMINDER, userPref.reminder);
     }
 
     public String getName() {
@@ -90,5 +97,21 @@ public class UserPref {
 
     public void setReminderInterval(int reminderInterval) {
         this.reminderInterval = reminderInterval;
+    }
+
+    public boolean isWidget() {
+        return widget;
+    }
+
+    public void setWidget(boolean widget) {
+        this.widget = widget;
+    }
+
+    public int getReminder() {
+        return reminder;
+    }
+
+    public void setReminder(int reminder) {
+        this.reminder = reminder;
     }
 }
