@@ -68,22 +68,6 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
         });
     }
 
-    List<SpendGoal> getData() {
-        List<SpendGoal> data = new ArrayList<>();
-        data.add(new SpendGoal(Category.MAKEUP.getId(), 100000,1639586109000L,"This is a description"));
-        data.add(new SpendGoal(Category.EDUCATION.getId(),100000,1639586109000L,"This is a description"));
-        data.add(new SpendGoal(Category.TRAFFIC.getId(),100000,1639586109000L,"This is a description"));
-        data.add(new SpendGoal(Category.FOOD_AND_DRINK.getId(),100000,1639586109000L,"This is a description"));
-        data.add(new SpendGoal(Category.FITNESS.getId(),100000,1639586109000L,"This is a description"));
-        data.add(new SpendGoal(Category.BILLS.getId(),100000,1639586109000L,"This is a description"));
-        data.add(new SpendGoal(Category.APPLIANCES.getId(),100000,1639586109000L,"This is a description"));
-        data.add(new SpendGoal(Category.ENTERTAINMENT.getId(),100000,1639586109000L,"This is a description"));
-        data.add(new SpendGoal(Category.MAKEUP.getId(),100000,1639586109000L,"This is a description"));
-        data.add(new SpendGoal(Category.HEALTH.getId(),100000,1639586109000L,"This is a description"));
-        data.add(new SpendGoal(Category.OTHERS.getId(),100000,1639586109000L,"This is a description"));
-        return data;
-    }
-
     private void initializeViews() {
         goalAdapter = new GoalAdapter(this, spendGoals);
         binding.spendingGoalList.setAdapter(goalAdapter);
