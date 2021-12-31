@@ -17,7 +17,7 @@
         <LinearLayout
             android:id="@+id/frame1"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_marginVertical="@dimen/margin_top_card"
@@ -38,13 +38,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/pie_chart"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginHorizontal="@dimen/margin_left_card"/>
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/text_padding_horizontal"
+                    android:paddingVertical="@dimen/text_padding_vertical">
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pie_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginRight="10dp"/>
+
+                    <GridView
+                        android:id="@+id/pie_chart_labels"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:nestedScrollingEnabled="true" />
+
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
@@ -52,7 +68,7 @@
 
         <LinearLayout
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_marginVertical="@dimen/margin_top_card"
