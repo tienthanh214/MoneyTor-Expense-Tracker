@@ -117,8 +117,8 @@ public class FirebaseHelper {
                 });
     }
 
-    public static <T> void getDocuments(FirebaseUser user, String collection, Class<T> type,
-                                        OnCompleteListener<QuerySnapshot> onCompleteListener) {
+    public static <T> void getCollection(FirebaseUser user, String collection, Class<T> type,
+                                         OnCompleteListener<QuerySnapshot> onCompleteListener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(COLLECTION_USERS).document(user.getUid())
                 .collection(collection)
@@ -126,8 +126,8 @@ public class FirebaseHelper {
                 .addOnCompleteListener(onCompleteListener);
     }
 
-    public static <T> void putDocuments(FirebaseUser user, String collection, ArrayList<T> objects,
-                                        OnCompleteListener<Void> onCompleteListener) {
+    public static <T> void putCollection(FirebaseUser user, String collection, ArrayList<T> objects,
+                                         OnCompleteListener<Void> onCompleteListener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collectionRef = db.collection(COLLECTION_USERS).document(user.getUid())
                 .collection(collection);
@@ -137,6 +137,10 @@ public class FirebaseHelper {
             batch.set(documentRef, object);
         }
         batch.commit().addOnCompleteListener(onCompleteListener);
+    }
+
+    public static <T> void deleteCollection(FirebaseUser user, String collection){
+
     }
 
 //    public static void uploadData(FirebaseUser user) {

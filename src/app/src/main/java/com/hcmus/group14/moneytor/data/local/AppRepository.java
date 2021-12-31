@@ -260,35 +260,35 @@ public class AppRepository {
                 (ArrayList<DebtLend>) debtLendDao.getAllDebtLendsNoLiveData();
 
 
-        FirebaseHelper.putDocuments(user, FirebaseHelper.COLLECTION_DEBTLEND, debtLends, task -> {
+        FirebaseHelper.putCollection(user, FirebaseHelper.COLLECTION_DEBTLEND, debtLends, task -> {
             if (task.isSuccessful()) Log.d(FirebaseHelper.TAG, "DebtLend successfully uploaded");
             else Log.w(FirebaseHelper.TAG, "Error uploading DebtLend");
         });
 
         ArrayList<Relate> relates = (ArrayList<Relate>) relateDao.getAllRelatesNoLiveData();
 
-        FirebaseHelper.putDocuments(user, FirebaseHelper.COLLECTION_RELATE, relates, task -> {
+        FirebaseHelper.putCollection(user, FirebaseHelper.COLLECTION_RELATE, relates, task -> {
             if (task.isSuccessful()) Log.d(FirebaseHelper.TAG, "Relate successfully uploaded");
             else Log.w(FirebaseHelper.TAG, "Error uploading Relate");
         });
 
         ArrayList<SpendGoal> spendGoals = (ArrayList<SpendGoal>) spendGoalDao.getAllSpendGoalsNoLiveData();
 
-        FirebaseHelper.putDocuments(user, FirebaseHelper.COLLECTION_SPENDGOAL, spendGoals, task -> {
+        FirebaseHelper.putCollection(user, FirebaseHelper.COLLECTION_SPENDGOAL, spendGoals, task -> {
             if (task.isSuccessful()) Log.d(FirebaseHelper.TAG, "SpendGoal successfully uploaded");
             else Log.w(FirebaseHelper.TAG, "Error uploading SpendGoal");
         });
 
         ArrayList<Spending> spendings = (ArrayList<Spending>) spendingDao.getAllSpendingsNoLiveData();
 
-        FirebaseHelper.putDocuments(user, FirebaseHelper.COLLECTION_SPENDING, spendings, task -> {
+        FirebaseHelper.putCollection(user, FirebaseHelper.COLLECTION_SPENDING, spendings, task -> {
             if (task.isSuccessful()) Log.d(FirebaseHelper.TAG, "Spending successfully uploaded");
             else Log.w(FirebaseHelper.TAG, "Error uploading Spending");
         });
 
         ArrayList<Wallet> wallets = (ArrayList<Wallet>) walletDao.getAllWalletsNoLiveData();
 
-        FirebaseHelper.putDocuments(user, FirebaseHelper.COLLECTION_WALLET, wallets, task -> {
+        FirebaseHelper.putCollection(user, FirebaseHelper.COLLECTION_WALLET, wallets, task -> {
             if (task.isSuccessful()) Log.d(FirebaseHelper.TAG, "Wallet successfully uploaded");
             else Log.w(FirebaseHelper.TAG, "Error uploading Wallet");
         });
@@ -296,7 +296,7 @@ public class AppRepository {
 
     public void downloadData(FirebaseUser user) {
 
-        FirebaseHelper.getDocuments(user, FirebaseHelper.COLLECTION_DEBTLEND, DebtLend.class, task -> {
+        FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_DEBTLEND, DebtLend.class, task -> {
             if (task.isSuccessful())
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     DebtLend debtLend = document.toObject(DebtLend.class);
@@ -305,7 +305,7 @@ public class AppRepository {
             else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
         });
 
-        FirebaseHelper.getDocuments(user, FirebaseHelper.COLLECTION_RELATE, Relate.class, task -> {
+        FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_RELATE, Relate.class, task -> {
             if (task.isSuccessful())
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Relate relate = document.toObject(Relate.class);
@@ -314,7 +314,7 @@ public class AppRepository {
             else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
         });
 
-        FirebaseHelper.getDocuments(user, FirebaseHelper.COLLECTION_SPENDGOAL, SpendGoal.class, task -> {
+        FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_SPENDGOAL, SpendGoal.class, task -> {
             if (task.isSuccessful())
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     SpendGoal spendGoal = document.toObject(SpendGoal.class);
@@ -323,7 +323,7 @@ public class AppRepository {
             else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
         });
 
-        FirebaseHelper.getDocuments(user, FirebaseHelper.COLLECTION_SPENDING, Spending.class, task -> {
+        FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_SPENDING, Spending.class, task -> {
             if (task.isSuccessful())
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Spending spending = document.toObject(Spending.class);
@@ -332,7 +332,7 @@ public class AppRepository {
             else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
         });
 
-        FirebaseHelper.getDocuments(user, FirebaseHelper.COLLECTION_WALLET, Wallet.class, task -> {
+        FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_WALLET, Wallet.class, task -> {
             if (task.isSuccessful())
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Wallet wallet = document.toObject(Wallet.class);
