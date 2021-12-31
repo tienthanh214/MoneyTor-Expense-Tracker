@@ -343,6 +343,7 @@ public class AppRepository {
     }
 
     public void downloadData(FirebaseUser user) {
+        deleteAllData();
 
         FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_DEBTLEND, DebtLend.class,
                 task -> {
