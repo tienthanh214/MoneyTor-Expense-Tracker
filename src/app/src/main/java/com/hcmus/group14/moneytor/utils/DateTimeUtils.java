@@ -45,4 +45,10 @@ public class DateTimeUtils {
             return getCurrentTimeMillis();
         }
     }
+    public static String changeFormatToJapanese(String date)
+    {
+        assert date.matches("^[0-9]{2}\\/[0-9]{2}\\/[0-9]{4}$"); //Must match the exact format of dd/MM/yyyy
+        String[] split = date.split("\\/");
+        return split[2] + "年" + split[1] + "月" + split[0] + "日"; //ex: 31/12/2021 ->　2021年12月31日
+    }
 }
