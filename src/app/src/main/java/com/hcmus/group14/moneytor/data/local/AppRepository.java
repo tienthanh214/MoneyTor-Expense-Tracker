@@ -119,6 +119,10 @@ public class AppRepository {
         });
     }
 
+    private void insertSpendingRelateCrossRef(SpendingRelateCrossRef crossRef) {
+        spendingDao.insertSpendingRelateCrossRef(crossRef);
+    }
+
     // -------------- wallet --------------
     public LiveData<List<Wallet>> getAllWallets() {
         return allWallets;
@@ -253,6 +257,14 @@ public class AppRepository {
         else  // if only cats valid
             return debtLendDao.filterByCategories(cats);
     }
+    // delete
+    private void deleteAllData() {
+        spendingDao.deleteAllSpendingWithRelate();
+        debtLendDao.deleteAllDebtLends();
+        walletDao.deleteAllWallets();
+        spendGoalDao.deleteAllSpendGoals();
+        relateDao.deleteAllRelates();
+    }
     //----------------FireBase interaction services--------------------
 
     public void uploadData(FirebaseUser user) {
@@ -292,6 +304,11 @@ public class AppRepository {
             if (task.isSuccessful()) Log.d(FirebaseHelper.TAG, "Wallet successfully uploaded");
             else Log.w(FirebaseHelper.TAG, "Error uploading Wallet");
         });
+
+        // many to many relationship between relate and spending
+        ArrayList<SpendingRelateCrossRef> crossRefs = (ArrayList<SpendingRelateCrossRef>) spendingDao.getAllSpendingRelateCrossRef();
+
+        // TODO upload all relation spending - relate
     }
 
     public void downloadData(FirebaseUser user) {
@@ -340,5 +357,7 @@ public class AppRepository {
                 }
             else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
         });
+
+        // TODO: insert all relate - spending here (use insertSpendingRelateCrossRef(xyz))
     }
 }
