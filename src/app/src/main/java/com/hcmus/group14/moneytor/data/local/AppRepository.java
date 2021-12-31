@@ -333,7 +333,7 @@ public class AppRepository {
                 });
 
         ArrayList<SpendingRelateCrossRef> spendingRelateCrossRefs =
-                (ArrayList<SpendingRelateCrossRef>) spendingRelateCrossRefDao.getall;
+                (ArrayList<SpendingRelateCrossRef>) spendingDao.getAllSpendingRelateCrossRef();
         FirebaseHelper.putCollection(user, FirebaseHelper.COLLECTION_SPENDING_RELATE_CROSS_REF,
                 spendingRelateCrossRefs, task -> {
                     if (task.isSuccessful())
@@ -386,7 +386,7 @@ public class AppRepository {
                         Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
                 });
 
-        FirebaseHelper.getDocuments(user, FirebaseHelper.COLLECTION_WALLET, Wallet.class, task -> {
+        FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_WALLET, Wallet.class, task -> {
             if (task.isSuccessful())
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Wallet wallet = document.toObject(Wallet.class);
