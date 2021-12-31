@@ -8,6 +8,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.hcmus.group14.moneytor.data.model.UserPref;
@@ -132,15 +133,20 @@ public class FirebaseHelper {
         CollectionReference collectionRef = db.collection(COLLECTION_USERS).document(user.getUid())
                 .collection(collection);
         WriteBatch batch = db.batch();
-        for (T object : objects) {
-            DocumentReference documentRef = collectionRef.document();
-            batch.set(documentRef, object);
-        }
-        batch.commit().addOnCompleteListener(onCompleteListener);
-    }
-
-    public static <T> void deleteCollection(FirebaseUser user, String collection){
-
+        collectionRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // Clear collection before upload
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    batch.delete(document.getReference());
+                }
+                // Upload new objects
+                for (T object : objects) {
+                    DocumentReference documentRef = collectionRef.document();
+                    batch.set(documentRef, object);
+                }
+                batch.commit().addOnCompleteListener(onCompleteListener);
+            } else Log.d(TAG, "Error getting documents: ", task.getException());
+        });
     }
 
 //    public static void uploadData(FirebaseUser user) {
