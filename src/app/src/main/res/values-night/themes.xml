@@ -28,4 +28,7 @@
     <style name="Theme.Moneytor.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Moneytor.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="filter_select_theme" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/filter_select_wrapper_background</item>
+    </style>
 </resources>

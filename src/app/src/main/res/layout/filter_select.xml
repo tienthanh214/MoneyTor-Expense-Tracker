@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="15dp"
+    >
+
+    <TextView
+        android:id="@+id/mainTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Filter"
+        android:textColor="@color/orange_soda"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/secondTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="CATEGORY"
+        android:textColor="@color/jonquill" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/filter_select_item_background"
+        android:padding="15dp"
+        android:text="Tap to select categories"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:id="@+id/categoriesSelect"/>
+
+    <TextView
+        android:id="@id/secondTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="TIME PERIOD"
+        android:textColor="@color/jonquill" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/filter_select_item_background"
+        android:padding="15dp"
+        android:text="Tap to select period"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:id="@+id/periodSelect"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cancel_filter_btn_background"
+            android:text="Cancel"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/white"
+            android:id="@+id/cancelBtn"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/confirm_filter_btn_background"
+            android:text="Confirm"
+            android:id="@+id/confirmBtn"/>
+    </LinearLayout>
+</LinearLayout>
