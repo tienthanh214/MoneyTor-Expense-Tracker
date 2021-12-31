@@ -64,7 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        // Show profile picture and name
+        // TODO: Show profile picture and name
         prepareView();
         setPreferenceListener();
         displayUserInfo();
@@ -102,6 +102,7 @@ public class SettingsActivity extends AppCompatActivity {
         sharedPreferenceChangeListener = (sharedPreferences1, key) -> {
             switch (key) {
                 case UserPref.USER_NAME:
+                    // TODO: apply all setting
                     // TODO: sync change to firestore
                     viewModel.setUsername(
                             PreferenceUtils.getString(this,
@@ -221,15 +222,15 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void applyUserPref() {
-        // Apply dark mode setting
-        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(
-                PreferenceUtils.getString(this,
-                        UserPref.USER_DARK_MODE, "-1")));
-        // Apply language setting
-        LanguageUtils.setLocale(this, PreferenceUtils.getString(this,
-                "user_language", "en"));
-    }
+//    private void applyUserPref() {
+//        // Apply dark mode setting
+//        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(
+//                PreferenceUtils.getString(this,
+//                        UserPref.USER_DARK_MODE, "-1")));
+//        // Apply language setting
+//        LanguageUtils.setLocale(this, PreferenceUtils.getString(this,
+//                "user_language", "en"));
+//    }
 
     private void uploadUserPref(FirebaseUser user) {
         // Update user name
@@ -241,8 +242,12 @@ public class SettingsActivity extends AppCompatActivity {
                 UserPref.USER_DARK_MODE, "-1");
         int reminderInterval = PreferenceUtils.getInt(this,
                 UserPref.USER_REMINDER_INTERVAL, 1);
+        boolean widget = PreferenceUtils.getBoolean(this,
+                UserPref.USER_WIDGET, false);
+        int reminder = PreferenceUtils.getInt(this,
+                UserPref.USER_REMINDER, 1);
         UserPref userPref = new UserPref(name, user.getUid(), user.getEmail(), language, darkMode
-                , reminderInterval);
+                , reminderInterval, widget, reminder);
         FirebaseHelper.putUser(user, userPref);
     }
 
