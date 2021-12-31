@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.hcmus.group14.moneytor.data.local.AppViewModel;
 import com.hcmus.group14.moneytor.data.model.Reminder;
 import com.hcmus.group14.moneytor.data.model.UserPref;
+import com.hcmus.group14.moneytor.utils.NotificationUtils;
 import com.hcmus.group14.moneytor.utils.PreferenceUtils;
 
 import java.util.List;
@@ -22,10 +23,11 @@ public class ReminderViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> reminderStatus;
     private int hour;
     private int minutes;
+    final private int time;
 
     public ReminderViewModel(@NonNull Application application) {
         super(application);
-        int time = PreferenceUtils.getInt(
+        time = PreferenceUtils.getInt(
                 application.getApplicationContext(),
                 UserPref.USER_REMINDER,
                 -1);
@@ -42,6 +44,10 @@ public class ReminderViewModel extends AndroidViewModel {
 
     public MutableLiveData<Boolean> getReminderStatus() {
         return reminderStatus;
+    }
+
+    public boolean hasAccept() {
+        return time >= 0;
     }
 
     public int getHour() {
@@ -64,6 +70,16 @@ public class ReminderViewModel extends AndroidViewModel {
         PreferenceUtils.putInt(context,
                 UserPref.USER_REMINDER,
                 hour * 60 + minutes);
+        if (hasAccept())
+            NotificationUtils.cancelNoteReminder(context);
+        NotificationUtils.scheduleNoteReminder(context, hour, minutes, 1);
+    }
+
+    public void dismissReminder(Context context) {
+        PreferenceUtils.putInt(context,
+                UserPref.USER_REMINDER,
+                -1);
+        NotificationUtils.cancelNoteReminder(context);
     }
 
 }
