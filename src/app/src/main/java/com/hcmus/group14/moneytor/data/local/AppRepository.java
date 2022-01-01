@@ -131,7 +131,9 @@ public class AppRepository {
     }
 
     private void insertSpendingRelateCrossRef(SpendingRelateCrossRef crossRef) {
-        spendingDao.insertSpendingRelateCrossRef(crossRef);
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            spendingDao.insertSpendingRelateCrossRef(crossRef);
+        });
     }
 
     // -------------- wallet --------------
@@ -278,6 +280,7 @@ public class AppRepository {
         else  // if only cats valid
             return debtLendDao.filterByCategories(cats);
     }
+
     // delete
     private void deleteAllData() {
         spendingDao.deleteAllSpendingWithRelate();
@@ -356,14 +359,16 @@ public class AppRepository {
                         Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
                 });
 
-        FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_RELATE, Relate.class, task -> {
-            if (task.isSuccessful())
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    Relate relate = document.toObject(Relate.class);
-                    insertRelate(relate);
-                }
-            else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
-        });
+        FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_RELATE, Relate.class,
+                task -> {
+                    if (task.isSuccessful())
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Relate relate = document.toObject(Relate.class);
+                            insertRelate(relate);
+                        }
+                    else
+                        Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
+                });
 
         FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_SPENDGOAL, SpendGoal.class,
                 task -> {
@@ -387,15 +392,27 @@ public class AppRepository {
                         Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
                 });
 
-        FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_WALLET, Wallet.class, task -> {
-            if (task.isSuccessful())
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    Wallet wallet = document.toObject(Wallet.class);
-                    insertWallet(wallet);
-                }
-            else Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
-        });
+        FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_WALLET, Wallet.class,
+                task -> {
+                    if (task.isSuccessful())
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Wallet wallet = document.toObject(Wallet.class);
+                            insertWallet(wallet);
+                        }
+                    else
+                        Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
+                });
 
-        // TODO: insert all relate - spending here (use insertSpendingRelateCrossRef(xyz))
+        FirebaseHelper.getCollection(user, FirebaseHelper.COLLECTION_SPENDING_RELATE_CROSS_REF,
+                SpendingRelateCrossRef.class, task -> {
+                    if (task.isSuccessful())
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            SpendingRelateCrossRef spendingRelateCrossRef =
+                                    document.toObject(SpendingRelateCrossRef.class);
+                            insertSpendingRelateCrossRef(spendingRelateCrossRef);
+                        }
+                    else
+                        Log.d(FirebaseHelper.TAG, "Error getting documents: ", task.getException());
+                });
     }
 }
