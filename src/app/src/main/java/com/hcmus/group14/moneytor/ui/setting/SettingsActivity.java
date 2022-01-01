@@ -138,17 +138,17 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void displayUserInfo() {
         // Set user profile photo
-        Uri photoUri = Uri.parse(PreferenceUtils.getString(this,
+        Uri defaultPhotoUri = Uri.parse(PreferenceUtils.getString(this,
                 UserPref.USER_PHOTO,
                 String.format("android.resource://com.hcmus.group14.moneytor/%d",
                         R.drawable.account_circle_fill)));
-        ivPhoto.setImageURI(photoUri);
         if (user != null) {
-            photoUri = user.getPhotoUrl();
-            if (photoUri != null) {
-                Glide.with(this).load(photoUri.toString()).into(ivPhoto);
-            }
-        }
+            Uri photoUri = user.getPhotoUrl();
+            if (photoUri != null) Glide.with(this).load(photoUri.toString()).into(ivPhoto);
+            else ivPhoto.setImageURI(defaultPhotoUri);
+        } else
+            ivPhoto.setImageURI(defaultPhotoUri);
+
         // Login or logout
         if (!viewModel.isLoggedIn()) {
             binding.btnLogout.setText("Log in");
