@@ -36,7 +36,6 @@
 
     <string name="bundle_goal_obj">bundleAlarmObj</string>
     <string name="arg_goal_obj">ArgAlarmObj</string>
-    <string name="reminder_message">Creating habits is the key to financial success. We are here to remind you to take track down your spending regularly.</string>
     <string name="reminder_title">MoneyTor Reminder</string>
     <string name="title_activity_settings">Settings</string>
 
@@ -62,4 +61,5 @@
     <string name="toolbar_title_goal">Spending goal</string>
     <string name="toolbar_goal_spending">List spending</string>
     <string name="toolbar_title_visualize">Visualize</string>
+    <string name="reminder_message">Creating habits is the key to financial success. We are here to remind you to take track down your spendings regularly.</string>
 </resources>
