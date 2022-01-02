@@ -10,9 +10,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.databinding.ActivityReminderBinding;
@@ -27,8 +31,7 @@ public class ReminderActivity extends NoteBaseActivity<ActivityReminderBinding> 
     private ActivityReminderBinding binding;
     private ReminderViewModel viewModel;
     private Button saveButton;
-    private SwitchCompat reminderSwitch;
-    private LinearLayout setReminderTime;
+    private boolean hasTurnOnReminder = false;
 
     @Override
     public int getLayoutId() {
@@ -50,26 +53,26 @@ public class ReminderActivity extends NoteBaseActivity<ActivityReminderBinding> 
 
     private void setOnClickSaveButton() {
         saveButton = binding.buttonSaveReminderTime;
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: call save reminder time from VM
-
-                Toast.makeText(getApplicationContext(), "Set reminder successfully!",
-                        Toast.LENGTH_SHORT).show();
-                ReminderActivity.this.finish();
-            }
+        saveButton.setOnClickListener(view -> {
+            // TODO: call save reminder time from VM
+            viewModel.saveReminder(ReminderActivity.this);
+            Toast.makeText(getApplicationContext(), "Set reminder successfully!",
+                    Toast.LENGTH_SHORT).show();
+            ReminderActivity.this.finish();
         });
     }
 
     private void setReminderSwitchChecked() {
-        reminderSwitch = binding.reminderSwitch;
-        reminderSwitch.setOnCheckedChangeListener((c, value) -> {
-            setReminderTime = binding.setReminderTime;
-            if (value == false) {
-                setReminderTime.setVisibility(View.INVISIBLE);
+        viewModel.getReminderStatus().observe(this, aBoolean -> {
+            if (!aBoolean) {
+                binding.setReminderTime.setVisibility(View.INVISIBLE);
+                viewModel.dismissReminder(ReminderActivity.this);
             } else {
-                openDialog();
+                if (!hasTurnOnReminder && !viewModel.hasAccept()) {
+                    openDialog();
+                } else {
+                    binding.setReminderTime.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -84,7 +87,8 @@ public class ReminderActivity extends NoteBaseActivity<ActivityReminderBinding> 
         builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                setReminderTime.setVisibility(View.VISIBLE);
+                binding.setReminderTime.setVisibility(View.VISIBLE);
+                hasTurnOnReminder = true;
             }
         });
 
@@ -92,7 +96,7 @@ public class ReminderActivity extends NoteBaseActivity<ActivityReminderBinding> 
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-                reminderSwitch.setChecked(false);
+                binding.reminderSwitch.setChecked(false);
             }
         });
 

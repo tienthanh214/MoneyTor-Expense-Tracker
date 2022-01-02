@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -21,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageView ivPhoto;
     private SettingViewModel viewModel;
     private ActivitySettingsBinding binding;
-    private TextView reminderSetting;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -64,7 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        // Show profile picture and name
+        // TODO: Show profile picture and name
         prepareView();
         setPreferenceListener();
         displayUserInfo();
@@ -102,7 +103,6 @@ public class SettingsActivity extends AppCompatActivity {
         sharedPreferenceChangeListener = (sharedPreferences1, key) -> {
             switch (key) {
                 case UserPref.USER_NAME:
-                    // TODO: sync change to firestore
                     viewModel.setUsername(
                             PreferenceUtils.getString(this,
                                     UserPref.USER_NAME, getString(R.string.default_username)));
@@ -133,18 +133,23 @@ public class SettingsActivity extends AppCompatActivity {
         viewModel.getWidgetStatus().observe(this, aBoolean -> {
             viewModel.onWidgetCheckedChange(SettingsActivity.this, aBoolean);
         });
-        binding.btnSync.setOnClickListener(
-                v -> synchronizeData(FirebaseAuth.getInstance().getCurrentUser()));
+        binding.btnSync.setOnClickListener(v -> synchronizeData());
     }
 
     private void displayUserInfo() {
         // Set user profile photo
-        Uri photoUri = Uri.parse(PreferenceUtils.getString(this,
+        Uri defaultPhotoUri = Uri.parse(PreferenceUtils.getString(this,
                 UserPref.USER_PHOTO,
                 String.format("android.resource://com.hcmus.group14.moneytor/%d",
                         R.drawable.account_circle_fill)));
-        ivPhoto.setImageURI(photoUri);
-        // login or logout
+        if (user != null) {
+            Uri photoUri = user.getPhotoUrl();
+            if (photoUri != null) Glide.with(this).load(photoUri.toString()).into(ivPhoto);
+            else ivPhoto.setImageURI(defaultPhotoUri);
+        } else
+            ivPhoto.setImageURI(defaultPhotoUri);
+
+        // Login or logout
         if (!viewModel.isLoggedIn()) {
             binding.btnLogout.setText("Log in");
         }
@@ -167,8 +172,13 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
 
-    private void synchronizeData(FirebaseUser user) {
+    private void synchronizeData() {
         // Check if user already exist and has data on the cloud
+        if (user == null) {
+            Toast.makeText(SettingsActivity.this, "Not signed in", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection(COLLECTION_USERS).document(user.getUid());
         docRef.get().addOnCompleteListener(task -> {
@@ -176,9 +186,10 @@ public class SettingsActivity extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                    AlertDialog.Builder builder =
+                            new AlertDialog.Builder(SettingsActivity.this);
                     builder.setMessage("Cloud data detected!");
-                    builder.setPositiveButton("Retrieve progress",
+                    builder.setPositiveButton("Download progress",
                             (dialog, id) -> {
                                 downloadUserPref(user);
                                 viewModel.downloadData(user);
@@ -188,10 +199,10 @@ public class SettingsActivity extends AppCompatActivity {
                                 uploadUserPref(user);
                                 viewModel.uploadData(user);
                             });
-                    builder.setNeutralButton("Do nothing",
+                    builder.setNeutralButton("Cancel",
                             (dialog, id) -> {
                                 Toast.makeText(SettingsActivity.this,
-                                        "Data is not uniform between cloud and local database",
+                                        "Data sync cancelled",
                                         Toast.LENGTH_SHORT).show();
                             });
                     builder.setCancelable(false);
@@ -209,7 +220,6 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void downloadUserPref(FirebaseUser user) {
-        // TODO: implement this
         FirebaseHelper.getUser(user, task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot documentSnapshot = task.getResult();
@@ -221,18 +231,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void applyUserPref() {
-        // Apply dark mode setting
-        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(
-                PreferenceUtils.getString(this,
-                        UserPref.USER_DARK_MODE, "-1")));
-        // Apply language setting
-        LanguageUtils.setLocale(this, PreferenceUtils.getString(this,
-                "user_language", "en"));
-    }
-
     private void uploadUserPref(FirebaseUser user) {
-        // Update user name
         String name = PreferenceUtils.getString(this,
                 UserPref.USER_NAME, getString(R.string.default_username));
         String language = PreferenceUtils.getString(this,
@@ -241,8 +240,13 @@ public class SettingsActivity extends AppCompatActivity {
                 UserPref.USER_DARK_MODE, "-1");
         int reminderInterval = PreferenceUtils.getInt(this,
                 UserPref.USER_REMINDER_INTERVAL, 1);
-        UserPref userPref = new UserPref(name, user.getUid(), user.getEmail(), language, darkMode
-                , reminderInterval);
+        boolean widget = PreferenceUtils.getBoolean(this,
+                UserPref.USER_WIDGET, false);
+        int reminder = PreferenceUtils.getInt(this,
+                UserPref.USER_REMINDER, 1);
+        UserPref userPref = new UserPref(name, user.getUid(), user.getEmail(), language,
+                darkMode
+                , reminderInterval, widget, reminder);
         FirebaseHelper.putUser(user, userPref);
     }
 

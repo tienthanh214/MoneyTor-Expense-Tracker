@@ -94,21 +94,6 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         filterViewModel.setFilterState(new FilterState(cats, DateTimeUtils.getMillisByDate(10, 12, 2021), DateTimeUtils.getMillisByDate(22, 12, 2021)));
     }
 
-    List<Spending> getData() {
-        List<Spending> data = new ArrayList<>();
-        data.add(new Spending(10000000, "Title 1", "A", "This is a description", 1639586109000L));
-        data.add(new Spending(10000, "Title 2", "A", "This is a description", 1639586109000L));
-        data.add(new Spending(10000, "Title 3", "A", "This is a description", 1639586109000L));
-        data.add(new Spending(100000, "Title 4", "A", "This is a description", 1639586109000L));
-        data.add(new Spending(100000000, "Title 5", "A", "This is a description", 1639586109000L));
-        data.add(new Spending(1000000, "Title 6", "A", "This is a description", 1639586109000L));
-        data.add(new Spending(1000000, "Title 7", "A", "This is a description", 1639586109000L));
-        data.add(new Spending(100000, "Title 8", "A", "This is a description", 1639586109000L));
-        data.add(new Spending(100000, "Title 9", "A", "This is a description", 1639586109000L));
-        data.add(new Spending(10000, "Title 10", "A", "This is a description", 1639586109000L));
-        return data;
-    }
-
     private void initializeViews() {
         stringToCategory = new HashMap<String, Category>();
         for (Category category : allCategories) {

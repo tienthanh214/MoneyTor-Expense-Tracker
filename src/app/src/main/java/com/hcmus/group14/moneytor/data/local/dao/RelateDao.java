@@ -41,4 +41,7 @@ public interface RelateDao {
 
     @Query("select * from relate_table")
     List<Relate> getAllRelatesNoLiveData();
+
+    @Query("DELETE FROM relate_table")
+    void deleteAllRelates();
 }

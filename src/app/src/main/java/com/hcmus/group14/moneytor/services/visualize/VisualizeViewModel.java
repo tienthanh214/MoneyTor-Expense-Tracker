@@ -29,6 +29,12 @@ public class VisualizeViewModel extends AndroidViewModel {
     public static final int FILTER_DAILY = -1,
             FILTER_WEEKLY = 0, FILTER_MONTHLY = 1, FILTER_ANNUALLY = 2;
 
+    public static final int LANG_ENGLISH = 0, LANG_VIETNAMESE = 1, LANG_JAPANESE = 2;
+
+    private String monthsEnglish[] = {"",
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
+            "Oct", "Nov", "Dec"};
+
     public class SpendingAmountInfo
     {
         public Category category;
@@ -153,10 +159,16 @@ public class VisualizeViewModel extends AndroidViewModel {
         return sum;
     }
 
-   
     @SuppressLint("NewApi")
     public ArrayList<SpendingPeriodInfo>
     getGroupedSpendingAmount(List<Spending> spendings, int filterType)
+    {
+        return getGroupedSpendingAmount(spendings, filterType, LANG_VIETNAMESE);
+    }
+
+    @SuppressLint("NewApi")
+    public ArrayList<SpendingPeriodInfo>
+    getGroupedSpendingAmount(List<Spending> spendings, int filterType, int labelLanguage)
     {
         ArrayList<SpendingPeriodInfo> returnResult = new ArrayList<>();
 
@@ -183,46 +195,110 @@ public class VisualizeViewModel extends AndroidViewModel {
                 break;
             case FILTER_MONTHLY:
                 intervals = 5;
-                intervalDuration = 6l * (24l * 60l * 60l * 1000l);
+                intervalDuration = 7l * (24l * 60l * 60l * 1000l);
                 beginning = "01" + today.substring(2);
                 lowerCap = DateTimeUtils.getDateInMillis(beginning);
                 break;
             case FILTER_ANNUALLY:
-                intervals = 12;
-                intervalDuration = 30l * (24l * 60l * 60l * 1000l);
                 beginning = "01/01" + today.substring(5);
                 lowerCap = DateTimeUtils.getDateInMillis(beginning);
                 break;
             default:
                 return null;
         }
-        for (int interval = 0; interval < intervals; interval++)
+        if (filterType == FILTER_ANNUALLY)
         {
-            long cost = 0l;
-            lowerLimit = upperLimit - intervalDuration;
-            if (lowerLimit < lowerCap) lowerLimit = lowerCap;
-            String lowerDate = DateTimeUtils.getDate(lowerLimit);
-            String upperDate = DateTimeUtils.getDate(upperLimit);
-            for (Spending spending: spendings)
+            //To get the leap year
+            String theFirstOfMarch = "01/03" + today.substring(5);
+            long beginningOfMarch = DateTimeUtils.getDateInMillis(theFirstOfMarch);
+
+            //First, loop through months, for Feb, check if there is a day missing (leap year). If yes,
+            //one more day is added to the interval duration.
+            lowerLimit = lowerCap;
+            for (int i = 1; i <= 12; i++)
             {
-                long spendingDateMillis = spending.getDate();
-                if (spendingDateMillis >= lowerLimit && spendingDateMillis < upperLimit)
-                    cost += spending.getCost();
+                switch (i)
+                {
+                    case 2:
+                        intervalDuration = 28l * 3600000l * 24l;
+                        break;
+                    case 4:
+                    case 6:
+                    case 9:
+                    case 11:
+                        intervalDuration = 30l * 3600000l * 24l;
+                        break;
+                    default:
+                        intervalDuration = 31l * 3600000l * 24l;
+                }
+                upperLimit = lowerLimit + intervalDuration;
+                if (i == 2 && upperLimit < beginningOfMarch) upperLimit += 3600000l * 24l;
+                //Check if upper limit exceeds the current date, changes accordingly.
+                if (upperLimit > upperCap) upperLimit = upperCap;
+                //Loop through the spendings to check if the date created falls between the limits.
+                long cost = 0l;
+                for (Spending spending: spendings)
+                {
+                    long spendingDateMillis = spending.getDate();
+                    if (spendingDateMillis >= lowerLimit && spendingDateMillis < upperLimit)
+                        cost += spending.getCost();
+                }
+                if (labelLanguage == LANG_VIETNAMESE)
+                returnResult.add(new SpendingPeriodInfo(Integer.toString(i), cost));
+                else if (labelLanguage == LANG_ENGLISH)
+                    returnResult.add(new SpendingPeriodInfo(monthsEnglish[i], cost));
+                else returnResult.add(new SpendingPeriodInfo(Integer.toString(i) + "月", cost));
+                lowerLimit = upperLimit;
+                if (lowerLimit >= upperCap) break;
             }
-            returnResult.add(
-                    new SpendingPeriodInfo(
-                            lowerDate + " - " + upperDate, cost));
-            upperLimit = lowerLimit;
-            if (upperLimit <= lowerCap) break;
         }
-        returnResult.sort(spendingPeriodInfoComparator);
-        if (filterType == FILTER_WEEKLY || filterType == FILTER_DAILY)
-            for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
-                spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,5);
-        else    //xx/yy/zzzz - xx/yy/zzzz
-            for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
-                spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0,5) + " - " +
-                                            spendingPeriodInfo.period.substring(13, 18);
+        else {
+            for (int interval = 0; interval < intervals; interval++) {
+                long cost = 0l;
+                lowerLimit = upperLimit - intervalDuration;
+                if (lowerLimit < lowerCap) lowerLimit = lowerCap;
+                String lowerDate = DateTimeUtils.getDate(lowerLimit);
+                String upperDate = DateTimeUtils.getDate(upperLimit - 1l);
+                for (Spending spending : spendings) {
+                    long spendingDateMillis = spending.getDate();
+                    if (spendingDateMillis >= lowerLimit && spendingDateMillis < upperLimit)
+                        cost += spending.getCost();
+                }
+
+                returnResult.add(
+                        new SpendingPeriodInfo(
+                                lowerDate + " - " + upperDate, cost));
+                upperLimit = lowerLimit;
+                if (upperLimit <= lowerCap) break;
+            }
+            returnResult.sort(spendingPeriodInfoComparator);
+        }
+        if (labelLanguage != 2) {
+            if (filterType == FILTER_WEEKLY || filterType == FILTER_DAILY)
+                for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
+                    spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0, 5);
+            else if (filterType == FILTER_MONTHLY)   //xx/yy/zzzz - xx/yy/zzzz
+                for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
+                    spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0, 5) + " - " +
+                            spendingPeriodInfo.period.substring(13, 18);
+        }
+        else
+        {
+            if (filterType == FILTER_WEEKLY || filterType == FILTER_DAILY)
+                for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
+                    spendingPeriodInfo.period =
+                            DateTimeUtils.changeFormatToJapanese(spendingPeriodInfo.period
+                            .substring(0,10))
+                            .substring(5);
+            else if (filterType == FILTER_MONTHLY)   //2021年12月31日 - 2021年12月31日
+                for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
+                    spendingPeriodInfo.period =
+                            DateTimeUtils.changeFormatToJapanese(spendingPeriodInfo.period
+                                    .substring(0,10))
+                                    .substring(5) + " - " +
+                                    DateTimeUtils.changeFormatToJapanese(
+                                            spendingPeriodInfo.period.substring(13)).substring(5);
+        }
         return returnResult;
     }
 }

@@ -61,23 +61,6 @@ public class ContactActivity extends NoteBaseActivity<ActivityContactBinding> {
         initializeViews(type);
     }
 
-    List<Relate> getData() {
-        List<Relate> data = new ArrayList<>();
-        data.add(new Relate("Hieu", "01234556789"));
-        data.add(new Relate("Hieu1", "01234556789"));
-        data.add(new Relate("Hieu2", "01234556789"));
-        data.add(new Relate("Hieu3", "01234556789"));
-        data.add(new Relate("Hieu4", "01234556789"));
-        data.add(new Relate("Hieu5", "01234556789"));
-        data.add(new Relate("Hieu6", "01234556789"));
-        data.add(new Relate("Hieu7", "01234556789"));
-        data.add(new Relate("Hieu8", "01234556789"));
-        data.add(new Relate("Hieu9", "01234556789"));
-        data.add(new Relate("Hieu10", "01234556789"));
-        data.add(new Relate("Hieu11", "01234556789"));
-        return data;
-    }
-
     private void initializeViews(String type) {
         int limit = type.equals("spendingList") ? 99999 : 1;
         contactAdapter = new ContactAdapter(this, contacts, findViewById(R.id.selectedContact), limit);

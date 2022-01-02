@@ -36,7 +36,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/margin_right_card"
-                android:id="@+id/reminder_switch" />
+                android:id="@+id/reminder_switch"
+                android:checked="@={viewModel.reminderStatus}"/>
+
+                />
 
         </LinearLayout>
 
@@ -67,6 +70,8 @@
                 android:layout_height="wrap_content"
                 android:timePickerMode="spinner"
                 android:layout_gravity="center"
+                android:hour="@={viewModel.hour}"
+                android:minute="@={viewModel.minutes}"
                 android:layout_marginHorizontal="@dimen/margin_left_card"/>
 
             <Button

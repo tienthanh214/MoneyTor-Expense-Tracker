@@ -101,47 +101,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    private void synchronizeData(FirebaseUser user) {
-//        // Check if user already exist and has data on the cloud
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        DocumentReference docRef = db.collection(COLLECTION_USERS).document(user.getUid());
-//        docRef.get().addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                DocumentSnapshot document = task.getResult();
-//                if (document.exists()) {
-//                    Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                    builder.setMessage("Cloud data detected!");
-//                    builder.setPositiveButton("Retrieve progress",
-//                            (dialog, id) -> {
-//                                downloadUserPref(user);
-//                                FirebaseHelper.downloadData(user);
-//                            });
-//                    builder.setNegativeButton("Upload progress",
-//                            (dialog, id) -> {
-//                                uploadUserPref(user);
-//                                FirebaseHelper.uploadData(user);
-//                            });
-//                    builder.setNeutralButton("Do nothing",
-//                            (dialog, id) -> {
-//                                Toast.makeText(MainActivity.this,
-//                                        "Data is not uniform between cloud and local database",
-//                                        Toast.LENGTH_SHORT).show();
-//                            });
-//                    builder.setCancelable(false);
-//                    AlertDialog alertDialog = builder.create();
-//                    alertDialog.show();
-//                } else {
-//                    Log.d(TAG, "No such user");
-//                    uploadUserPref(user);
-//                    FirebaseHelper.uploadData(user);
-//                }
-//            } else {
-//                Log.d(TAG, "Check user failed with ", task.getException());
-//            }
-//        });
-//    }
-
     private void downloadUserPref(FirebaseUser user) {
         // TODO: implement this
         FirebaseHelper.getUser(user, task -> {
@@ -175,8 +134,12 @@ public class MainActivity extends AppCompatActivity {
                 UserPref.USER_DARK_MODE, "-1");
         int reminderInterval = PreferenceUtils.getInt(this,
                 UserPref.USER_REMINDER_INTERVAL, 1);
+        boolean widget = PreferenceUtils.getBoolean(this,
+                UserPref.USER_WIDGET, false);
+        int reminder = PreferenceUtils.getInt(this,
+                UserPref.USER_REMINDER, 1);
         UserPref userPref = new UserPref(name, user.getUid(), user.getEmail(), language, darkMode
-                , reminderInterval);
+                , reminderInterval, widget, reminder);
         FirebaseHelper.putUser(user, userPref);
     }
 }

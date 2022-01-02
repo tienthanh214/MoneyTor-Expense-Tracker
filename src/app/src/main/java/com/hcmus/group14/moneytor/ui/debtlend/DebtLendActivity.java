@@ -70,23 +70,6 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
         });
     }
 
-    List<DebtLend> getData() {
-        List<DebtLend> data = new ArrayList<>();
-        data.add(new DebtLend(Category.PETS.getId(), 100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend(Category.MAKEUP.getId(), 100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend(Category.ENTERTAINMENT.getId(), 100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend(Category.OTHERS.getId(), 100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend(Category.HEALTH.getId(), 100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend(Category.HEALTH.getId(), 100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend(Category.FITNESS.getId(), 100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend(Category.TRAFFIC.getId(), 100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend(Category.MAINTENANCE.getId(), 100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend(Category.FOOD_AND_DRINK.getId(), 100000,1,0,1639586109000L,"this is a description"));
-        data.add(new DebtLend(Category.BILLS.getId(), 100000,1,1,1639586109000L,"this is a description"));
-        data.add(new DebtLend(Category.UTILITIES.getId(), 100000,1,1,1639586109000L,"this is a description"));
-        return data;
-    }
-
     private void initializeViews() {
         debtLendAdapter = new DebtLendAdapter(this, debtLends);
         binding.debtLendList.setAdapter(debtLendAdapter);

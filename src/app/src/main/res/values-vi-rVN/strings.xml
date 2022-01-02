@@ -37,7 +37,7 @@
 
     <string name="bundle_goal_obj">bundleAlarmObj</string>
     <string name="arg_goal_obj">ArgAlarmObj</string>
-    <string name="reminder_message">Chúng tôi muốn nhắc nhỡ bạn là hay ghi chú đi bro. Bao giờ mới khá lên được.</string>
+    <string name="reminder_message">Chúng tôi muốn nhắc nhở bạn là hay ghi chú đi bro. Bao giờ mới khá lên được.</string>
     <string name="reminder_title">MoneyTor Reminder</string>
     <string name="title_activity_settings">Settings</string>
 

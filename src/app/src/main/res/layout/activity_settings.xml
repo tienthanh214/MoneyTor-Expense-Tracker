@@ -26,7 +26,8 @@
                 android:id="@+id/iv_photo"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:contentDescription="User profile photo" />
 
             <TextView
                 android:id="@+id/tv_username"
@@ -67,19 +68,19 @@
                 android:id="@+id/reminderSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:background="@drawable/list_item_background"
                 android:fontFamily="@font/poppins_medium"
                 android:maxLines="2"
                 android:padding="10dp"
                 android:text="Reminder setting"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
                 android:src="@drawable/ic_arrow" />
@@ -101,7 +102,7 @@
                 android:padding="10dp"
                 android:text="Display homescreen widget"
                 android:textAlignment="center"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.SwitchCompat
@@ -116,8 +117,6 @@
             android:id="@+id/btn_sync"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:layout_margin="10dp"
             android:insetTop="0dp"
             android:insetBottom="0dp"

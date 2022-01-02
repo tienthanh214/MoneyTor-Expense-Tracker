@@ -46,6 +46,8 @@ public abstract class SpendingDao {
     public abstract List<Spending> getAllSpendingsNoLiveData();
 
     // for bill sharing
+    @Query("select * from spending_relate")
+    public abstract List<SpendingRelateCrossRef> getAllSpendingRelateCrossRef();
     @Transaction
     @Query("SELECT * FROM spending_table")
     public abstract LiveData<List<SpendingWithRelates>> getAllSpendingWithRelates();
@@ -62,6 +64,9 @@ public abstract class SpendingDao {
 
     @Delete
     public abstract void deleteSpendingRelateCrossRef(SpendingRelateCrossRef crossRef);
+
+    @Query("DELETE FROM spending_relate")
+    public abstract void deleteAllSpendingRelateCrossRef();
 
     @Query("DELETE FROM spending_relate WHERE spending_id = :id")
     public abstract void deleteRelateBySpendingId(int id);
@@ -126,4 +131,10 @@ public abstract class SpendingDao {
     public abstract LiveData<List<Spending>> filterByCategories(List<String> cats);
     @Query("SELECT * FROM spending_table WHERE date BETWEEN :startDate AND :endDate")
     public abstract LiveData<List<Spending>> filterByTime(long startDate, long endDate);
+
+    @Transaction
+    public void deleteAllSpendingWithRelate() {
+        deleteAllSpending();
+        deleteAllSpendingRelateCrossRef();
+    }
 }

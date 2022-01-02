@@ -31,4 +31,7 @@ public interface WalletDao {
 
     @Query("select * from wallet_table")
     List<Wallet> getAllWalletsNoLiveData();
+
+    @Query("DELETE FROM wallet_table")
+    void deleteAllWallets();
 }
