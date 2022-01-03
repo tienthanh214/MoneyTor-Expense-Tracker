@@ -7,8 +7,6 @@ import android.content.res.Resources;
 import java.util.Locale;
 
 public class LanguageUtils {
-    public static final String VIETNAMESE = "vn";
-    public static final String ENGLISH = "en";
 
     public static void setLocale(Activity activity, String languageCode) {
         Locale locale = new Locale(languageCode);

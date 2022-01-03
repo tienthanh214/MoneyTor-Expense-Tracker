@@ -3,11 +3,13 @@
     <string-array name="language_entries">
         <item>Vietnamese</item>
         <item>English</item>
+        <item>Japan</item>
     </string-array>
 
     <string-array name="language_values">
         <item>vi</item>
         <item>en</item>
+        <item>ja</item>
     </string-array>
 
     <!-- UI mode Preference -->
