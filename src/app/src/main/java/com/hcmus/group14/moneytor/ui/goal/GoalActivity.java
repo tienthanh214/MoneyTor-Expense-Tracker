@@ -1,13 +1,17 @@
 package com.hcmus.group14.moneytor.ui.goal;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,6 +25,7 @@ import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
 import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
+import com.hcmus.group14.moneytor.utils.FilterSelectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,7 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
     private SearchView searchView;
 
     private FilterViewModel viewModel;
+    private FilterSelectUtils filterSelectUtils;
 
     @Override
     public int getLayoutId() {
@@ -69,11 +75,28 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
     }
 
     private void initializeViews() {
+        filterSelectUtils = new FilterSelectUtils(this);
         goalAdapter = new GoalAdapter(this, spendGoals);
         binding.spendingGoalList.setAdapter(goalAdapter);
         binding.spendingGoalList.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void showDialog() {
+        AlertDialog alertDialog = filterSelectUtils.createMainDialog();
+        alertDialog.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionFilter:
+                showDialog();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private List<SpendGoal> filter(String text) {
         List<SpendGoal> filteredList = new ArrayList<>();
         for (SpendGoal item : spendGoals) {

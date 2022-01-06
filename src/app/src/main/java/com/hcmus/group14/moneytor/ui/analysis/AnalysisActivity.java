@@ -1,6 +1,8 @@
 package com.hcmus.group14.moneytor.ui.analysis;
 
+import android.app.AlertDialog;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -8,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.GridView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,6 +26,7 @@ import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
+import com.hcmus.group14.moneytor.utils.FilterSelectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +40,7 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
     private FilterViewModel filterViewModel;
     // data
     private CategoryItemStatisticsAdapter categoryAdapter;
+    private FilterSelectUtils filterSelectUtils = new FilterSelectUtils(this);
 
     @Override
     public int getLayoutId() {
@@ -64,6 +70,22 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void showDialog() {
+        AlertDialog alertDialog = filterSelectUtils.createMainDialog();
+        alertDialog.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionFilter:
+                showDialog();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void setCategoriesStatistics() {
         GridView gridView = binding.categoriesStatistics;
         final List<Category> categories = CategoriesUtils.getDefaultCategories();

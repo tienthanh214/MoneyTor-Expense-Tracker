@@ -1,10 +1,12 @@
 package com.hcmus.group14.moneytor.ui.visualize;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -14,6 +16,8 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.compose.ui.graphics.drawscope.Fill;
 import androidx.core.content.ContextCompat;
@@ -60,6 +64,7 @@ import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
 import com.hcmus.group14.moneytor.ui.custom.CategoryLabelAdapter;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.LanguageUtils;
+import com.hcmus.group14.moneytor.utils.FilterSelectUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,6 +91,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
     private ArrayList<VisualizeViewModel.SpendingPeriodInfo> barGroupedEntries;
     private ArrayList<String> barLabels;
     private BarData barData;
+    private FilterSelectUtils filterSelectUtils = new FilterSelectUtils(this);
 
     private String systemLanguage;
 
@@ -123,6 +129,23 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         barChart = binding.barChart;
         initPieChart();
         initBarChart();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void showDialog() {
+        AlertDialog alertDialog = filterSelectUtils.createMainDialog();
+        alertDialog.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionFilter:
+                showDialog();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private int getLabelLanguage() {
