@@ -62,4 +62,18 @@
     <string name="toolbar_goal_spending">List spending</string>
     <string name="toolbar_title_visualize">Visualize</string>
     <string name="reminder_message">Creating habits is the key to financial success. We are here to remind you to track down your expenses regularly.</string>
+
+    <string name="date_time_format">x/y</string>
+    <string name="january">Jan</string>
+    <string name="february">Feb</string>
+    <string name="march">Mar</string>
+    <string name="april">Apr</string>
+    <string name="may">May</string>
+    <string name="june">Jun</string>
+    <string name="july">Jul</string>
+    <string name="august">Aug</string>
+    <string name="september">Sep</string>
+    <string name="october">Oct</string>
+    <string name="november">Nov</string>
+    <string name="december">Dec</string>
 </resources>

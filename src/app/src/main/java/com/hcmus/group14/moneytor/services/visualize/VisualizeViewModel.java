@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 
 
+import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.local.dao.SpendingDao;
 import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.services.options.Category;
@@ -28,12 +29,6 @@ import java.util.TreeMap;
 public class VisualizeViewModel extends AndroidViewModel {
     public static final int FILTER_DAILY = -1,
             FILTER_WEEKLY = 0, FILTER_MONTHLY = 1, FILTER_ANNUALLY = 2;
-
-    public static final int LANG_ENGLISH = 0, LANG_VIETNAMESE = 1, LANG_JAPANESE = 2;
-
-    private String monthsEnglish[] = {"",
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
-            "Oct", "Nov", "Dec"};
 
     public class SpendingAmountInfo
     {
@@ -163,13 +158,6 @@ public class VisualizeViewModel extends AndroidViewModel {
     public ArrayList<SpendingPeriodInfo>
     getGroupedSpendingAmount(List<Spending> spendings, int filterType)
     {
-        return getGroupedSpendingAmount(spendings, filterType, LANG_VIETNAMESE);
-    }
-
-    @SuppressLint("NewApi")
-    public ArrayList<SpendingPeriodInfo>
-    getGroupedSpendingAmount(List<Spending> spendings, int filterType, int labelLanguage)
-    {
         ArrayList<SpendingPeriodInfo> returnResult = new ArrayList<>();
 
         String today = DateTimeUtils.getDate(DateTimeUtils.getCurrentTimeMillis());
@@ -243,11 +231,47 @@ public class VisualizeViewModel extends AndroidViewModel {
                     if (spendingDateMillis >= lowerLimit && spendingDateMillis < upperLimit)
                         cost += spending.getCost();
                 }
-                if (labelLanguage == LANG_VIETNAMESE)
-                returnResult.add(new SpendingPeriodInfo(Integer.toString(i), cost));
-                else if (labelLanguage == LANG_ENGLISH)
-                    returnResult.add(new SpendingPeriodInfo(monthsEnglish[i], cost));
-                else returnResult.add(new SpendingPeriodInfo(Integer.toString(i) + "月", cost));
+                String label = "";
+                switch (i)
+                {
+                    case 1:
+                        label = getApplication().getString(R.string.january);
+                        break;
+                    case 2:
+                        label = getApplication().getString(R.string.february);
+                        break;
+                    case 3:
+                        label = getApplication().getString(R.string.march);
+                        break;
+                    case 4:
+                        label = getApplication().getString(R.string.april);
+                        break;
+                    case 5:
+                        label = getApplication().getString(R.string.may);
+                        break;
+                    case 6:
+                        label = getApplication().getString(R.string.june);
+                        break;
+                    case 7:
+                        label = getApplication().getString(R.string.july);
+                        break;
+                    case 8:
+                        label = getApplication().getString(R.string.august);
+                        break;
+                    case 9:
+                        label = getApplication().getString(R.string.september);
+                        break;
+                    case 10:
+                        label = getApplication().getString(R.string.october);
+                        break;
+                    case 11:
+                        label = getApplication().getString(R.string.november);
+                        break;
+                    default:
+                        label = getApplication().getString(R.string.december);
+                        break;
+                }
+                returnResult.add(new SpendingPeriodInfo(label, cost));
                 lowerLimit = upperLimit;
                 if (lowerLimit >= upperCap) break;
             }
@@ -273,31 +297,31 @@ public class VisualizeViewModel extends AndroidViewModel {
             }
             returnResult.sort(spendingPeriodInfoComparator);
         }
-        if (labelLanguage != 2) {
-            if (filterType == FILTER_WEEKLY || filterType == FILTER_DAILY)
-                for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
-                    spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0, 5);
-            else if (filterType == FILTER_MONTHLY)   //xx/yy/zzzz - xx/yy/zzzz
-                for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
-                    spendingPeriodInfo.period = spendingPeriodInfo.period.substring(0, 5) + " - " +
-                            spendingPeriodInfo.period.substring(13, 18);
-        }
-        else
+
+        String dateMonthFormat = getApplication().getString(R.string.date_time_format);
+        if (filterType == FILTER_WEEKLY || filterType == FILTER_DAILY)
+            for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
+            {
+                String[] split = spendingPeriodInfo.period.split("\\/");
+                spendingPeriodInfo.period = dateMonthFormat.replace("x", split[0]).
+                        substring(0,3);
+
+            }
+        else if (filterType == FILTER_MONTHLY)   //2021年12月31日 - 2021年12月31日
+            for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
+            {
+                String[] dates = spendingPeriodInfo.period.split(" \\- ");
+                String[] split0 = dates[0].split("\\/"),
+                        split1 = dates[1].split("\\/");
+                spendingPeriodInfo.period = dateMonthFormat.replace("x", split0[0]).
+                        replace("y", split0[1]) + " - "
+                        + dateMonthFormat.replace("x", split1[0]).
+                        replace("y", split1[1]);
+            }
+
+        for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
         {
-            if (filterType == FILTER_WEEKLY || filterType == FILTER_DAILY)
-                for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
-                    spendingPeriodInfo.period =
-                            DateTimeUtils.changeFormatToJapanese(spendingPeriodInfo.period
-                            .substring(0,10))
-                            .substring(5);
-            else if (filterType == FILTER_MONTHLY)   //2021年12月31日 - 2021年12月31日
-                for (SpendingPeriodInfo spendingPeriodInfo : returnResult)
-                    spendingPeriodInfo.period =
-                            DateTimeUtils.changeFormatToJapanese(spendingPeriodInfo.period
-                                    .substring(0,10))
-                                    .substring(5) + " - " +
-                                    DateTimeUtils.changeFormatToJapanese(
-                                            spendingPeriodInfo.period.substring(13)).substring(5);
+           System.out.println(spendingPeriodInfo.period);
         }
         return returnResult;
     }

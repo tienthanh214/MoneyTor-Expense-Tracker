@@ -63,4 +63,17 @@
     <string name="toolbar_title_goal">Mục tiêu tài chính</string>
     <string name="toolbar_goal_spending">Danh sách chi tiêu</string>
     <string name="toolbar_title_visualize">Minh họa</string>
+    <string name="date_time_format">x/y</string>
+    <string name="january">T1</string>
+    <string name="february">T2</string>
+    <string name="march">T3</string>
+    <string name="april">T4</string>
+    <string name="may">T5</string>
+    <string name="june">T6</string>
+    <string name="july">T7</string>
+    <string name="august">T8</string>
+    <string name="september">T9</string>
+    <string name="october">T10</string>
+    <string name="november">T11</string>
+    <string name="december">T12</string>
 </resources>
