@@ -1,8 +1,12 @@
 package com.hcmus.group14.moneytor.ui.visualize;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -12,9 +16,12 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.compose.ui.graphics.drawscope.Fill;
 import androidx.core.content.ContextCompat;
+import androidx.core.os.ConfigurationCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
@@ -56,10 +63,13 @@ import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
 import com.hcmus.group14.moneytor.ui.custom.CategoryLabelAdapter;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
+import com.hcmus.group14.moneytor.utils.LanguageUtils;
+import com.hcmus.group14.moneytor.utils.FilterSelectUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding> {
@@ -81,6 +91,9 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
     private ArrayList<VisualizeViewModel.SpendingPeriodInfo> barGroupedEntries;
     private ArrayList<String> barLabels;
     private BarData barData;
+    private FilterSelectUtils filterSelectUtils = new FilterSelectUtils(this);
+
+    private String systemLanguage;
 
     final private int DAILY_MOD = 1;
     final private int WEEKLY_MOD = 2;
@@ -100,6 +113,10 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         viewModel = new ViewModelProvider(this).get(VisualizeViewModel.class);
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
         binding.setViewModel(viewModel);
+
+        systemLanguage = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0).getLanguage();
+        Log.d("@@@ lang", systemLanguage);
+
         pieAllEntries = new ArrayList<>();
         barHashMapEntries = new HashMap<>();
         barGroupedEntries = new ArrayList<>();
@@ -114,6 +131,39 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         initBarChart();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void showDialog() {
+        AlertDialog alertDialog = filterSelectUtils.createMainDialog();
+        alertDialog.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionFilter:
+                showDialog();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private int getLabelLanguage() {
+        if (systemLanguage.equals("en"))
+            return VisualizeViewModel.LANG_ENGLISH;
+        else if (systemLanguage.equals("vi"))
+            return VisualizeViewModel.LANG_VIETNAMESE;
+        else
+            return VisualizeViewModel.LANG_JAPANESE;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        systemLanguage = newConfig.locale.getLanguage();
+        Log.d("@@@ lang", systemLanguage);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -123,9 +173,11 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
     }
 
     private void updateNewData(List<Spending> spendingList) {
+
         // TODO: get daily/weekly/monthly/annually spending from view model
-        barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList,
-                VisualizeViewModel.FILTER_MONTHLY);
+        barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_ANNUALLY
+                ,getLabelLanguage()
+        );
         pieAllEntries = viewModel.getSpendingProportionByCategory(spendingList);
         barHashMapEntries = viewModel.getDailySpendingAmount(spendingList);
         setPieChartData();
