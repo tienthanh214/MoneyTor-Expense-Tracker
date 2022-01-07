@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -91,19 +92,20 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         gridView.setAdapter(adapter);
     }
 
-
     // TODO: do everything when data change
     private void updateNewData(List<Spending> spendingList) {
         // update category statistics
         categoryAdapter.setItems(analyzeViewModel.getDetailsForCategories(spendingList));
         // update total amount
-        binding.totalAmountAnalyze.setText(String.format(Locale.US ,"%,d", analyzeViewModel.getTotal(spendingList)) + " VNĐ");
+        binding.totalAmountAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getTotal(spendingList)) + " VNĐ");
         binding.averageByDateAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getAverage(spendingList)) + " VNĐ");
         binding.highestSpendingAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getMaxSpending(spendingList)) + " VNĐ");
 
         ArrayList<Category> highestCategory = analyzeViewModel.getMaxSpendingCategory(spendingList);
-        binding.highestCategoryIcon.setImageResource(highestCategory.get(0).getResourceId());
-        binding.highestCategoryIcon.setBackgroundTintList(ColorStateList.valueOf(highestCategory.get(0).getColor()));
+        if (!highestCategory.isEmpty()) {
+            binding.highestCategoryIcon.setImageResource(highestCategory.get(0).getResourceId());
+            binding.highestCategoryIcon.setBackgroundTintList(ColorStateList.valueOf(highestCategory.get(0).getColor()));
+        }
     }
 
 }
