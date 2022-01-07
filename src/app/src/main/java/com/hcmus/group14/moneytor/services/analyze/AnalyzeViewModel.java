@@ -1,17 +1,13 @@
 package com.hcmus.group14.moneytor.services.analyze;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-
-import com.hcmus.group14.moneytor.data.local.AppViewModel;
-import com.hcmus.group14.moneytor.data.local.dao.SpendingDao;
 import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.services.options.Category;
-import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +29,7 @@ public class AnalyzeViewModel extends AndroidViewModel {
     //Get total amount of spendings filtered
     public long getTotal(List<Spending> spendings)
     {
-        if (spendings == null) return 0l;
+        if (spendings == null) return 0L;
         long sum = 0L;
         for (Spending spending: spendings)
             sum += spending.getCost();
@@ -55,7 +51,7 @@ public class AnalyzeViewModel extends AndroidViewModel {
     //Get the highest spending across the filtered.
     public long getMaxSpending(List<Spending> spendings)
     {
-        if (spendings == null) return 0l;
+        if (spendings == null) return 0L;
         long max = 0;
         for (Spending spending: spendings)
             if (max < spending.getCost())
@@ -68,6 +64,7 @@ public class AnalyzeViewModel extends AndroidViewModel {
     {
         long max = 0;
         ArrayList<Category> categories = new ArrayList<>();
+        if (spendings == null) return categories;
         for (Spending spending: spendings)
             if (max < spending.getCost()) {
                 max = spending.getCost();
@@ -86,7 +83,7 @@ public class AnalyzeViewModel extends AndroidViewModel {
             (List<Spending> spendings)
     {
         HashMap<Category, Long> returnResult = new HashMap<>();
-
+        if (spendings == null) return returnResult;
         ArrayList<Category> categories = new ArrayList<>();
         //Digs all categories available in all filtered spendings
         for (Spending spending : spendings) {

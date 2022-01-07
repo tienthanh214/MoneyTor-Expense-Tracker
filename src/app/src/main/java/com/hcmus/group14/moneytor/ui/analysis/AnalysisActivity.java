@@ -12,7 +12,6 @@ import android.widget.GridView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.FilterState;
@@ -31,12 +30,11 @@ import java.util.Locale;
 
 public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> {
 
-    private AppBarConfiguration appBarConfiguration;
     private ActivityAnalysisBinding binding;
     private AnalyzeViewModel analyzeViewModel;
     // data
     private CategoryItemStatisticsAdapter categoryAdapter;
-    private FilterSelectUtils filterSelectUtils = new FilterSelectUtils(this);
+    private final FilterSelectUtils filterSelectUtils = new FilterSelectUtils(this);
 
     @Override
     public int getLayoutId() {
@@ -54,7 +52,11 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         // binding observe
         filterViewModel.getAllSpending().observe(this, this::updateNewData);
         // TODO: receive intent and show filter by FilterState()
-        filterViewModel.setFilterState(new FilterState());
+
+        FilterState filterState = (FilterState)getIntent().getSerializableExtra("filter_state");
+        if (filterState == null)
+            filterState = new FilterState();
+        filterViewModel.setFilterState(filterState);
         setCategoriesStatistics();
     }
 
@@ -89,6 +91,7 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         gridView.setAdapter(adapter);
     }
 
+
     // TODO: do everything when data change
     private void updateNewData(List<Spending> spendingList) {
         // update category statistics
@@ -96,7 +99,7 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         // update total amount
         binding.totalAmountAnalyze.setText(String.format(Locale.US ,"%,d", analyzeViewModel.getTotal(spendingList)) + " VNĐ");
         binding.averageByDateAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getAverage(spendingList)) + " VNĐ");
-        binding.highestSpendingAnalyze.setText(String.format("%,2d", analyzeViewModel.getMaxSpending(spendingList)) + " VNĐ");
+        binding.highestSpendingAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getMaxSpending(spendingList)) + " VNĐ");
 
         ArrayList<Category> highestCategory = analyzeViewModel.getMaxSpendingCategory(spendingList);
         binding.highestCategoryIcon.setImageResource(highestCategory.get(0).getResourceId());

@@ -33,9 +33,8 @@ public abstract class NoteBaseActivity<T extends ViewDataBinding> extends AppCom
     }
 
     public void setFilter(List<String> cats, String period) {
-        Log.i("@@@ set", cats.toString() + " " + period);
         if (filterViewModel != null) {
             filterViewModel.setFilterState(new FilterState(cats, period));
         }
-    };
+    }
 }

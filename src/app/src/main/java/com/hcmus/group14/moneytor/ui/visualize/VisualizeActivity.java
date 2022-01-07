@@ -1,7 +1,9 @@
 package com.hcmus.group14.moneytor.ui.visualize;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,9 +11,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.GridView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -35,6 +38,7 @@ import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.services.visualize.VisualizeViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.ui.custom.CategoryLabelAdapter;
+import com.hcmus.group14.moneytor.utils.FilterSelectUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,22 +46,21 @@ import java.util.List;
 
 public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding> {
 
-    private AppBarConfiguration appBarConfiguration;
     private ActivityVisualizeBinding binding;
     private VisualizeViewModel viewModel;
-    private int mod = 0;
 
     private PieChart pieChart;
     private ArrayList<VisualizeViewModel.SpendingAmountInfo> pieAllEntries;
     private ArrayList<Category> pieLabels;
     private PieData pieData;
-    private CategoryLabelAdapter categoryAdapter;
 
     private BarChart barChart;
     private HashMap<String, Long> barHashMapEntries;
     private ArrayList<VisualizeViewModel.SpendingPeriodInfo> barGroupedEntries;
-    private ArrayList<String> barLabels;
     private BarData barData;
+
+    private final FilterSelectUtils filterSelectUtils = new FilterSelectUtils(this);
+
 
     final private int DAILY_MOD = 1;
     final private int WEEKLY_MOD = 2;
@@ -89,6 +92,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         barChart = binding.barChart;
         initPieChart();
         initBarChart();
+        Log.i("@@@ onCreate", "done");
     }
 
     @Override
@@ -99,9 +103,35 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void showDialog() {
+        AlertDialog alertDialog = filterSelectUtils.createMainDialog();
+        alertDialog.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.actionFilter) {
+            showDialog();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setFilter(List<String> cats, String period) {
+        // setup range filter there
+        if (filterViewModel != null) {
+            FilterState filterState = new FilterState(cats, period);
+            // filterState.endDate = -1;
+            // filterState.startDate = -1;
+            filterViewModel.setFilterState(filterState);
+        }
+    }
+
     private void updateNewData(List<Spending> spendingList) {
         // TODO: get daily/weekly/monthly/annually spending from view model
-        barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_ANNUALLY
+        barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList,
+                filterViewModel.getFilterState().filterType
         //        ,VisualizeViewModel.LANG_JAPANESE
         );
         pieAllEntries = viewModel.getSpendingProportionByCategory(spendingList);
@@ -129,7 +159,6 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
     private void setPieChartLabels() {
         GridView labels = binding.pieChartLabels;
         CategoryLabelAdapter adapter = new CategoryLabelAdapter(this, R.layout.category_item_pie_chart_label, pieLabels);
-        this.categoryAdapter = adapter;
         labels.setAdapter(adapter);
     }
 
@@ -139,8 +168,6 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         pieLabels = new ArrayList<>();
         PieDataSet pieDataSet;
 
-        Log.d("@@@ category", String.valueOf(pieAllEntries.size()));
-
         for (VisualizeViewModel.SpendingAmountInfo entry : pieAllEntries) {
             double percentage = entry.percentage;
             double minPercentageToShowLabelOnChart = 0.05d;
@@ -149,10 +176,8 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
                         entry.category.getResourceId());
                 drawable.setTint(Color.parseColor("#FFFFFF"));
                 pieEntries.add(new PieEntry(entry.amount, String.valueOf((int)(entry.percentage * 100)) + "%"));
-                Log.d("@@@" + entry.category, String.valueOf(entry.percentage));
             } else {
                 pieEntries.add(new PieEntry(entry.amount));
-                Log.d("@@@" + entry.category, String.valueOf(entry.percentage));
             }
             pieColors.add(entry.category.getColor());
             pieLabels.add(entry.category);
@@ -212,9 +237,7 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private void setBarChartData() {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        barLabels = new ArrayList<>();
-
-        Log.d("@@@ date", String.valueOf(barGroupedEntries));
+        ArrayList<String> barLabels = new ArrayList<>();
 
         int i = 0;
         for (VisualizeViewModel.SpendingPeriodInfo entry : barGroupedEntries){
@@ -223,7 +246,6 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
             barLabels.add(entry.period);
             i+=1;
         }
-        Log.d("@@@ in set data", String.valueOf(barLabels));
 
         XAxis xAxis = barChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(barLabels));

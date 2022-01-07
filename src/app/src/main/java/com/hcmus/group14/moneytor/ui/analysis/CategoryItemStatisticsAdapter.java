@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hcmus.group14.moneytor.R;
-import com.hcmus.group14.moneytor.services.analyze.AnalyzeViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -63,6 +63,13 @@ public class CategoryItemStatisticsAdapter extends ArrayAdapter<String> {
     // function for update data
     void setItems(HashMap<Category, Long> categoriesDetails) {
         // if want to sort by value -> reorder items by value
+        Collections.sort(items, (Category x, Category y) -> {
+            Long valueX = categoriesDetails.get(x);
+            Long valueY = categoriesDetails.get(y);
+            if (valueX == null) valueX = 0L;
+            if (valueY == null) valueY = 0L;
+            return Long.compare(valueY, valueX);
+        });
         this.categoryDetail = categoriesDetails;
         notifyDataSetChanged();
     }

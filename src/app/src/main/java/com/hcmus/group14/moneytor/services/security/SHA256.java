@@ -1,4 +1,4 @@
-package com.hcmus.group14.moneytor.security;
+package com.hcmus.group14.moneytor.services.security;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

@@ -21,7 +21,7 @@ public class FilterViewModel extends AppViewModel {
     private LiveData<List<Spending>> allSpending = null;
     private LiveData<List<DebtLendAndRelate>> allDebtLend = null;
     private LiveData<List<SpendGoal>> allSpendGoal = null;
-
+    private FilterState _filterState;
     public FilterViewModel(@NonNull Application application) {
         super(application);
         filterState = new MutableLiveData<>();
@@ -29,6 +29,11 @@ public class FilterViewModel extends AppViewModel {
 
     public void setFilterState(FilterState filterState) {
         this.filterState.postValue(filterState);
+        this._filterState = filterState;
+    }
+
+    public FilterState getFilterState() {
+        return this._filterState;
     }
 
     public LiveData<List<Spending>> getAllSpending() {

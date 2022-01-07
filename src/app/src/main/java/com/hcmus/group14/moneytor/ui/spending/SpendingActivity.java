@@ -22,6 +22,7 @@ import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.databinding.ActivitySpendingBinding;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.services.options.FilterViewModel;
+import com.hcmus.group14.moneytor.ui.analysis.AnalysisActivity;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 import com.hcmus.group14.moneytor.utils.FilterSelectUtils;
@@ -58,13 +59,11 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         });
 
         filterViewModel.setFilterState(new FilterState());
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, AddSpendingActivity.class);
-                startActivity(intent);
-            }
+        binding.fab.setOnClickListener(view -> {
+            Intent intent = new Intent(context, AddSpendingActivity.class);
+            startActivity(intent);
         });
+        setAnalyzeButton();
 
     }
 
@@ -75,6 +74,14 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         binding.spendingList.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    private void setAnalyzeButton() {
+        binding.analyzeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AnalysisActivity.class);
+            intent.putExtra("filter_state", filterViewModel.getFilterState());
+            startActivity(intent);
+        });
+
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     void showDialog() {
