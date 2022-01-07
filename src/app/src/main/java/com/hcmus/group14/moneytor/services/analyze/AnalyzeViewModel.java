@@ -33,6 +33,7 @@ public class AnalyzeViewModel extends AndroidViewModel {
     //Get total amount of spendings filtered
     public long getTotal(List<Spending> spendings)
     {
+        if (spendings == null) return 0l;
         long sum = 0L;
         for (Spending spending: spendings)
             sum += spending.getCost();
@@ -54,6 +55,7 @@ public class AnalyzeViewModel extends AndroidViewModel {
     //Get the highest spending across the filtered.
     public long getMaxSpending(List<Spending> spendings)
     {
+        if (spendings == null) return 0l;
         long max = 0;
         for (Spending spending: spendings)
             if (max < spending.getCost())
