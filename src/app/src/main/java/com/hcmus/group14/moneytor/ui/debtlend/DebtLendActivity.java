@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.hcmus.group14.moneytor.R;
@@ -23,8 +21,6 @@ import com.hcmus.group14.moneytor.data.model.DebtLend;
 import com.hcmus.group14.moneytor.data.model.FilterState;
 import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 import com.hcmus.group14.moneytor.databinding.ActivityDebtLendBinding;
-import com.hcmus.group14.moneytor.services.debtlend.DebtLendViewModel;
-import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
@@ -35,16 +31,14 @@ import java.util.List;
 
 public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> {
 
-    private AppBarConfiguration appBarConfiguration;
     private ActivityDebtLendBinding binding;
-    private DebtLendViewModel debtLendViewModel;
     private List<DebtLendAndRelate> debtLends;
     private DebtLendAdapter debtLendAdapter;
     private Context context;
     SearchView searchView;
 
-    private FilterViewModel viewModel;
     private FilterSelectUtils filterSelectUtils;
+
 
     @Override
     public int getLayoutId() {
@@ -60,12 +54,12 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
         this.setTitle(getString(R.string.toolbar_title_debtlend));
         initializeViews();
 
-        viewModel = new ViewModelProvider(this).get(FilterViewModel.class);
-        viewModel.getAllDebtLend().observe(this, debtLends -> {
+        filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
+        filterViewModel.getAllDebtLend().observe(this, debtLends -> {
             this.debtLends = debtLends;
             debtLendAdapter.setDebtLends(debtLends);
         });
-        viewModel.setFilterState(new FilterState());
+        filterViewModel.setFilterState(new FilterState());
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,10 +79,8 @@ public class DebtLendActivity extends NoteBaseActivity<ActivityDebtLendBinding> 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionFilter:
-                showDialog();
-                break;
+        if (item.getItemId() == R.id.actionFilter) {
+            showDialog();
         }
         return super.onOptionsItemSelected(item);
     }

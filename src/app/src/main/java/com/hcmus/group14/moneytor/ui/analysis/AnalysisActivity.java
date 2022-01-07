@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,8 +11,6 @@ import android.widget.GridView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
@@ -37,7 +34,6 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
     private AppBarConfiguration appBarConfiguration;
     private ActivityAnalysisBinding binding;
     private AnalyzeViewModel analyzeViewModel;
-    private FilterViewModel filterViewModel;
     // data
     private CategoryItemStatisticsAdapter categoryAdapter;
     private FilterSelectUtils filterSelectUtils = new FilterSelectUtils(this);
@@ -79,10 +75,8 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionFilter:
-                showDialog();
-                break;
+        if (item.getItemId() == R.id.actionFilter) {
+            showDialog();
         }
         return super.onOptionsItemSelected(item);
     }

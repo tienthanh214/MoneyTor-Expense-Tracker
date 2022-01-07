@@ -36,7 +36,6 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
     private SpendingAdapter spendingAdapter;
     private Context context;
     private SearchView searchView;
-    private FilterViewModel filterViewModel;
     private FilterSelectUtils filterSelectUtils;
 
     @Override
@@ -86,10 +85,8 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionFilter:
-                showDialog();
-                break;
+        if (item.getItemId() == R.id.actionFilter) {
+            showDialog();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -111,6 +108,7 @@ public class SpendingActivity extends NoteBaseActivity<ActivitySpendingBinding> 
         //filterViewModel.setFilterState(new FilterState(cats, DateTimeUtils.getDateInMillis(9, 12, 2021), DateTimeUtils.getDateInMillis(22, 12, 2021)));
         filterViewModel.setFilterState(new FilterState(cats, DateTimeUtils.getMillisByDate(10, 12, 2021), DateTimeUtils.getMillisByDate(22, 12, 2021)));
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

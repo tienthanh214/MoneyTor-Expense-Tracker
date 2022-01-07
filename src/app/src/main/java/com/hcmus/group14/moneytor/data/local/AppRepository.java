@@ -36,11 +36,11 @@ public class AppRepository {
     final private RelateDao relateDao;
     final private WalletDao walletDao;
     //Data repositories
-    private LiveData<List<Spending>> allSpending;
-    private LiveData<List<Reminder>> allReminders;
-    private LiveData<List<SpendGoal>> allSpendGoals;
-    private LiveData<List<DebtLend>> allDebtLends;
-    private LiveData<List<Wallet>> allWallets;
+    private final LiveData<List<Spending>> allSpending;
+    private final LiveData<List<Reminder>> allReminders;
+    private final LiveData<List<SpendGoal>> allSpendGoals;
+    private final LiveData<List<DebtLend>> allDebtLends;
+    private final LiveData<List<Wallet>> allWallets;
     //For FireBase interactions
 
 

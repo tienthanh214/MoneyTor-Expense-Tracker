@@ -36,7 +36,7 @@ public abstract class SpendingDao {
     @Query("DELETE FROM spending_table")
     public abstract void deleteAllSpending();
 
-    @Query("SELECT * FROM spending_table ORDER BY date")
+    @Query("SELECT * FROM spending_table ORDER BY date DESC")
     public abstract LiveData<List<Spending>> getAllSpending();
 
     @Query("select * from spending_table where category in (:cats)")

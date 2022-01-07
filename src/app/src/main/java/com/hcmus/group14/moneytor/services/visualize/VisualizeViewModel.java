@@ -278,7 +278,7 @@ public class VisualizeViewModel extends AndroidViewModel {
         }
         else {
             for (int interval = 0; interval < intervals; interval++) {
-                long cost = 0l;
+                long cost = 0L;
                 lowerLimit = upperLimit - intervalDuration;
                 if (lowerLimit < lowerCap) lowerLimit = lowerCap;
                 String lowerDate = DateTimeUtils.getDate(lowerLimit);

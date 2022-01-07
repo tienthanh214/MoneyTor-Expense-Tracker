@@ -1,83 +1,50 @@
 package com.hcmus.group14.moneytor.ui.visualize;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.GridView;
-import android.widget.ListView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.SearchView;
-import androidx.compose.ui.graphics.drawscope.Fill;
 import androidx.core.content.ContextCompat;
-import androidx.core.os.ConfigurationCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.MPPointF;
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.FilterState;
 import com.hcmus.group14.moneytor.data.model.Spending;
-import com.hcmus.group14.moneytor.databinding.ActivityAnalysisBinding;
 import com.hcmus.group14.moneytor.databinding.ActivityVisualizeBinding;
-import com.hcmus.group14.moneytor.services.analyze.AnalyzeViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.services.visualize.VisualizeViewModel;
-import com.hcmus.group14.moneytor.ui.analysis.CategoryItemStatisticsAdapter;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
-import com.hcmus.group14.moneytor.ui.custom.CategoryAdapter;
 import com.hcmus.group14.moneytor.ui.custom.CategoryLabelAdapter;
-import com.hcmus.group14.moneytor.utils.CategoriesUtils;
-import com.hcmus.group14.moneytor.utils.LanguageUtils;
-import com.hcmus.group14.moneytor.utils.FilterSelectUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding> {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityVisualizeBinding binding;
     private VisualizeViewModel viewModel;
-    private FilterViewModel filterViewModel;
     private int mod = 0;
 
     private PieChart pieChart;
@@ -91,9 +58,6 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
     private ArrayList<VisualizeViewModel.SpendingPeriodInfo> barGroupedEntries;
     private ArrayList<String> barLabels;
     private BarData barData;
-    private FilterSelectUtils filterSelectUtils = new FilterSelectUtils(this);
-
-    private String systemLanguage;
 
     final private int DAILY_MOD = 1;
     final private int WEEKLY_MOD = 2;
@@ -113,10 +77,6 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         viewModel = new ViewModelProvider(this).get(VisualizeViewModel.class);
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
         binding.setViewModel(viewModel);
-
-        systemLanguage = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0).getLanguage();
-        Log.d("@@@ lang", systemLanguage);
-
         pieAllEntries = new ArrayList<>();
         barHashMapEntries = new HashMap<>();
         barGroupedEntries = new ArrayList<>();
@@ -131,39 +91,6 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         initBarChart();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    void showDialog() {
-        AlertDialog alertDialog = filterSelectUtils.createMainDialog();
-        alertDialog.show();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionFilter:
-                showDialog();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private int getLabelLanguage() {
-        if (systemLanguage.equals("en"))
-            return VisualizeViewModel.LANG_ENGLISH;
-        else if (systemLanguage.equals("vi"))
-            return VisualizeViewModel.LANG_VIETNAMESE;
-        else
-            return VisualizeViewModel.LANG_JAPANESE;
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        systemLanguage = newConfig.locale.getLanguage();
-        Log.d("@@@ lang", systemLanguage);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -173,10 +100,9 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
     }
 
     private void updateNewData(List<Spending> spendingList) {
-
         // TODO: get daily/weekly/monthly/annually spending from view model
         barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList, VisualizeViewModel.FILTER_ANNUALLY
-                ,getLabelLanguage()
+        //        ,VisualizeViewModel.LANG_JAPANESE
         );
         pieAllEntries = viewModel.getSpendingProportionByCategory(spendingList);
         barHashMapEntries = viewModel.getDailySpendingAmount(spendingList);

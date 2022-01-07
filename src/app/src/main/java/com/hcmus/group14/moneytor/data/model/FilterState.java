@@ -1,12 +1,17 @@
 package com.hcmus.group14.moneytor.data.model;
 
 import com.hcmus.group14.moneytor.services.options.Category;
+import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FilterState implements Serializable {
+    final static public String WEEK = "Week";
+    final static public String MONTH = "Month";
+    final static public String YEAR = "Year";
+    static public final String[] timePeriods = {WEEK, MONTH, YEAR};
     public List<String> categories;
     public long startDate;
     public long endDate;
@@ -21,6 +26,27 @@ public class FilterState implements Serializable {
         this.endDate = endDate;
     }
 
+    public FilterState(List<String> cats, String period) {
+        this.categories = cats;
+        this.endDate = DateTimeUtils.getCurrentTimeMillis();
+        switch (period) {
+            case WEEK:
+                this.startDate = this.endDate - DateTimeUtils.WEEKLY_INTERVAL;
+                break;
+            case MONTH:
+                this.startDate = this.endDate - DateTimeUtils.MONTHLY_INTERVAL;
+                break;
+            case YEAR:
+                this.startDate = this.endDate - DateTimeUtils.ANNUALLY_INTERVAL;
+                break;
+            default:
+                this.startDate = -1;
+                this.endDate = -1;
+                break;
+        }
+
+    }
+
     public void setCategories(List<Category> cats) {
         if (categories == null)
             categories = new ArrayList<>();
@@ -28,4 +54,6 @@ public class FilterState implements Serializable {
             categories.add(cat.getId());
         }
     }
+
+
 }

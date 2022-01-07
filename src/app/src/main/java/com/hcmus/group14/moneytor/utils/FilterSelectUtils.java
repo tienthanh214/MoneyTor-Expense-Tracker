@@ -16,8 +16,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.databinding.ViewDataBinding;
 
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.model.FilterState;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.ui.analysis.AnalysisActivity;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
@@ -31,11 +33,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FilterSelectUtils {
-    private List<Category> selectedCategories;
+    private List<String> selectedCategories;
     private List<String> selectedCategoriesString;
     private final List<Category> allCategories = CategoriesUtils.getDefaultCategories();
-    private HashMap<String, Category> stringToCategory;
-    private final String[] timePeriods = {"Week", "Month", "Year"};
+    final private HashMap<String, Category> stringToCategory;
+    private final String[] timePeriods = FilterState.timePeriods;
     private String selectedPeriod;
     private final Context context;
     AlertDialog mainDialogInstance;
@@ -53,7 +55,7 @@ public class FilterSelectUtils {
         context = parentContext;
     }
 
-    public List<Category> getSelectedCategories() {
+    public List<String> getSelectedCategories() {
         return selectedCategories;
     }
 
@@ -87,13 +89,13 @@ public class FilterSelectUtils {
         confirmBtn.setOnClickListener(v12 -> {
             TextView tv = parentView.findViewById(R.id.categoriesSelect);
             List<String> newSelectedString = new ArrayList<>();
-            List<Category> newSelectedCategory = new ArrayList<>();
+            List<String> newSelectedCategory = new ArrayList<>();
             for (int i = 0; i < checkboxGroup.getChildCount(); i++) {
                 CheckBox check = (CheckBox) checkboxGroup.getChildAt(i);
                 if (check.isChecked()) {
                     String temp = check.getText().toString();
                     newSelectedString.add(temp);
-                    newSelectedCategory.add(stringToCategory.get(temp));
+                    newSelectedCategory.add(stringToCategory.get(temp).getId());
                 }
             }
             selectedCategories = newSelectedCategory;
@@ -160,7 +162,7 @@ public class FilterSelectUtils {
         confirmBtn.setOnClickListener(v1 -> {
             // filter data lại từ selectedCategories
             if(context instanceof SpendingActivity){
-                //((SpendingActivity) context).testFilter();
+//                ((SpendingActivity) context).testFilter();
                 Log.d("aaaaa","spending");
                 // gọi hàm filter public ở class tương ứng truyền category ở scope này vào.
             }
@@ -176,6 +178,10 @@ public class FilterSelectUtils {
             if(context instanceof VisualizeActivity){
                 Log.d("aaaaa","visualize");
             }
+
+
+            ((NoteBaseActivity<ViewDataBinding>)context).setFilter(getSelectedCategories(), getSelectedPeriod());
+
             alertDialog.dismiss();
         });
         cancelBtn.setOnClickListener(v14 -> alertDialog.dismiss());

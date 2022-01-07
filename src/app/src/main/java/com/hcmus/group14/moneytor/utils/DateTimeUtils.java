@@ -13,6 +13,11 @@ public class DateTimeUtils {
     final private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     @SuppressLint("ConstantLocale")
     final private static SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    // constant
+    private static final long DAILY_INTERVAL = 1000 * 24 * 60 * 60;
+    public static final long WEEKLY_INTERVAL = 7 * DAILY_INTERVAL;
+    public static final long MONTHLY_INTERVAL = 30 * DAILY_INTERVAL;
+    public static final long ANNUALLY_INTERVAL = 365 * DAILY_INTERVAL;
 
     public static String getDate(long time) {
         if (time < 0)

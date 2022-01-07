@@ -23,7 +23,6 @@ import com.hcmus.group14.moneytor.data.model.SpendGoal;
 import com.hcmus.group14.moneytor.databinding.ActivityGoalBinding;
 import com.hcmus.group14.moneytor.services.goal.SpendGoalViewModel;
 import com.hcmus.group14.moneytor.services.options.FilterViewModel;
-import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.utils.FilterSelectUtils;
 
@@ -40,7 +39,6 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
     private Context context;
     private SearchView searchView;
 
-    private FilterViewModel viewModel;
     private FilterSelectUtils filterSelectUtils;
 
     @Override
@@ -58,12 +56,12 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
 
         initializeViews();
 
-        viewModel = new ViewModelProvider(this).get(FilterViewModel.class);
-        viewModel.getAllSpendGoal().observe(this, goalList -> {
+        filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
+        filterViewModel.getAllSpendGoal().observe(this, goalList -> {
             this.spendGoals = goalList;
             this.goalAdapter.setSpendGoals(goalList);
         });
-        viewModel.setFilterState(new FilterState());
+        filterViewModel.setFilterState(new FilterState());
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,10 +88,8 @@ public class GoalActivity extends NoteBaseActivity<ActivityGoalBinding> {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionFilter:
-                showDialog();
-                break;
+        if (item.getItemId() == R.id.actionFilter) {
+            showDialog();
         }
         return super.onOptionsItemSelected(item);
     }

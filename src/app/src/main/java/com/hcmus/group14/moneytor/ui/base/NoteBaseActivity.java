@@ -9,8 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import com.hcmus.group14.moneytor.data.model.FilterState;
+import com.hcmus.group14.moneytor.services.options.FilterViewModel;
+
+import java.util.List;
+
 public abstract class NoteBaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
     private T viewDataBinding;
+    protected FilterViewModel filterViewModel;
 
     public abstract @LayoutRes int getLayoutId();
 
@@ -25,4 +31,11 @@ public abstract class NoteBaseActivity<T extends ViewDataBinding> extends AppCom
     protected T getViewDataBinding() {
         return viewDataBinding;
     }
+
+    public void setFilter(List<String> cats, String period) {
+        Log.i("@@@ set", cats.toString() + " " + period);
+        if (filterViewModel != null) {
+            filterViewModel.setFilterState(new FilterState(cats, period));
+        }
+    };
 }
