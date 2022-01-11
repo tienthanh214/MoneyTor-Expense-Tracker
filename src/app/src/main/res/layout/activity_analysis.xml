@@ -33,7 +33,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_top_text"
                 android:layout_marginBottom="20dp"
-                android:textSize="40sp" />
+                android:textSize="40sp"
+                android:textAlignment="center"/>
 
             <View
                 android:layout_width="match_parent"

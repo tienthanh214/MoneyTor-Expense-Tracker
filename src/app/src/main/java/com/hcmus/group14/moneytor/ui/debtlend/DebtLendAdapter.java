@@ -19,6 +19,7 @@ import com.hcmus.group14.moneytor.data.model.relation.DebtLendAndRelate;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
+import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.List;
 import java.util.Locale;
@@ -99,7 +100,7 @@ public class DebtLendAdapter extends RecyclerView.Adapter<DebtLendAdapter.DebtLe
         }
 
         public void setValue(long value) {
-            valueView.setText(String.format(Locale.US, "%,d", value) + " VNĐ");
+            valueView.setText(InputUtils.getCurrency(value));
         }
 
         public DebtLendViewHolder(@NonNull View itemView, DebtLendAdapter adapter) {

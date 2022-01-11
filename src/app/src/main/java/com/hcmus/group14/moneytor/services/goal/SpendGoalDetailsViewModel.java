@@ -1,7 +1,7 @@
 package com.hcmus.group14.moneytor.services.goal;
 
 import android.app.Application;
-import android.util.Log;
+import android.text.Editable;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -40,7 +40,6 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
     public void uploadData(SpendGoal goal) {
         if (goal != null && _goal == null) {
             _goal = goal;
-            Log.i("@@@ load", _goal.toString());
             setAmount(_goal.getSpendingCap());
             setDescription(_goal.getDesc());
             setDate(_goal.getDate());
@@ -62,7 +61,7 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
     }
 
     public void setAmount(long amount) {
-        _amount.setValue(String.valueOf(amount));
+        _amount.setValue(InputUtils.getCurrencyFormat(amount));
     }
 
     public MutableLiveData<String> getDate() {
@@ -79,9 +78,12 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
 
     public void setCategory(String id) {
         int position = CategoriesUtils.findPositionById(id);
-        Log.i("set @@@", position + " " + id);
         if (position != -1)
             _category.setValue(position);
+    }
+
+    public void afterTextChanged(Editable s) {
+        _amount.setValue(InputUtils.getCurrencyFormat(s));
     }
 
     void updateData() {
@@ -91,7 +93,7 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
         _goal.setDate(DateTimeUtils.getDateInMillis(_date.getValue()));
         _goal.setCategory(CategoriesUtils.getCategoryIdByPosition(_category.getValue()));
         if (_amount.getValue() != null && !_amount.getValue().isEmpty()) {
-            _goal.setSpendingCap(Long.parseLong(_amount.getValue()));
+            _goal.setSpendingCap(InputUtils.getCurrencyInLong(_amount.getValue()));
         } else {
             _goal.setSpendingCap(0);
         }
@@ -99,7 +101,6 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
 
     public InputUtils saveSpendGoal() {
         updateData();
-        Log.i("@@@ goal", _goal.toString());
         InputUtils errors = new InputUtils();
         if (_goal.getCategory().isEmpty())
             errors.setError(InputUtils.Type.CATEGORY);

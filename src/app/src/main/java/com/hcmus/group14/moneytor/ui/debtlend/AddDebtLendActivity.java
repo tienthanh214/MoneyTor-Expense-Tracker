@@ -1,7 +1,6 @@
 package com.hcmus.group14.moneytor.ui.debtlend;
 
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -18,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.data.model.Relate;
@@ -37,7 +34,6 @@ import java.util.List;
 public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetailsBinding> implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private final int REQUEST_CODE_RELATE_CONTACT = 1234;
-    private AppBarConfiguration appBarConfiguration;
     private ActivityDebtLendDetailsBinding binding;
     private DebtLendDetailsViewModel viewModel;
     private int debtLendId;
@@ -56,7 +52,7 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
         viewModel = new ViewModelProvider(this).get(DebtLendDetailsViewModel.class);
         binding.setViewModel(viewModel);
 
-        int debtLendId = (int) getIntent().getIntExtra("debt_id", -1);
+        debtLendId = (int) getIntent().getIntExtra("debt_id", -1);
         if (debtLendId != -1) {
             // if click on item list view, load full info of a spending
             viewModel.getDebtLendAndRelateById(debtLendId).observe(this, debtLend -> {
@@ -106,13 +102,13 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionSave:
-                save();
-                return true;
-            case R.id.actionDelete:
-                delete();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.actionSave) {
+            save();
+            return true;
+        } else if (itemId == R.id.actionDelete) {
+            delete();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -145,22 +141,14 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
         builder.setTitle("Alert!");
         builder.setCancelable(false);
 
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO: viewModel.delete()
-                Toast.makeText(getApplicationContext(), "Debt/Lend deleted",
-                        Toast.LENGTH_LONG).show();
-                AddDebtLendActivity.this.finish();
-            }
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            viewModel.deleteDebtLend();
+            Toast.makeText(getApplicationContext(), "Debt/Lend deleted",
+                    Toast.LENGTH_LONG).show();
+            AddDebtLendActivity.this.finish();
         });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
@@ -176,24 +164,15 @@ public class AddDebtLendActivity extends NoteBaseActivity<ActivityDebtLendDetail
 
     private void setDatePickerDialog() {
         EditText date = binding.editTextDate;
-        date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR);
-                int mMonth = c.get(Calendar.MONTH);
-                int mDay = c.get(Calendar.DAY_OF_MONTH);
+        date.setOnClickListener(v -> {
+            final Calendar c = Calendar.getInstance();
+            int mYear = c.get(Calendar.YEAR);
+            int mMonth = c.get(Calendar.MONTH);
+            int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AddDebtLendActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-            }
+            DatePickerDialog datePickerDialog = new DatePickerDialog(AddDebtLendActivity.this,
+                    (view, year, monthOfYear, dayOfMonth) -> date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year), mYear, mMonth, mDay);
+            datePickerDialog.show();
         });
     }
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.hcmus.group14.moneytor.R;
 import com.hcmus.group14.moneytor.services.options.Category;
+import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public class CategoryItemStatisticsAdapter extends ArrayAdapter<String> {
         if (categoryDetail != null) {
             Long value = categoryDetail.get(category);
             if (value == null) value = 0L;
-            textView.setText(String.format(Locale.US, "%,d", value) + " VNĐ");
+            textView.setText(InputUtils.getCurrency(value));
         }
         return view;
     }

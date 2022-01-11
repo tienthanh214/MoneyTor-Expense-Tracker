@@ -3,7 +3,6 @@ package com.hcmus.group14.moneytor.ui.spending;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,9 @@ import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
+import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.List;
-import java.util.Locale;
 
 public class SpendingAdapter extends RecyclerView.Adapter<SpendingAdapter.SpendingViewHolder> {
     private final LayoutInflater layoutInflater;
@@ -87,7 +86,7 @@ public class SpendingAdapter extends RecyclerView.Adapter<SpendingAdapter.Spendi
         }
 
         public void setValue(long value) {
-            valueView.setText(String.format(Locale.US, "%,d", value) + " VNĐ");
+            valueView.setText(InputUtils.getCurrency(value));
         }
         public void setImage(int color, int resource){
             imageView.setImageResource(resource);

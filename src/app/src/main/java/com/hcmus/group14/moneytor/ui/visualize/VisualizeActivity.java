@@ -92,7 +92,6 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
         barChart = binding.barChart;
         initPieChart();
         initBarChart();
-        Log.i("@@@ onCreate", "done");
     }
 
     @Override

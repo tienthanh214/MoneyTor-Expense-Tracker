@@ -1,7 +1,7 @@
 package com.hcmus.group14.moneytor.services.debtlend;
 
 import android.app.Application;
-import android.util.Log;
+import android.text.Editable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +44,10 @@ public class DebtLendDetailsViewModel extends AppViewModel {
 
     public LiveData<List<DebtLendAndRelate>> getDebtLendAndRelateById(int id) {
         return appRepository.getDebtLendAndRelateById(id);
+    }
+
+    public void afterTextChanged(Editable s) {
+        value.setValue(InputUtils.getCurrencyFormat(s));
     }
 
     public void uploadData(List<DebtLendAndRelate> debtLendAndRelateList) {
@@ -90,7 +94,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
         category.setValue(position);
     }
 
-    public void setValue(long pValue) {value.setValue(String.valueOf(pValue));
+    public void setValue(long pValue) {value.setValue(InputUtils.getCurrencyFormat(pValue));
     }
 
     public void setDebt(boolean pDebt) {
@@ -117,8 +121,9 @@ public class DebtLendDetailsViewModel extends AppViewModel {
         _debtLend.setDesc(desc.getValue());
         _debtLend.setDate(DateTimeUtils.getDateInMillis(date.getValue()));
         // _debtLend.setDebt(debt.getValue());
-        boolean pDebt = debt.getValue();
-        if (pDebt) _debtLend.setDebt(1);
+        Boolean pDebt = debt.getValue();
+        if (pDebt == null || pDebt)
+            _debtLend.setDebt(1);
         else _debtLend.setDebt(0);
         if (newRelate == null)
         {
@@ -132,7 +137,7 @@ public class DebtLendDetailsViewModel extends AppViewModel {
 
 
         if (value.getValue() != null && ! value.getValue().isEmpty()) {
-            _debtLend.setValue(Long.parseLong(value.getValue()));
+            _debtLend.setValue(InputUtils.getCurrencyInLong(value.getValue()));
         } else {
             _debtLend.setValue(-1);
         }

@@ -17,6 +17,7 @@ import com.hcmus.group14.moneytor.data.model.SpendGoal;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
+import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.List;
 import java.util.Locale;
@@ -83,7 +84,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
         }
 
         public void setValue(long value) {
-            valueView.setText(String.format(Locale.US, "%,d", value) + " VNĐ");
+            valueView.setText(InputUtils.getCurrency(value));
         }
 
         public void setImage(int color, int resource){

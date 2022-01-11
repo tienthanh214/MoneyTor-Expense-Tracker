@@ -41,7 +41,8 @@
                     android:hint="Amount"
                     android:inputType="number"
                     android:paddingVertical="@dimen/text_padding_vertical"
-                    android:text="@={viewModel.value}"
+                    android:text="@{viewModel.value}"
+                    android:afterTextChanged="@{viewModel.afterTextChanged}"
                     android:textSize="@dimen/amount_size" />
             </LinearLayout>
 

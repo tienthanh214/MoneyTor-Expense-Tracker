@@ -24,6 +24,7 @@ import com.hcmus.group14.moneytor.services.options.FilterViewModel;
 import com.hcmus.group14.moneytor.ui.base.NoteBaseActivity;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.FilterSelectUtils;
+import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,9 +98,9 @@ public class AnalysisActivity extends NoteBaseActivity<ActivityAnalysisBinding> 
         // update category statistics
         categoryAdapter.setItems(analyzeViewModel.getDetailsForCategories(spendingList));
         // update total amount
-        binding.totalAmountAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getTotal(spendingList)) + " VNĐ");
-        binding.averageByDateAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getAverage(spendingList)) + " VNĐ");
-        binding.highestSpendingAnalyze.setText(String.format(Locale.US, "%,d", analyzeViewModel.getMaxSpending(spendingList)) + " VNĐ");
+        binding.totalAmountAnalyze.setText(InputUtils.getCurrency(analyzeViewModel.getTotal(spendingList)));
+        binding.averageByDateAnalyze.setText(InputUtils.getCurrency(analyzeViewModel.getAverage(spendingList)));
+        binding.highestSpendingAnalyze.setText(InputUtils.getCurrency(analyzeViewModel.getMaxSpending(spendingList)));
 
         ArrayList<Category> highestCategory = analyzeViewModel.getMaxSpendingCategory(spendingList);
         if (!highestCategory.isEmpty()) {

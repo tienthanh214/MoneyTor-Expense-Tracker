@@ -2,9 +2,7 @@ package com.hcmus.group14.moneytor.services.spending;
 
 import android.app.Application;
 import android.text.Editable;
-import android.text.Selection;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -19,7 +17,6 @@ import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 import com.hcmus.group14.moneytor.utils.InputUtils;
 
 import java.util.List;
-import java.util.Locale;
 
 public class SpendingDetailsViewModel extends AppViewModel {
     private final MutableLiveData<String> _title;
@@ -93,7 +90,7 @@ public class SpendingDetailsViewModel extends AppViewModel {
     }
 
     public void setCost(long cost) {
-        _cost.setValue(String.format(Locale.US, "%,d", cost));
+        _cost.setValue(InputUtils.getCurrencyFormat(cost));
     }
 
     public void setCategory(String id) {
@@ -122,16 +119,7 @@ public class SpendingDetailsViewModel extends AppViewModel {
     }
 
     public void afterTextChanged(Editable s) {
-        String str = s.toString();
-        long value = 0L;
-        if (!str.isEmpty()) {
-            str = str.replace(",", "");
-            if (str.length() > 13)
-                str = str.substring(0, 13);
-            value = Long.parseLong(str);
-            Selection.setSelection(s, s.toString().length());
-        }
-        _cost.postValue(String.format(Locale.US, "%,d", value));
+        _cost.postValue(InputUtils.getCurrencyFormat(s));
     }
 
     void updateData() {
@@ -142,7 +130,7 @@ public class SpendingDetailsViewModel extends AppViewModel {
         _spending.setDate(DateTimeUtils.getDateInMillis(_date.getValue()));
         _spending.setCategory(CategoriesUtils.getCategoryIdByPosition(_category.getValue()));
         if (_cost.getValue() != null && !_cost.getValue().isEmpty()) {
-            _spending.setCost(Long.parseLong(_cost.getValue().replace(",", "")));
+            _spending.setCost(InputUtils.getCurrencyInLong(_cost.getValue()));
         } else {
             _spending.setCost(-1);
         }
