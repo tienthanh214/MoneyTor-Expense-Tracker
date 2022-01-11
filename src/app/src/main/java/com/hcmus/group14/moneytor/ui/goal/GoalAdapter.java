@@ -106,7 +106,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
             // open activity
             int position = this.getAdapterPosition();
             Intent intent = new Intent(context, AddGoalActivity.class);
-            intent.putExtra("goal_id", goals.get(position).getGoalID());
+            intent.putExtra("goal_obj", goals.get(position));
             context.startActivity(intent);
         }
     }

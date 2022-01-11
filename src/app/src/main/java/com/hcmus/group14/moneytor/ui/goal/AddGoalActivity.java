@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.hcmus.group14.moneytor.R;
+import com.hcmus.group14.moneytor.data.model.SpendGoal;
 import com.hcmus.group14.moneytor.databinding.ActivityGoalDetailsBinding;
 import com.hcmus.group14.moneytor.services.goal.SpendGoalDetailsViewModel;
 import com.hcmus.group14.moneytor.services.options.Category;
@@ -36,7 +37,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
     private AppBarConfiguration appBarConfiguration;
     private ActivityGoalDetailsBinding binding;
     private SpendGoalDetailsViewModel viewModel;
-    private int goalId;
+    private SpendGoal goal;
 
     @Override
     public int getLayoutId() {
@@ -52,12 +53,10 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
         viewModel = new ViewModelProvider(this).get(SpendGoalDetailsViewModel.class);
         binding.setViewModel(viewModel);
 
-        goalId = (int)getIntent().getIntExtra("goal_id", 0);
-        if (goalId != 0) {
+        goal = (SpendGoal)getIntent().getSerializableExtra("goal_obj");
+        if (goal != null) {
             // if click on item list view, load full info of a goal
-            viewModel.getSpendGoalById(goalId).observe(this, goal -> {
-                viewModel.uploadData(goal);
-            });
+            viewModel.uploadData(goal);
         }
 
         setSpinner();
@@ -66,7 +65,7 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (goalId == 0) {
+        if (goal == null) {
             menu.findItem(R.id.actionDelete).setEnabled(false);
             menu.findItem(R.id.actionDelete).setVisible(false);
         }
@@ -75,13 +74,13 @@ public class AddGoalActivity extends NoteBaseActivity<ActivityGoalDetailsBinding
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionSave:
-                saveGoal();
-                return true;
-            case R.id.actionDelete:
-                deleteGoal();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.actionSave) {
+            saveGoal();
+            return true;
+        } else if (itemId == R.id.actionDelete) {
+            deleteGoal();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

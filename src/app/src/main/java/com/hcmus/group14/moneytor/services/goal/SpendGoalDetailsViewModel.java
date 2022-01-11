@@ -31,16 +31,15 @@ public class SpendGoalDetailsViewModel extends AppViewModel {
         _date = new MutableLiveData<>(DateTimeUtils.getDate(-1));
         _description = new MutableLiveData<>("");
         _category = new MutableLiveData<>();
-
     }
 
     public LiveData<List<SpendGoal>> getSpendGoalById(int goalId) {
         return appRepository.getSpendGoalById(goalId);
     }
 
-    public void uploadData(List<SpendGoal> goalList) {
-        if (goalList.size() > 0 && _goal == null) {
-            _goal = goalList.get(0);
+    public void uploadData(SpendGoal goal) {
+        if (goal != null && _goal == null) {
+            _goal = goal;
             Log.i("@@@ load", _goal.toString());
             setAmount(_goal.getSpendingCap());
             setDescription(_goal.getDesc());
