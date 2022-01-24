@@ -76,4 +76,35 @@
     <string name="october">T10</string>
     <string name="november">T11</string>
     <string name="december">T12</string>
+    <!-- Detail note -->
+    <string name="amount">Giá trị</string>
+    <string name="category">Loại</string>
+    <string name="date_spending">Ngày chi tiêu</string>
+    <string name="date_debt">Ngày vay nợ</string>
+    <string name="title">Tiêu đề</string>
+    <string name="description">Mô tả</string>
+    <string name="share_with">Chia sẻ hóa đơn</string>
+    <string name="tap_to_choose_contacts">Nhấn để chọn liên hệ</string>
+    <string name="date_goal">Ngày đến hạn</string>
+    <string name="target">Người vay nợ</string>
+    <string name="debt_or_lend">Ghi nợ hoặc cho vay</string>
+    <string name="debt">Nợ</string>
+    <string name="lend">Cho vay</string>
+    <!-- Analysis -->
+    <string name="total">Tổng</string>
+    <string name="average_by_date">Trung bình\nmỗi ngày</string>
+    <string name="spending_categories">Tổng chi tiêu trên từng loại</string>
+    <string name="highest_spending">Chi tiêu cao nhất</string>
+    <string name="category_summary">Thống kê trên mỗi loại</string>
+    <!-- Visualize -->
+    <string name="daily_summary">Thống kê mỗi ngày</string>
+    <string name="weekly_summary">Thống kê tuần qua</string>
+    <string name="monthly_summary">Thống kê tháng qua</string>
+    <string name="annually_summary">Thống kê năm qua</string>
+    <!-- Setting -->
+    <string name="reminder_setting">Cài đặt nhắc nhở</string>
+    <string name="display_homescreen_widget">Bong bóng thông báo</string>
+    <string name="sync_data">Đồng bộ dữ liệu</string>
+    <string name="reminder_notification">Nhắc nhở ghi chú</string>
+    <string name="select_time">Chọn thời điểm</string>
 </resources>

@@ -2,28 +2,21 @@ package com.hcmus.group14.moneytor.services.visualize;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 
-
 import com.hcmus.group14.moneytor.R;
-import com.hcmus.group14.moneytor.data.local.dao.SpendingDao;
 import com.hcmus.group14.moneytor.data.model.Spending;
 import com.hcmus.group14.moneytor.services.options.Category;
 import com.hcmus.group14.moneytor.utils.CategoriesUtils;
 import com.hcmus.group14.moneytor.utils.DateTimeUtils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 
 public class VisualizeViewModel extends AndroidViewModel {
@@ -324,5 +317,18 @@ public class VisualizeViewModel extends AndroidViewModel {
            System.out.println(spendingPeriodInfo.period);
         }
         return returnResult;
+    }
+
+    public int getFilterTypeId(int filterType) {
+        switch (filterType) {
+            case FILTER_WEEKLY:
+                return R.string.weekly_summary;
+            case FILTER_MONTHLY:
+                return R.string.monthly_summary;
+            case FILTER_ANNUALLY:
+                return R.string.annually_summary;
+            default:
+                return R.string.daily_summary;
+        }
     }
 }

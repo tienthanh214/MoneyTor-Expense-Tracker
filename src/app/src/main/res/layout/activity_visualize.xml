@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/text_padding_horizontal"
                 android:paddingVertical="@dimen/text_padding_vertical"
-                android:text="Category summary"
+                android:text="@string/category_summary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/text_padding_horizontal"
                 android:paddingVertical="@dimen/text_padding_vertical"
-                android:text="Daily summary"
+                android:text="@string/daily_summary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 

@@ -76,4 +76,35 @@
     <string name="october">Oct</string>
     <string name="november">Nov</string>
     <string name="december">Dec</string>
+    <!-- Detail note-->
+    <string name="amount">Amount</string>
+    <string name="category">Category</string>
+    <string name="date_spending">Date</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="share_with">Share with</string>
+    <string name="tap_to_choose_contacts">Tap to choose contacts</string>
+
+    <string name="date_debt">Date</string>
+    <string name="date_goal">Date</string>
+    <string name="target">Target</string>
+    <string name="debt_or_lend">Debt or lend</string>
+    <string name="debt">Debt</string>
+    <string name="lend">Lend</string>
+    <!-- Analyze -->
+    <string name="total">Total</string>
+    <string name="average_by_date">Average by date</string>
+    <string name="spending_categories">Spending categories</string>
+    <string name="highest_spending">Highest spending</string>
+    <string name="category_summary">Category summary</string>
+    <!-- Visualize -->
+    <string name="daily_summary">Daily summary</string>
+    <string name="weekly_summary">Weekly summary</string>
+    <string name="monthly_summary">Monthly summary</string>
+    <string name="annually_summary">Annually summary</string>
+    <string name="reminder_setting">Reminder setting</string>
+    <string name="display_homescreen_widget">Display homescreen widget</string>
+    <string name="sync_data">Sync data</string>
+    <string name="reminder_notification">Reminder notification</string>
+    <string name="select_time">Select time</string>
 </resources>

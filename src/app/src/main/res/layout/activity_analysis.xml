@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:text="Total"
+                android:text="@string/total"
                 android:textSize="25sp" />
 
             <TextView
@@ -53,7 +53,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/text_padding_horizontal"
                     android:paddingVertical="@dimen/text_padding_vertical"
-                    android:text="Average by date"
+                    android:text="@string/average_by_date"
                     android:textSize="20sp" />
 
                 <View
@@ -90,7 +90,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/text_padding_horizontal"
                     android:paddingVertical="@dimen/text_padding_vertical"
-                    android:text="Spending categories"
+                    android:text="@string/spending_categories"
                     android:textSize="20sp" />
 
                 <View
@@ -121,7 +121,7 @@
                 android:layout_weight="2"
                 android:paddingVertical="@dimen/text_padding_vertical"
                 android:paddingHorizontal="@dimen/text_padding_horizontal"
-                android:text="Highest spending"
+                android:text="@string/highest_spending"
                 android:textSize="25sp"
                 android:gravity="left"/>
 

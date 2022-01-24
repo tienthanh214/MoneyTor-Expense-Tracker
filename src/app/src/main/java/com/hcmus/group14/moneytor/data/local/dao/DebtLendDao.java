@@ -37,7 +37,7 @@ public abstract class DebtLendDao {
     @Query("select * from debt_lend_table where recordId = :id")
     abstract public DebtLend[] getDebtLendByID(int id);
     //Cross reference data retrieval
-    @Transaction @Query("select * from debt_lend_table")
+    @Transaction @Query("select * from debt_lend_table order by date desc, recordId desc")
     abstract public LiveData<List<DebtLendAndRelate>> getAllDebtLendAndRelate();
     @Transaction @Query("select * from debt_lend_table where recordId = :id")
     abstract public LiveData<List<DebtLendAndRelate>> getDebtLendAndRelateById(int id);

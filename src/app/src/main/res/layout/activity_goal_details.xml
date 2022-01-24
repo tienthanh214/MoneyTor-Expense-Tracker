@@ -33,13 +33,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
+                android:afterTextChanged="@{viewModel.afterTextChanged}"
                 android:background="@drawable/text_view_background"
                 android:gravity="center_horizontal"
+                android:hint="@string/amount"
                 android:inputType="number"
                 android:paddingVertical="@dimen/text_padding_vertical"
-                android:hint="Amount"
                 android:text="@{viewModel.amount}"
-                android:afterTextChanged="@{viewModel.afterTextChanged}"
                 android:textSize="@dimen/amount_size" />
         </LinearLayout>
 
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_top_text"
                         android:layout_marginBottom="@dimen/margin_bottom_text"
-                        android:text="Category"
+                        android:text="@string/category"
                         android:textSize="@dimen/text_size" />
 
                     <Spinner
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_top_text"
                         android:layout_marginBottom="@dimen/margin_bottom_text"
-                        android:text="Date"
+                        android:text="@string/date_goal"
                         android:textSize="@dimen/text_size" />
 
                     <EditText
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_top_text"
                         android:layout_marginBottom="@dimen/margin_bottom_text"
-                        android:text="Description"
+                        android:text="@string/description"
                         android:textSize="@dimen/text_size" />
 
                     <EditText
@@ -114,7 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/text_view_background"
-                        android:hint="Description"
+                        android:hint="@string/description"
                         android:text="@={viewModel.description}"
                         android:paddingVertical="@dimen/text_padding_vertical"
                         android:paddingLeft="@dimen/text_padding_horizontal"

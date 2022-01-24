@@ -73,7 +73,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:maxLines="2"
                 android:padding="10dp"
-                android:text="Reminder setting"
+                android:text="@string/reminder_setting"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -100,7 +100,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:maxLines="2"
                 android:padding="10dp"
-                android:text="Display homescreen widget"
+                android:text="@string/display_homescreen_widget"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -120,7 +120,7 @@
             android:layout_margin="10dp"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="Sync data" />
+            android:text="@string/sync_data" />
 
         <View
             android:id="@+id/divider"

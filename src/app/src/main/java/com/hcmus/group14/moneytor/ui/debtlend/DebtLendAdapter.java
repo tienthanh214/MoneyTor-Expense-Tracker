@@ -50,7 +50,7 @@ public class DebtLendAdapter extends RecyclerView.Adapter<DebtLendAdapter.DebtLe
         holder.setValue(currentDebtLend.getValue());
         holder.setDesc(currentDebtLend.getDesc());
         int isDebt =currentDebtLend.getDebt();
-        String title = (isDebt == 1 ? "Debt" : "Lend") + " " + currentRelate.getName();
+        String title = context.getString(isDebt == 1 ? R.string.debt : R.string.lend) + " " + currentRelate.getName();
         holder.setTitle(title);
         Category category = CategoriesUtils.findCategoryById(currentDebtLend.getCategory());
         holder.setImage(category.getColor(),category.getResourceId());
@@ -74,12 +74,12 @@ public class DebtLendAdapter extends RecyclerView.Adapter<DebtLendAdapter.DebtLe
     }
 
     public class DebtLendViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private DebtLendAdapter adapter;
-        private TextView titleView;
-        private TextView descView;
-        private TextView dateView;
-        private TextView valueView;
-        private ImageView imageView;
+        private final DebtLendAdapter adapter;
+        private final TextView titleView;
+        private final TextView descView;
+        private final TextView dateView;
+        private final TextView valueView;
+        private final ImageView imageView;
 
 
         public void setImage(int color, int resource){

@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -61,11 +60,6 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private final FilterSelectUtils filterSelectUtils = new FilterSelectUtils(this);
 
-
-    final private int DAILY_MOD = 1;
-    final private int WEEKLY_MOD = 2;
-    final private int MONTHLY_MOD = 3;
-    final private int ANNUALLY_MOD = 4;
 
     @Override
     public int getLayoutId() {
@@ -129,10 +123,12 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
 
     private void updateNewData(List<Spending> spendingList) {
         // TODO: get daily/weekly/monthly/annually spending from view model
+        int filterType = filterViewModel.getFilterState().filterType;
         barGroupedEntries = viewModel.getGroupedSpendingAmount(spendingList,
-                filterViewModel.getFilterState().filterType
+                filterType
         //        ,VisualizeViewModel.LANG_JAPANESE
         );
+        binding.barChartTitle.setText(getString(viewModel.getFilterTypeId(filterType)));
         pieAllEntries = viewModel.getSpendingProportionByCategory(spendingList);
         barHashMapEntries = viewModel.getDailySpendingAmount(spendingList);
         setPieChartData();
@@ -173,8 +169,9 @@ public class VisualizeActivity extends NoteBaseActivity<ActivityVisualizeBinding
             if (percentage > minPercentageToShowLabelOnChart) {
                 Drawable drawable = ContextCompat.getDrawable(VisualizeActivity.this,
                         entry.category.getResourceId());
+                assert drawable != null;
                 drawable.setTint(Color.parseColor("#FFFFFF"));
-                pieEntries.add(new PieEntry(entry.amount, String.valueOf((int)(entry.percentage * 100)) + "%"));
+                pieEntries.add(new PieEntry(entry.amount, (int) (entry.percentage * 100) + "%"));
             } else {
                 pieEntries.add(new PieEntry(entry.amount));
             }

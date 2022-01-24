@@ -21,6 +21,6 @@
     <dimen name="main_scr_center_btn_size">110dp</dimen>
     <dimen name="main_scr_text_size">13sp</dimen>
 
-    <dimen name="text_padding_horizontal">20dp</dimen>
+    <dimen name="text_padding_horizontal">10dp</dimen>
     <dimen name="text_padding_vertical">10dp</dimen>
 </resources>

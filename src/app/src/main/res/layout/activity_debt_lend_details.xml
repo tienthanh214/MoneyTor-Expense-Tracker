@@ -20,16 +20,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_margin="40dp"
                 android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_coin" />
+                    android:src="@drawable/ic_coin"/>
 
                 <EditText
                     android:id="@+id/input_amount"
@@ -38,7 +37,7 @@
                     android:layout_weight="4"
                     android:background="@drawable/text_view_background"
                     android:gravity="center_horizontal"
-                    android:hint="Amount"
+                    android:hint="@string/amount"
                     android:inputType="number"
                     android:paddingVertical="@dimen/text_padding_vertical"
                     android:text="@{viewModel.value}"
@@ -69,7 +68,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_top_text"
                             android:layout_marginBottom="@dimen/margin_bottom_text"
-                            android:text="Category"
+                            android:text="@string/category"
                             android:textSize="@dimen/text_size" />
 
                         <Spinner
@@ -87,7 +86,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_top_text"
                             android:layout_marginBottom="@dimen/margin_bottom_text"
-                            android:text="Date"
+                            android:text="@string/date_debt"
                             android:textSize="@dimen/text_size" />
 
                         <EditText
@@ -99,7 +98,7 @@
                             android:drawablePadding="10dp"
                             android:focusable="false"
                             android:paddingVertical="@dimen/text_padding_vertical"
-                            android:paddingLeft="@dimen/text_padding_horizontal"
+                            android:paddingStart="@dimen/text_padding_horizontal"
                             android:text="@={viewModel.date}" />
 
                         <TextView
@@ -108,7 +107,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_top_text"
                             android:layout_marginBottom="@dimen/margin_bottom_text"
-                            android:text="Target"
+                            android:text="@string/target"
                             android:textSize="@dimen/text_size" />
 
                         <EditText
@@ -117,7 +116,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/text_view_background"
                             android:focusable="false"
-                            android:hint="Target"
+                            android:hint="@string/target"
                             android:paddingVertical="@dimen/text_padding_vertical"
                             android:paddingLeft="@dimen/text_padding_horizontal"
                             android:text="@={viewModel.target}"
@@ -129,7 +128,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_top_text"
                             android:layout_marginBottom="@dimen/margin_bottom_text"
-                            android:text="Description"
+                            android:text="@string/description"
                             android:textSize="@dimen/text_size" />
 
                         <EditText
@@ -137,7 +136,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/text_view_background"
-                            android:hint="Description"
+                            android:hint="@string/description"
                             android:paddingVertical="@dimen/text_padding_vertical"
                             android:paddingLeft="@dimen/text_padding_horizontal"
                             android:text="@={viewModel.desc}"
@@ -148,7 +147,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_top_text"
-                            android:text="Debt or lend"
+                            android:text="@string/debt_or_lend"
                             android:textSize="@dimen/text_size" />
 
                         <RadioGroup
@@ -164,14 +163,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="20dp"
                                 android:checked="@={!viewModel.debt}"
-                                android:text="Lend" />
+                                android:text="@string/lend" />
 
                             <RadioButton
                                 android:id="@+id/radioDebt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:checked="@={viewModel.debt}"
-                                android:text="Debt" />
+                                android:text="@string/debt" />
 
                         </RadioGroup>
 

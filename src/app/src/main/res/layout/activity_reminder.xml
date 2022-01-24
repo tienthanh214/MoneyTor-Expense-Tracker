@@ -23,8 +23,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_left_card"
-                android:text="Reminder notification"
-                android:textSize="20dp"
+                android:text="@string/reminder_notification"
+                android:textSize="20sp"
+                android:layout_weight="3"
                 android:maxLines="2"
                 android:fontFamily="@font/poppins_medium"
                 android:paddingVertical="8dp"
@@ -35,12 +36,10 @@
             <androidx.appcompat.widget.SwitchCompat
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/margin_right_card"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/margin_right_card"
                 android:id="@+id/reminder_switch"
                 android:checked="@={viewModel.reminderStatus}"/>
-
-                />
-
         </LinearLayout>
 
         <LinearLayout
@@ -56,8 +55,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Select time"
-                android:textSize="20dp"
+                android:text="@string/select_time"
+                android:textSize="20sp"
                 android:maxLines="2"
                 android:fontFamily="@font/poppins_medium"
                 android:textStyle="bold"
@@ -79,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/save_button_background"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:text="Save"
                 android:fontFamily="@font/poppins_medium"
                 android:paddingHorizontal="@dimen/text_padding_horizontal"
