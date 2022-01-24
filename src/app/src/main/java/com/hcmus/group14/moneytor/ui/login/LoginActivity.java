@@ -91,8 +91,8 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                Toast.makeText(LoginActivity.this, "firebaseAuthWithGoogle:" + account.getId(),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LoginActivity.this, "firebaseAuthWithGoogle:" + account.getId(),
+//                        Toast.LENGTH_SHORT).show();
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -125,8 +125,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void onLoginComplete(FirebaseUser user, boolean isFirstLogin) {
         if (user == null) {
-            Toast.makeText(LoginActivity.this, "No user",
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(LoginActivity.this, "No user",
+//                    Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             if (isFirstLogin) intent.putExtra(LOGIN_TYPE, FIRST_TIME_LOGIN);

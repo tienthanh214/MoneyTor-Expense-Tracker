@@ -76,7 +76,7 @@ public class GoalBroadcastReceiver extends BroadcastReceiver {
                     .build();
             builder.setBubbleMetadata(bubbleData);
             builder.setContentTitle("Widget");
-            builder.setContentText("Click me to fast note a spending");
+            builder.setContentText(context.getString(R.string.bubble_notif));
         }
 
         // TODO set what happen when press notification

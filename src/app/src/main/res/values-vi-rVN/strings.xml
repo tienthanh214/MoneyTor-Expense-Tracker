@@ -107,4 +107,5 @@
     <string name="sync_data">Đồng bộ dữ liệu</string>
     <string name="reminder_notification">Nhắc nhở ghi chú</string>
     <string name="select_time">Chọn thời điểm</string>
+    <string name="bubble_notif">Nhấn vào bong bóng để ghi chú chi tiêu nhanh chóng</string>
 </resources>

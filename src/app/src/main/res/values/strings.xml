@@ -107,4 +107,5 @@
     <string name="sync_data">Sync data</string>
     <string name="reminder_notification">Reminder notification</string>
     <string name="select_time">Select time</string>
+    <string name="bubble_notif">Click me to fast note a spending</string>
 </resources>
