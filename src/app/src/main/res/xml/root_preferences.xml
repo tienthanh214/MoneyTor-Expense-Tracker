@@ -30,8 +30,5 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Notification">
-
-    </PreferenceCategory>
 
 </PreferenceScreen>
