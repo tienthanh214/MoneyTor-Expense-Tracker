@@ -1,0 +1,197 @@
+			(Introduction to Software Engineering) Group 14 - Moneytor
+					Database Schema
+					-Draft Ver1.1-
+					--2021/11/24--
+Log:
+- 1.0 (2021/11/15): Initial version
+- 1.1 (2021/11/24): Adjustments to fit the purpose of bill sharing and debt management.
+- 1.2 (2021/11/27): Adjustments to types of primary keys (for auto-generation) and length of 
+  the category string.
+- 1.3 (2021/12/14): Adjustments to the Target attribute in the Debt/Lend dbs to match the schema
+  of relatives.
+
+These database schemas are assumed to be used in the sqlite3 engine (for the local machine) and
+other SQL-based relational database engines and is subject to change if the database engine changes.
+
+This is the initial version. Everything below this line is subject to change to satisfy conditions.
+----------------------------------------------------------------------------------------------------
+Local machine side databases:
+- NOTES
+- SPEND_GOAL
+- DEBT_LEND
+- REMINDER
+- WALLETS
+- RELATE
+Server side databases:
+- USERS
+- USER_NAME
+- NOTES_GLOBAL
+- SPEND_GOAL_GLOBAL
+- DEBT_LEND_GLOBAL
+- WALLETS_GLOBAL
+- RELATE_GLOB
+----------------------------------------------------------------------------------------------------
+Table 1: NOTES
+              |----------note_id: INT PRIMARY KEY NOT NULL
+              |----------note_title: NVARCHAR(30) NOT NULL
+              |----------category: CHAR(30) NOT NULL
+              |----------cost: INT NOT NULL
+              |----------date: DATETIME NOT NULL
+              |----------desc: NVARCHAR(100)
+              |----------shared: STRING
+Description: The database saves the user's spending notes on the local machine. Each note has its own
+unique ID (note_id). A note must have a title with 30 characters or less. The category of which 
+the user spent on, as well as when and how much the user spent, should also be included. The user can
+choose to write a description for the spending note which should be 100 characters or less, or leave
+it blank. A note can be shared through multiple people, if it is the case, the `shared` field contains
+all of the sharers' IDs (more details at table 11), which in Room DB will be stored as an ArrayList.
+----------------------------------------------------------------------------------------------------
+Table 2: USERS
+              |----------user_id: INT PRIMARY KEY NOT NULL
+              |----------email: CHAR(64) UNIQUE NOT NULL
+              |----------name: NVARCHAR(50) NOT NULL
+Description: The database saves the authentications of all registered users. Each user is identified
+by a unique ID (user_id). A user has a unique email that they used to register, and their name.  
+For security and database integrity reasons, all user emails must be hashed using SHA256.
+----------------------------------------------------------------------------------------------------
+Table 3: NOTES_GLOBAL
+              |----------user_id: INT NOT NULL
+              |----------note_id: INT NOT NULL
+              |----------note_title: NVARCHAR(30) NOT NULL
+              |----------category: CHAR(30) NOT NULL
+              |----------cost: INT NOT NULL
+              |----------date: DATETIME NOT NULL
+              |----------desc: NVARCHAR(100)
+              |----------CONSTRAINT PRIMARY KEY(user_id, note_id)
+              |----------shared: STRING
+Description: The database saves the user's spending notes on the Google FireBase platform. 
+Each note belongs to one and only one user, the note itself must have a different ID from other notes
+of the same user. A note must have a title with 30 characters or less. The category of which 
+the user spent on, as well as when and how much the user spent, should also be included. The user can
+choose to write a description for the spending note which should be 100 characters or less, or leave
+it blank. A note can be shared through multiple people, if it is the case, the `shared` field contains
+all of the sharers' IDs (more details at table 12), which in Room DB will be stored as an ArrayList.
+---------------------------------------------------------------------------------------------------
+Table 4: SPEND_GOAL
+              |-----------goal_id: INT NOT NULL PRIMARY KEY
+              |-----------category: CHAR(30)
+              |-----------spending_cap: INT NOT NULL
+              |-----------date: DATETIME NOT NULL
+              |-----------desc: NVARCHAR(100)
+Description: The database saves all spending goals the user has set, placed on the local machine.
+Each goal is identified by its unique ID. The detailed information of a spending goal consists of
+the spending category (set to null if it is for general spending), the spending cap (also known as
+the goal) and the date/time of creation. The user can choose to write a description for the spending 
+goal which should be 100 characters or less, or leave it blank.
+---------------------------------------------------------------------------------------------------
+Table 5: SPEND_GOAL_GLOBAL
+              |-----------user_id: INT NOT NULL
+              |-----------goal_id: INT NOT NULL
+              |-----------category: CHAR(30)
+              |-----------spending_cap: INT NOT NULL
+              |-----------date: DATETIME NOT NULL
+              |-----------desc: NVARCHAR(100)
+              |-----------CONSTRAINT PRIMARY KEY(user_id, goal_id)
+Description: The database saves all spending goals the user has set, placed on the Google FireBase
+platform.
+Each goal belongs to only one user and has its unique ID to differentiate between other goals. 
+The detailed information of a spending goal consists of the spending category (set to null if it is 
+for general spending), the spending cap (also known as the goal) and the date/time of creation. 
+The user can choose to write a description for the spending  goal which should be 100 characters or
+less, or leave it blank.
+----------------------------------------------------------------------------------------------------
+Table 6: DEBT_LEND
+              |-----------record_id: INT NOT NULL PRIMARY KEY
+              |-----------category: CHAR(30)
+              |-----------value: INT NOT NULL
+              |-----------target: INT NOT NULL
+              |-----------debt: INT CHECK (debt = 0 OR debt = 1)
+              |-----------date: DATETIME NOT NULL
+              |-----------desc: NVARCHAR(100)
+Description: The database saves all debt/lend records the user has noted, placed on the local machine.
+Each debt/lend record is identified by its unique ID (record_id). The detailed information of a record
+consists of:
+    - Whether is this record for a debt or a lend (0 if lend, 1 if debt)
+    - Category of the debt/lend (not necessary)
+    - How much money loaned/lent
+    - Who to loan/lend
+    - Date/time of the debt/lend
+    - Description (up to 100 characters, not necessary)
+----------------------------------------------------------------------------------------------------
+Table 7: DEBT_LEND_GLOBAL
+              |-----------user_id: INT NOT NULL
+              |-----------record_id: INT NOT NULL
+              |-----------category: CHAR(30)
+              |-----------value: INT NOT NULL
+              |-----------target: INT NOT NULL
+              |-----------debt: INT CHECK (debt = 0 OR debt = 1)
+              |-----------date: DATETIME NOT NULL
+              |-----------desc: NVARCHAR(100)
+              |-----------CONSTRAINT PRIMARY KEY(user_id, record_id)
+Description: The database saves all debt/lend records the user has noted, placed on the Google FireBase
+platform.
+Each debt/lend record belongs to only one user is identified by its ID. 
+The detailed information of a record consists of:
+    - Whether is this record for a debt or a lend (0 if lend, 1 if debt)
+    - Category of the debt/lend (not necessary)
+    - How much money loaned/lent
+    - Who to loan/lend
+    - Date/time of the debt/lend
+    - Description (up to 100 characters, not necessary)
+----------------------------------------------------------------------------------------------------
+Table 8: REMINDER
+              |-----------rem_id: INT NOT NULL PRIMARY KEY
+              |-----------type: CHAR(30) NOT NULL
+              |-----------when: DATETIME NOT NULL
+              |-----------date: DATETIME NOT NULL
+              |-----------desc: NVARCHAR(100)
+Description: The database saves all reminders that the user have set, placed on the local machine.
+Each reminder is identified by its unique ID (rem_id) and consists of the type of reminder (daily,
+weekly, monthly or annually), when to remind, date created and description which can be left blank
+or should be 100 characters long or lower.
+----------------------------------------------------------------------------------------------------
+Table 9: WALLETS
+              |-----------wallet_id: INT NOT NULL PRIMARY KEY
+              |-----------type: INT NOT NULL CHECK (type = 0 OR type = 1) --physical wallet/e-wallet
+              |-----------provider: CHAR(10)
+              |-----------number: STRING
+Description: The database saves all wallets of the user for ease of spending control. This is placed
+on the local machine.
+Each wallet is identified by its own unique ID (wallet_id) and has the following information:
+    - Whether it is a physical wallet or an e-wallet
+    - The e-wallet's service provider (null if the wallet is a physical wallet)
+    - The e-wallet's ID number (null if the wallet is a physical wallet). (For security reasons, this
+      field should be encrypted.)
+----------------------------------------------------------------------------------------------------
+Table 10: WALLETS_GLOBAL
+              |-----------user_id: INT NOT NULL
+              |-----------wallet_id: INT NOT NULL
+              |-----------type: INT NOT NULL CHECK (type = 0 OR type = 1) --physical wallet/e-wallet
+              |-----------provider: CHAR(10)
+              |-----------number: STRING
+              |-----------CONSTRAINT PRIMARY KEY(user_id, wallet_id)
+Description: The database saves all wallets of the user for ease of spending control. This is placed
+on Google FireBase platform.
+Each wallet is identified by its own unique ID belonging to only one user and has the following 
+information:
+    - Whether it is a physical wallet or an e-wallet
+    - The e-wallet's service provider (null if the wallet is a physical wallet)
+    - The e-wallet's ID number (null if the wallet is a physical wallet). (For security reasons, this
+      field should be encrypted.)
+----------------------------------------------------------------------------------------------------
+Table 11: RELATE
+              |-----------rel_id: INT PRIMARY KEY
+              |-----------name: NVARCHAR(50) NOT NULL
+              |-----------tel: CHAR(10) NOT NULL
+Description: The database saves all related people in bill sharing and/or debt/loans. Each will have
+a unique ID to differentiate, their name and telephone number.
+----------------------------------------------------------------------------------------------------
+Table 12: RELATE_GLOB
+              |-----------user_id: INT NOT NULL
+              |-----------rel_id: INT NOT NULL
+              |-----------name: STRING NOT NULL
+              |-----------tel: STRING NOT NULL
+              |-----------CONSTRAINT PRIMARY KEY(user_id, rel_id)
+Description: The database saves all related people in bill sharing and/or debt/loans. Each will have
+a unique ID to differentiate, their name and telephone number. Since this is sensitive personal info,
+all fields (except the ID) has to be encrypted.
